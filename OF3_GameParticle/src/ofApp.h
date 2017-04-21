@@ -5,18 +5,17 @@
 #include "Game/Player.h"
 #include "Game/Bullet.h"
 #include "Game/Enemy.h"
-//#include "Gui.h"
+#include "Editor/ParticleEditor.h" 
 
 
 class ofApp : public ofBaseApp{
-private:
-	Player *gamePlayer;
-	GameStats *gameS;
-	vector<Bullet*> bulletP;
-	//vector<Enemy*> enemy;
+	private:
+		Player *gamePlayer;
+		GameStats *gameS;
+		ParticleEditor partEditor;
+
 
 	public:
-		//Gui* gui;
 
 		void setup();
 		void update();

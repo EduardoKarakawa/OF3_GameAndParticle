@@ -1,7 +1,10 @@
 #pragma once
+#include <vector>
 #include "GameObject.h"
 #include "ofGraphics.h"
 #include "ofMain.h"
+#include "Bullet.h"
+
 
 #define MAX_TIME_SHOOTING 0.2f
 
@@ -13,6 +16,7 @@ private:
 	int m_radius, m_keyArrow;
 	float m_speed;
 	float m_cooldownShooting;
+	vector<Bullet*> m_listBullet;
 
 public:
 	Player(int width, int height, float speed);
@@ -27,7 +31,8 @@ public:
 	int GetArrowKey() const;
 	// int GetBulletKey() const; virou bool GetShooting();--------------------------
 	bool GetShooting();
-
+	void BulletControl(float &deltaTime);
+	void DrawBullets();
 	// GetPosition foi movido para o GameObject-------------------------------------
 
 };

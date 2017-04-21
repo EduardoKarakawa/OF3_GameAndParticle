@@ -3,18 +3,15 @@
 //--------------------------------------------------------------
 void ofApp::setup() {
 
-	//gui = new Gui();
-	//gui->init();
-
 	//Inicia o player passado (posicao.x    , posicao.y         , speed);
-	gamePlayer = new Player(ofGetWidth() / 2, ofGetHeight() / 2, 500.0f);
-	gameS = new GameStats();
-	gameS->changeStats(2);
 
-	ofVec2f zero;
-	zero.set(0, 0);
-	bulletP.push_back(new Bullet(zero, -1));
-	//enemy.push_back(new Enemy(zero));
+	gamePlayer = new Player(ofGetWidth() / 2, ofGetHeight() / 2, 500.0f);
+
+	gameS = new GameStats();
+	gameS->changeStats(1);
+
+	partEditor.Setup();
+
 
 }
 
@@ -34,7 +31,7 @@ void ofApp::update() {
 
 		// ------------------------------ EDITOR -----------------------------------------------
 		case 1:
-			//gui->update();
+			partEditor.Update(deltaTime);
 			break;
 
 
@@ -43,32 +40,6 @@ void ofApp::update() {
 			
 			// Atualiza a posicao do player
 			gamePlayer->Update(deltaTime);
-
-			// Verifica se o player atirou e cria um novo tiro
-			if (gamePlayer->GetShooting())
-			{
-				gamePlayer->AddCounter();
-				bulletP.push_back(new Bullet(gamePlayer->GetPosition(), gamePlayer->GetArrowKey()));
-			}
-
-			// Verifica se exitem tiros para serem processados
-			if (bulletP.size() > 1)
-			{
-				// Percorre a lista de tiros para atualizar a posicao deles
-				for (int i = 1; i < bulletP.size(); i++)
-				{
-					bulletP.at(i)->Update(deltaTime);
-				}
-
-			}
-
-			//if (enemy.size() > 1)
-			//{
-			//	for (int i = 1; i < enemy.size(); i++)
-			//	{
-			//		enemy.at(i)->Draw();
-			//	}
-			//}
 
 			break;
 
@@ -92,31 +63,18 @@ void ofApp::draw() {
 
 		//EDITOR
 		case 1:
-			//gui->draw();
+			partEditor.Draw();
 			break;
 
 		//GAME
 		case 2:
 			gamePlayer->Draw();
 
-			if (bulletP.size() > 1)
-			{
-				for (int i = 1; i < bulletP.size(); i++)
-				{
-					bulletP.at(i)->Draw();
-				}
-			}
-
-			//if (enemy.size() > 1)
-			//{
-			//	for (int i = 1; i < enemy.size(); i++)
-			//	{
-			//		enemy.at(i)->Draw();
-			//	}
-			//}
 
 			break;
-		case 3://GAME OVER
+
+		//GAME OVER
+		case 3:
 			break;
 	}
 }
@@ -204,7 +162,7 @@ void ofApp::keyReleased(int key) {
 
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y) {
-
+	partEditor.SetMousePosition(x, y);
 }
 
 //--------------------------------------------------------------

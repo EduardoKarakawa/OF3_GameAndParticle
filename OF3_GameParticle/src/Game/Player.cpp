@@ -24,10 +24,12 @@ Player::Player(int width, int height, float speed)
 	m_cooldownShooting = 0;
 }
 
+
 void Player::AddCounter()
 {
 	m_keyArrow = 2;
 }
+
 
 void Player::Update(float &deltaTime)
 {
@@ -57,6 +59,8 @@ void Player::Update(float &deltaTime)
 		m_position.x-= tmpVelocity;
 	}
 
+	BulletControl(deltaTime);
+
 }
 
 
@@ -66,8 +70,13 @@ void Player::Draw()
 	// Verifica se o player esta dentro da tela e desenha ele
 	if (OnScreen()) 
 	{
+		// Desenha os tiros
+		DrawBullets();
+
+		// Desenha o Player
 		ofSetColor(0,0,0);
 		ofDrawCircle(m_position.x, m_position.y, m_radius);
+
 	}
 }
 
@@ -113,6 +122,7 @@ void Player::Press(int a)
 		break;
 	}
 }
+
 
 // Muda para falso as tecla que nao estiverem sendo precionada
 void Player::Release(int a)
@@ -173,7 +183,7 @@ int Player::GetArrowKey() const
 }
 
 
-
+// Retorna verdadeiro se o player ja poder atirar
 bool Player::GetShooting()
 {
 	// m_cooldownShooting eh uma varivel de contagem de tempo,  se ela for maior que MAX_TIME_SHOOTING e m_keyArrow for verdadeiro
@@ -183,4 +193,49 @@ bool Player::GetShooting()
 		return true;
 	}
 	return false;
+}
+
+
+// Funcao para controlar os tiros do player
+void Player::BulletControl(float &deltaTime) {
+
+
+	// Cria uma novo tiro se o cooldown tiver acabado
+	if (GetShooting()) {
+		AddCounter();
+		m_listBullet.push_back(new Bullet(GetPosition(), GetArrowKey()));
+	}
+
+
+
+	// Verifica se exitem tiros para serem processados
+	if (m_listBullet.size() > 1)
+	{
+		// Percorre a lista de tiros para atualizar a posicao deles
+		for (int i = 1; i < m_listBullet.size(); i++)
+		{
+			if (m_listBullet.at(i)->OnScreen()) {
+				m_listBullet.at(i)->Update(deltaTime);
+			}
+			else {
+				m_listBullet.erase(m_listBullet.begin() + i);
+			}
+		}
+
+	}
+}
+
+
+// Desenha os tiros do player
+void  Player::DrawBullets() {
+
+	// Verifica se tem tiros para ser desenhados
+	if (m_listBullet.size() > 1)
+	{
+		// Percorre a lista desenhando os tiros
+		for (int i = 1; i < m_listBullet.size(); i++)
+		{
+			m_listBullet.at(i)->Draw();
+		}
+	}
 }

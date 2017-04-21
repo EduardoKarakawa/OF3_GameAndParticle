@@ -106,7 +106,7 @@ void Gui::DrawDirectionAndCone(ofVec2f posit, ofVec2f direct)
 	ofSetColor(255, 255, 255);
 	ofVec3f start = ofVec3f(posit.x, posit.y, 0);
 	ofVec3f end = ofVec3f(direct.x, direct.y, 0);
-	(start, end, 10);
+	ofDrawArrow(start, end, 10);
 
 
 	// Desenha o cone mostrando onde sera gerado as particulas

@@ -3,7 +3,7 @@
 #include "ofxGui.h"
 #include "ofxLabel.h"
 #include "ParticleEmission.h"
-#include "../ofApp.h"
+#include "of3dUtils.h"
 
 
 class Gui {

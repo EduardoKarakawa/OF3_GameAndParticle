@@ -1,0 +1,49 @@
+#include "ParticleEditor.h"
+
+ParticleEditor::ParticleEditor()
+{
+	m_guiEditor.Init();
+}
+
+void ParticleEditor::Setup() {
+	LoadParticles();
+	m_particlesList.Setup(	ofVec2f(ofGetWidth() / 2.0f, ofGetHeight() / 2.0f), 
+							ofVec2f(ofGetWidth() / 2.0f, ofGetHeight() / 2.0f - 50),
+							50, 50, 2, 1.0f / 5.0f, 
+							"/sprites/particula.png", 30);
+}
+
+
+void ParticleEditor::Update(float &deltaTime) {
+	m_guiEditor.Update(m_particlesList);
+	m_particlesList.Update(deltaTime);
+
+}
+
+void ParticleEditor::Draw() {
+	m_guiEditor.Draw();
+	m_particlesList.Draw();
+}
+
+
+void ParticleEditor::LoadParticles()
+{
+	ofDirectory directory("/particles");
+	if (directory.isDirectory())
+	{
+		directory.allowExt("txt");
+		directory.listDir();
+		std::cout << "Leu o diretorio " << directory.getOriginalDirectory() << std::endl << "Total  de arquivos " << directory.size() << std::endl;
+		/*for (int i = 0; i < directory.size(); i++) {
+			m_particlesList.push_back(ParticleEmission());
+		}*/
+	}
+	else {
+		std::cout << "Nao Leu o diretorio " << directory.getOriginalDirectory() << std::endl;
+	}
+}
+
+
+void ParticleEditor::SetMousePosition(int &x, int &y) {
+	m_guiEditor.SetMousePosition(x, y);
+}
