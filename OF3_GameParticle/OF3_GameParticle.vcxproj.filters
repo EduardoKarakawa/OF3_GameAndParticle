@@ -36,11 +36,12 @@
     <ClCompile Include="src\Game\GameObject.cpp" />
     <ClCompile Include="src\Game\GameStats.cpp" />
     <ClCompile Include="src\Game\Player.cpp" />
-    <ClCompile Include="src\ParticleEditor\ParticleEditor.cpp" />
     <ClCompile Include="src\Editor\Gui.cpp" />
     <ClCompile Include="src\Editor\Particle.cpp" />
     <ClCompile Include="src\Editor\ParticleEditor.cpp" />
     <ClCompile Include="src\Editor\ParticleEmission.cpp" />
+    <ClCompile Include="src\Game\Menu.cpp" />
+    <ClCompile Include="src\KenjiGUI\MyButton.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -92,11 +93,12 @@
     <ClInclude Include="src\Game\GameObject.h" />
     <ClInclude Include="src\Game\GameStats.h" />
     <ClInclude Include="src\Game\Player.h" />
-    <ClInclude Include="src\ParticleEditor\ParticleEditor.h" />
     <ClInclude Include="src\Editor\Gui.h" />
     <ClInclude Include="src\Editor\Particle.h" />
     <ClInclude Include="src\Editor\ParticleEditor.h" />
     <ClInclude Include="src\Editor\ParticleEmission.h" />
+    <ClInclude Include="src\Game\Menu.h" />
+    <ClInclude Include="src\KenjiGUI\MyButton.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="icon.rc" />

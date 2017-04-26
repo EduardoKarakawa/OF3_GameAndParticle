@@ -14,6 +14,7 @@ class Gui {
 		ofxColorSlider color; //slider color
 		ofxToggle worldPosToMouse, directionPosToMouse; //check button 
 		ofxToggle drawParameters;
+		ofxToggle saveButton;
 		ofxPanel gui;
 		float buttonHide;
 		ofVec2f mousePositon, antPosition;

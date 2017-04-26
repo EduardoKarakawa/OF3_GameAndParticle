@@ -34,9 +34,6 @@ void ParticleEditor::LoadParticles()
 		directory.allowExt("txt");
 		directory.listDir();
 		std::cout << "Leu o diretorio " << directory.getOriginalDirectory() << std::endl << "Total  de arquivos " << directory.size() << std::endl;
-		/*for (int i = 0; i < directory.size(); i++) {
-			m_particlesList.push_back(ParticleEmission());
-		}*/
 	}
 	else {
 		std::cout << "Nao Leu o diretorio " << directory.getOriginalDirectory() << std::endl;

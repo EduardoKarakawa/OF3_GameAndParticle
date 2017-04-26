@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <fstream>
+#include <string>
 #include "Gui.h"
 #include "ParticleEmission.h"
 #include "ofFileUtils.h"
@@ -10,7 +11,6 @@ class ParticleEditor{
 	private:
 		Gui m_guiEditor;
 		ParticleEmission m_particlesList;
-		//std::vector<ParticleEmission> m_particlesList;
 		
 
 	public:

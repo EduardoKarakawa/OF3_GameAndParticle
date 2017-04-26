@@ -10,6 +10,7 @@ class ParticleEmission
 {
 	private:
 		std::vector<Particle> m_particles;
+		std::string m_spriteLocal;
 		ofImage m_sprite;
 		ofVec2f m_positionOrigin;
 		ofVec2f m_direction;
@@ -42,6 +43,8 @@ class ParticleEmission
 		void SetSprite(string sprite);
 		void SetSpawnTime(float timeSpawn);
 		void SetColor(ofColor color);
+
+		void SaveParticleConfig(std::string name);
 
 };
 

@@ -36,6 +36,9 @@ void Gui::Init() {
 	// Muda a cor das particulas
 	gui.add(color.setup					("Color: ", ofColor(255, 159, 17), ofColor(0, 0), ofColor(255, 255)));
 
+	// Botao de save
+	gui.add(saveButton.setup			("Salve", false, 100, 50));
+
 }
 
 void Gui::Update(ParticleEmission &emissor) {
@@ -48,6 +51,11 @@ void Gui::Update(ParticleEmission &emissor) {
 	emissor.SetSpeed(velocity);
 	emissor.SetSpawnTime(timeSpawn);
 	emissor.SetColor(color);
+	if (saveButton) {
+		saveButton = false;
+		emissor.SaveParticleConfig("teste.txt");
+	}
+	//gui.getButton("saveButton")
 }
 
 void Gui::Draw() {
@@ -98,6 +106,7 @@ void Gui::ChangeDirectionAndPosition()
 			worldPosToMouse = false;
 		}
 	}
+
 }
 
 void Gui::DrawDirectionAndCone(ofVec2f posit, ofVec2f direct)

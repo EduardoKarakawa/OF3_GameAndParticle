@@ -5,7 +5,9 @@
 #include "Game/Player.h"
 #include "Game/Bullet.h"
 #include "Game/Enemy.h"
+#include "Game/Menu.h"
 #include "Editor/ParticleEditor.h" 
+
 
 
 class ofApp : public ofBaseApp{
@@ -13,7 +15,7 @@ class ofApp : public ofBaseApp{
 		Player *gamePlayer;
 		GameStats *gameS;
 		ParticleEditor partEditor;
-
+		Menu menu;
 
 	public:
 
@@ -32,5 +34,5 @@ class ofApp : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
-		
+
 };

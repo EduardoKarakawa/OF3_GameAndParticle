@@ -12,10 +12,12 @@ void ParticleEmission::SetSpawnTime(float timeSpawn)		{ m_timeSpawnParticle = ti
 void ParticleEmission::SetColor(ofColor color)				{ m_color = color; }
 void ParticleEmission::SetSizeParticle(float radius)		{ m_sprite.resize(radius, radius); }
 
+
 void ParticleEmission::Setup(ofVec2f origin, ofVec2f direction, float openAngle, float speed, float lifeTime, float timeSpawn, string sprite, float size)
 {
 	// Inicia os parametros da sistema de particula novo
-	m_sprite.loadImage(sprite);
+	m_spriteLocal = sprite;
+	m_sprite.loadImage(m_spriteLocal);
 	m_sprite.resize(size, size);
 	m_positionOrigin = origin;
 	SetDirection(direction);
@@ -83,3 +85,24 @@ void ParticleEmission::CreateParticle()
 	}
 }
 
+
+// Coloca em uma string todos os parametros do emissor de particula para salvar em um file
+void ParticleEmission::SaveParticleConfig(std::string name) {
+	ofstream file;
+	file.open(name, std::ofstream::out);
+	if (file.is_open()) {
+
+		std::string out = "<Sprite> " + m_spriteLocal;
+		out += "\n<Size> " + std::to_string(m_sprite.getWidth());
+		out += "\n<Position> " + std::to_string(m_positionOrigin.x) + ' ' + std::to_string(m_positionOrigin.y);
+		out += "\n<Direction> " + std::to_string(m_direction.x) + ' ' + std::to_string(m_direction.y);
+		out += "\n<LifeTime> " + std::to_string(m_maxLifeTime);
+		out += "\n<Velocity> " + std::to_string(m_velocity);
+		out += "\n<TimeSpaw> " + std::to_string(m_spawnTimeCont);
+		out += "\n<Color> " + std::to_string(m_color.r) + ' ' + std::to_string(m_color.g) + ' ' + std::to_string(m_color.b) + ' ' + std::to_string(m_color.a);
+
+		file << out;
+
+		file.close();
+	}
+}
