@@ -10,7 +10,7 @@ class Bullet : public GameObject
 private:
 	int m_id;
 	int m_radius;
-	float m_r, m_g, m_b;
+	ofColor color;
 	float m_speed;
 	ofVec2f  m_direction;
 

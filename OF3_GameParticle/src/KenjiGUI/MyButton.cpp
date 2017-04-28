@@ -84,7 +84,7 @@ MyButton::MyButton()
 	m_colorPressed.set(255, 255, 255);
 	m_fontColor.set(255, 255, 255);
 	m_mousePressed = false;
-	m_font.load("C:/Windows/Fonts/arial.ttf", 12);
+	m_font.load("C:/Windows/Fonts/tahoma.ttf", 20);
 }
 
 
@@ -95,7 +95,7 @@ MyButton::MyButton(std::string name, bool value, ofVec2f &position, int width, i
 	m_width = width;
 	m_height = heigth;
 	m_name = name;
-	m_font.load("C:/Windows/Fonts/arial.ttf", 12);
+	m_font.load("C:/Windows/Fonts/tahoma.ttf", 20);
 	m_mousePressed = false;
 }
 
@@ -107,7 +107,7 @@ MyButton::MyButton(std::string name, bool value, int x, int y, int width, int he
 	m_width = width;
 	m_height = heigth;
 	m_name = name;
-	m_font.load("C:/Windows/Fonts/arial.ttf", 12);
+	m_font.load("C:/Windows/Fonts/tahoma.ttf", 20);
 	m_mousePressed = false;
 }
 
