@@ -28,6 +28,7 @@
     <ClCompile Include="..\..\..\..\..\..\..\Temp\of_v0.9.8_vs_release\addons\ofxGui\src\ofxSliderGroup.cpp" />
     <ClCompile Include="..\..\..\..\..\..\..\Temp\of_v0.9.8_vs_release\addons\ofxGui\src\ofxToggle.cpp" />
     <ClCompile Include="src\Game\EnemyControl.cpp" />
+    <ClCompile Include="src\Game\BulletControl.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -69,6 +70,7 @@
     <ClInclude Include="..\..\..\..\..\..\..\Temp\of_v0.9.8_vs_release\addons\ofxGui\src\ofxSliderGroup.h" />
     <ClInclude Include="..\..\..\..\..\..\..\Temp\of_v0.9.8_vs_release\addons\ofxGui\src\ofxToggle.h" />
     <ClInclude Include="src\Game\EnemyControl.h" />
+    <ClInclude Include="src\Game\BulletControl.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="icon.rc" />

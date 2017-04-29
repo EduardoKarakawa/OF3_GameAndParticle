@@ -6,7 +6,7 @@ void ofApp::setup() {
 
 	//Inicia o player passado (posicao.x    , posicao.y         , speed);
 	gamePlayer = new Player(ofGetWidth() / 2, ofGetHeight() / 2, 500.0f);
-	
+
 	// Inicia o Estado do Game
 	gameStats = new GameStats();
 	gameStats->changeStats(0);
@@ -18,9 +18,8 @@ void ofApp::setup() {
 	//Inicia o enemy
 	enemys = new EnemyControl();
 
-	ofVec2f zero;
-	zero.set(0, 0);
-	bulletP.push_back(new Bullet(zero, -1));
+	// Inicia o tiro
+	bullets = new BulletControl();
 
 	// Configura o Editor de Particula
 	partEditor.Setup();
@@ -34,7 +33,7 @@ void ofApp::update() {
 	// Pega o tempo entre o ultimo frame e o atual
 	float deltaTime = ofGetLastFrameTime();
 	gameTime->TimeGame();
-	int time = gameTime->GetTimeGame()/100;
+	int time = gameTime->GetTimeGame() / 100;
 
 	// Verifica o estado atual do jogo se esta em menu, editor, jogo ou fim de jogo
 	switch (gameStats->GetEstado())
@@ -55,31 +54,12 @@ void ofApp::update() {
 		// Atualiza a posicao do player
 		gamePlayer->Update(deltaTime);
 
-		// Verifica se o player atirou e cria um novo tiro
-		if (gamePlayer->GetShooting())
-		{
-			gamePlayer->AddCounter();
-			bulletP.push_back(new Bullet(gamePlayer->GetPosition(), gamePlayer->GetArrowKey()));
-		}
+		// Cria novos enemys, atualiza a posição e elimina os que levaram dano
+		enemys->Update(time, deltaTime, gamePlayer->GetPosition(), bullets);
 
-		enemys->Update(time, deltaTime, gamePlayer->GetPosition(), bulletP);
-
-
-		// Verifica se exitem tiros para serem processados
-		if (bulletP.size() > 1)
-		{
-			// Percorre a lista de tiros para atualizar a posicao deles
-			for (int i = 0; i < bulletP.size(); i++)
-			{
-				bool bulletLife = true;
-				bulletLife = bulletP.at(i)->Update(deltaTime);
-				// Percorre a lista de enemys para verificar a colisão com o tiro
-				
-				if (bulletLife == false) bulletP.erase(bulletP.begin() + i);
-			}
-
-		}
-
+		// Cria novos tiros, atualiza a posição e elimina os que sairam da tela e que receberam dano
+		bullets->Update(gamePlayer, deltaTime);
+		
 		gameTime->EndTime();
 		break;
 
@@ -109,16 +89,13 @@ void ofApp::draw() {
 
 		//GAME
 	case 1:
-		gamePlayer->Draw();	// Desenha o Player
+		// Desenha o Player
+		gamePlayer->Draw();
 
 		// Desenha os tiros
-		if (bulletP.size() > 1)
-		{
-			for (int i = 1; i < bulletP.size(); i++)
-			{
-				bulletP.at(i)->Draw();
-			}
-		}
+		bullets->Draw();
+		
+		// Desenha os enemys
 		enemys->Draw();
 
 		break;
