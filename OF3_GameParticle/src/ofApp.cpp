@@ -82,7 +82,6 @@ void ofApp::update() {
 				if (bulletLife == false) bulletP.erase(bulletP.begin() + i);
 			}
 
-
 		}
 
 		//Verfica se está no momento para criar novos inimigos
