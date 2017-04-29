@@ -30,8 +30,7 @@ public:
 	int GetArrowKey() const;
 	// int GetBulletKey() const; virou bool GetShooting();--------------------------
 	bool GetShooting();
-	void BulletControl(float &deltaTime);
-	void DrawBullets();
+	// Não lembro o que tinha aqui, mas foi apagado HSUAHSUHAUH
 	// GetPosition foi movido para o GameObject-------------------------------------
 
 };
