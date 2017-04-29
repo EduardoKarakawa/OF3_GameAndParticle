@@ -5,7 +5,7 @@
 #include "Game/GameTime.h"
 #include "Game/Player.h"
 #include "Game/Bullet.h"
-#include "Game/Enemy.h"
+#include "Game/EnemyControl.h"
 #include "Game/Menu.h"
 #include "Editor/ParticleEditor.h" 
 
@@ -15,8 +15,7 @@ private:
 	GameStats *gameStats;
 	GameTime *gameTime;
 	vector<Bullet*> bulletP;
-	vector<Enemy*> enemy;
-	int lastTime; //último momento que o inimigo foi criado
+	EnemyControl *enemys;
 	int startTime; //Para comecer a contar o tempo do zero
 	ParticleEditor partEditor;
 	Menu menu;	// Class que gerencia o menu

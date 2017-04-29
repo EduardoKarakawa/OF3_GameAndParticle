@@ -4,7 +4,6 @@
 void ofApp::setup() {
 	srand(time(NULL));
 
-
 	//Inicia o player passado (posicao.x    , posicao.y         , speed);
 	gamePlayer = new Player(ofGetWidth() / 2, ofGetHeight() / 2, 500.0f);
 	
@@ -14,14 +13,14 @@ void ofApp::setup() {
 
 	// Inicia a contagem de tempo
 	gameTime = new GameTime();
-
-	lastTime = 0;
 	startTime = 0;
+
+	//Inicia o enemy
+	enemys = new EnemyControl();
 
 	ofVec2f zero;
 	zero.set(0, 0);
 	bulletP.push_back(new Bullet(zero, -1));
-	enemy.push_back(new Enemy(zero));
 
 	// Configura o Editor de Particula
 	partEditor.Setup();
@@ -63,6 +62,9 @@ void ofApp::update() {
 			bulletP.push_back(new Bullet(gamePlayer->GetPosition(), gamePlayer->GetArrowKey()));
 		}
 
+		enemys->Update(time, deltaTime, gamePlayer->GetPosition(), bulletP);
+
+
 		// Verifica se exitem tiros para serem processados
 		if (bulletP.size() > 1)
 		{
@@ -72,33 +74,10 @@ void ofApp::update() {
 				bool bulletLife = true;
 				bulletLife = bulletP.at(i)->Update(deltaTime);
 				// Percorre a lista de enemys para verificar a colisão com o tiro
-				for (int j = 0; j < enemy.size(); j++)
-				{
-					if (enemy.at(j)->enemyLife(bulletP.at(i)->GetPosition()) == false)
-					{
-						enemy.erase(enemy.begin() + j);
-					}
-				}
+				
 				if (bulletLife == false) bulletP.erase(bulletP.begin() + i);
 			}
 
-		}
-
-		//Verfica se está no momento para criar novos inimigos
-		if (time % 6 == 0 && time != lastTime)
-		{
-			lastTime = time;
-			enemy.push_back(new Enemy(gamePlayer->GetPosition()));
-		}
-
-		//Verifica se exitem inimigos para serem processados
-		if (enemy.size() > 1)
-		{
-			// Percorre a lista de inimigos para atualizar a posição deles
-			for (int i = 0; i < enemy.size(); i++)
-			{
-				enemy.at(i)->Update(gamePlayer->GetPosition(), deltaTime);
-			}
 		}
 
 		gameTime->EndTime();
@@ -140,15 +119,7 @@ void ofApp::draw() {
 				bulletP.at(i)->Draw();
 			}
 		}
-
-		// Desenha os Inimigos
-		if (enemy.size() > 1)
-		{
-			for (int i = 1; i < enemy.size(); i++)
-			{
-				enemy.at(i)->Draw();
-			}
-		}
+		enemys->Draw();
 
 		break;
 
@@ -290,7 +261,6 @@ void ofApp::mouseExited(int x, int y) {
 
 //--------------------------------------------------------------
 void ofApp::windowResized(int w, int h) {
-
 }
 
 //--------------------------------------------------------------
