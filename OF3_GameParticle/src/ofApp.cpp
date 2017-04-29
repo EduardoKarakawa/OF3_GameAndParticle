@@ -290,26 +290,7 @@ void ofApp::mouseExited(int x, int y) {
 
 //--------------------------------------------------------------
 void ofApp::windowResized(int w, int h) {
-	switch (gameStats->GetEstado())
-	{
-		//MENU
-	case 0:
-		break;
 
-		//EDITOR
-	case 1:
-		//gui->resize(w, h);
-		break;
-
-		//GAME
-	case 2:
-		break;
-
-		//GAME OVER
-	case 3:
-		break;
-
-	}
 }
 
 //--------------------------------------------------------------
