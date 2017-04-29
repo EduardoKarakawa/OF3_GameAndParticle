@@ -10,7 +10,7 @@ void ofApp::setup() {
 	
 	// Inicia o Estado do Game
 	gameStats = new GameStats();
-	gameStats->changeStats(2);
+	gameStats->changeStats(0);
 
 	// Inicia a contagem de tempo
 	gameTime = new GameTime();
@@ -167,18 +167,20 @@ void ofApp::draw() {
 	}
 }
 
+
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key) {
+
+	if (key == OF_KEY_BACKSPACE) {
+		gameStats->changeStats(0);
+	}
+
+
 	switch (gameStats->GetEstado())
 	{
 	case 0://MENU
 		break;
-	case 1://EDITOR
-		if (key == 'h' || key == 'H') {
-			//gui->hide();
-		}
-		break;
-	case 2://GAME
+	case 1://GAME
 		if (key == OF_KEY_UP)
 			gamePlayer->Press(0);
 		if (key == OF_KEY_DOWN)
@@ -200,6 +202,13 @@ void ofApp::keyPressed(int key) {
 		if (key == GLFW_KEY_SPACE)
 			gamePlayer->Press(9);
 		break;
+
+	case 2://EDITOR
+		if (key == 'h' || key == 'H') {
+			//gui->hide();
+		}
+		break;
+
 	case 3://GAME OVER
 		break;
 
@@ -208,18 +217,18 @@ void ofApp::keyPressed(int key) {
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key) {
+	if (key == OF_KEY_BACKSPACE) {
+		gameStats->changeStats(0);
+	}
+
 	switch (gameStats->GetEstado())
 	{
 		//MENU
 	case 0:
 		break;
 
-		//EDITOR
-	case 1:
-		break;
-
 		//GAME
-	case 2:
+	case 1:
 		if (key == OF_KEY_UP)
 			gamePlayer->Release(0);
 		if (key == OF_KEY_DOWN)
@@ -242,6 +251,10 @@ void ofApp::keyReleased(int key) {
 			gamePlayer->Release(9);
 		break;
 
+		//EDITOR
+	case 2:
+		break;
+
 		//GAME OVER
 	case 3:
 		break;
@@ -250,7 +263,7 @@ void ofApp::keyReleased(int key) {
 
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y) {
-
+	partEditor.SetMousePosition(x, y);
 }
 
 //--------------------------------------------------------------
