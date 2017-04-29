@@ -2,6 +2,7 @@
 
 ParticleEmission::ParticleEmission(){}
 ParticleEmission::~ParticleEmission(){}
+ParticleEmission::ParticleEmission(std::string tag) { SearchConfig(tag); }
 void ParticleEmission::SetOrigin(ofVec2f origin)			{ m_positionOrigin = origin; }
 void ParticleEmission::SetDirection(ofVec2f direction)		{ m_direction = direction; }
 void ParticleEmission::SetOpenAngle(float openAngle)		{ m_openAngle = openAngle; }
@@ -108,6 +109,30 @@ void ParticleEmission::SaveParticleConfig(std::string name) {
 }
 
 
-//void ParticleEmission::SearchConfig(std::string father) {
-//	
-//}
+
+// Funcao para procurar uma configuracao de particula
+void ParticleEmission::SearchConfig(std::string tag) {
+	std::string path = "/particles";
+	ofDirectory directory(path);
+
+	// A variavel director so ira pegar os arquivos com extensao ".txt"
+	directory.allowExt(".txt");
+
+	// Verifica se o foi possivel abrir o directorio e se tem algum arquivo
+	if (directory.isDirectory() && directory.size() > 0) {
+		for (int i = 0; i < directory.size(); i++) {
+			std::ifstream file(directory.getPath(i));
+			std::string isTag, theTag;
+
+			file >> isTag >> theTag;
+			std::cout << isTag << "   " << theTag << std::endl;
+			// Verifica as tags
+			if (isTag == "<Tag>" && theTag == tag) {
+				std::cout << "Carregou o Player" << std::endl;
+			}
+			else {
+				std::cout << "Nao carregou" << std::endl;
+			}
+		}
+	}
+}
