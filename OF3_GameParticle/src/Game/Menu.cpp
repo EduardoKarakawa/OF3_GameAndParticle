@@ -1,7 +1,7 @@
 #include "Menu.h"
 void Menu::Setup()
 {
-	logo.load("particle_editor.png");
+	//logo.load("particle_editor.png");
 	//ofBackground(10, 10, 30);
 	m_buttonList.push_back(MyButton("Start Game", false, ofVec2f(ofGetWidth() / 2 - 100, (ofGetHeight() / 2)), 200, 70));
 	m_buttonList.push_back(MyButton("Particle Editor", false, ofVec2f(ofGetWidth() / 2 - 100, (ofGetHeight() / 2) + 100), 200, 70));
@@ -27,7 +27,7 @@ int Menu::Update() {
 	return 0;
 }
 void Menu::Draw() {
-	logo.draw(100, 50);
+	//logo.draw(100, 50);
 	for (MyButton i : m_buttonList) {
 		i.Draw();
 	}
