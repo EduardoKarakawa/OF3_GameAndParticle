@@ -64,7 +64,6 @@ void ofApp::update() {
 		}
 
 		// Verifica se exitem tiros para serem processados
-		std::cout << bulletP.size() << std::endl;
 		if (bulletP.size() > 1)
 		{
 			// Percorre a lista de tiros para atualizar a posicao deles
@@ -75,16 +74,13 @@ void ofApp::update() {
 				// Percorre a lista de enemys para verificar a colisão com o tiro
 				for (int j = 0; j < enemy.size(); j++)
 				{
-					printf("oi");
 					if (enemy.at(j)->enemyLife(bulletP.at(i)->GetPosition()) == false)
 					{
-						printf("oi");
 						enemy.erase(enemy.begin() + j);
 					}
 				}
 				if (bulletLife == false) bulletP.erase(bulletP.begin() + i);
 			}
-
 
 		}
 
