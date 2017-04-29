@@ -2,22 +2,26 @@
 
 #include "ofMain.h"
 #include "Game/GameStats.h"
+#include "Game/GameTime.h"
 #include "Game/Player.h"
-#include "Game/Bullet.h"
-#include "Game/Enemy.h"
+#include "Game/BulletControl.h"
+#include "Game/EnemyControl.h"
 #include "Game/Menu.h"
 #include "Editor/ParticleEditor.h" 
 
-
-
 class ofApp : public ofBaseApp{
-	private:
-		Player *gamePlayer;
-		GameStats *gameS;
-		ParticleEditor partEditor;
-		Menu menu;
+private:
+	Player *gamePlayer;
+	GameStats *gameStats;
+	GameTime *gameTime;
+	EnemyControl *enemys;
+	BulletControl *bullets;
+	int startTime; //Para comecer a contar o tempo do zero
+	ParticleEditor partEditor;
+	Menu menu;	// Class que gerencia o menu
 
 	public:
+		//Gui* gui;
 
 		void setup();
 		void update();
@@ -34,5 +38,5 @@ class ofApp : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
-
+		
 };

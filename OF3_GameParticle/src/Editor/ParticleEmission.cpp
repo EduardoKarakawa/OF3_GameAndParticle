@@ -77,7 +77,7 @@ void ParticleEmission::CreateParticle()
 		int tmp =  m_spawnTimeCont / m_timeSpawnParticle;
 		for (int i = 0; i < tmp; i++) {
 			m_particles.push_back(Particle());
-			// Inicializa a nova particula criada
+			// uInicializa a nova particula criada
 			(m_particles.end()-1)->Setup(m_positionOrigin, m_direction, m_openAngle, m_velocity, m_maxLifeTime, m_color.a);
 
 			m_spawnTimeCont -= m_timeSpawnParticle;
@@ -106,3 +106,8 @@ void ParticleEmission::SaveParticleConfig(std::string name) {
 		file.close();
 	}
 }
+
+
+//void ParticleEmission::SearchConfig(std::string father) {
+//	
+//}

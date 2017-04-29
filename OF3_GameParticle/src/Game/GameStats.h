@@ -3,8 +3,8 @@
 enum EstadoJogo
 {
 	MENU = 0,
-	GAMEPLAY,
 	EDITOR,
+	GAMEPLAY,
 	GAMEOVER
 };
 

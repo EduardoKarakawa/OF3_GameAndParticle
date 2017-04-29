@@ -18,12 +18,14 @@ void GameStats::changeStats(int a)
 		m_estadoJogo = EstadoJogo::MENU;
 		break;
 	case 1:
-		m_estadoJogo = EstadoJogo::GAMEPLAY;
+		m_estadoJogo = EstadoJogo::EDITOR;
 		break;
 	case 2:
-		m_estadoJogo = EstadoJogo::EDITOR;
+		m_estadoJogo = EstadoJogo::GAMEPLAY;
 		break;
 	case 3:
 		m_estadoJogo = EstadoJogo::GAMEOVER;
+	default:
+		break;
 	}
 }
