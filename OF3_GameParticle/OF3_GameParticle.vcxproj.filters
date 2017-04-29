@@ -1,24 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="src\ofApp.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\main.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Game\Bullet.cpp" />
-    <ClCompile Include="src\Game\Enemy.cpp" />
-    <ClCompile Include="src\Game\GameObject.cpp" />
-    <ClCompile Include="src\Game\GameStats.cpp" />
-    <ClCompile Include="src\Game\Player.cpp" />
-    <ClCompile Include="src\Editor\Gui.cpp" />
-    <ClCompile Include="src\Editor\Particle.cpp" />
-    <ClCompile Include="src\Editor\ParticleEditor.cpp" />
-    <ClCompile Include="src\Editor\ParticleEmission.cpp" />
-    <ClCompile Include="src\Game\Menu.cpp" />
-    <ClCompile Include="src\KenjiGUI\MyButton.cpp" />
-    <ClCompile Include="src\Game\GameTime.cpp" />
     <ClCompile Include="..\..\..\..\..\..\..\Temp\of_v0.9.8_vs_release\addons\ofxGui\src\ofxBaseGui.cpp" />
     <ClCompile Include="..\..\..\..\..\..\..\Temp\of_v0.9.8_vs_release\addons\ofxGui\src\ofxButton.cpp" />
     <ClCompile Include="..\..\..\..\..\..\..\Temp\of_v0.9.8_vs_release\addons\ofxGui\src\ofxGuiGroup.cpp" />
@@ -27,38 +9,24 @@
     <ClCompile Include="..\..\..\..\..\..\..\Temp\of_v0.9.8_vs_release\addons\ofxGui\src\ofxSlider.cpp" />
     <ClCompile Include="..\..\..\..\..\..\..\Temp\of_v0.9.8_vs_release\addons\ofxGui\src\ofxSliderGroup.cpp" />
     <ClCompile Include="..\..\..\..\..\..\..\Temp\of_v0.9.8_vs_release\addons\ofxGui\src\ofxToggle.cpp" />
+    <ClCompile Include="src\Editor\Gui.cpp" />
+    <ClCompile Include="src\Editor\Particle.cpp" />
+    <ClCompile Include="src\Editor\ParticleEditor.cpp" />
+    <ClCompile Include="src\Editor\ParticleEmission.cpp" />
+    <ClCompile Include="src\Game\Bullet.cpp" />
+    <ClCompile Include="src\Game\BulletControl.cpp" />
+    <ClCompile Include="src\Game\Enemy.cpp" />
     <ClCompile Include="src\Game\EnemyControl.cpp" />
+    <ClCompile Include="src\Game\GameObject.cpp" />
+    <ClCompile Include="src\Game\GameStats.cpp" />
+    <ClCompile Include="src\Game\GameTime.cpp" />
+    <ClCompile Include="src\Game\Menu.cpp" />
+    <ClCompile Include="src\Game\Player.cpp" />
+    <ClCompile Include="src\KenjiGUI\MyButton.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\ofApp.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="src">
-      <UniqueIdentifier>{d8376475-7454-4a24-b08a-aac121d3ad6f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="addons">
-      <UniqueIdentifier>{7eb276f0-9f83-4a8f-a8a5-c4fb018a5fce}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="addons\ofxGui">
-      <UniqueIdentifier>{15f049ec-55d2-4509-a7f8-3a451e496b70}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="addons\ofxGui\src">
-      <UniqueIdentifier>{044af030-09c1-4b69-918a-78775140bf1d}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="src\ofApp.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Game\Bullet.h" />
-    <ClInclude Include="src\Game\Enemy.h" />
-    <ClInclude Include="src\Game\GameObject.h" />
-    <ClInclude Include="src\Game\GameStats.h" />
-    <ClInclude Include="src\Game\Player.h" />
-    <ClInclude Include="src\Editor\Gui.h" />
-    <ClInclude Include="src\Editor\Particle.h" />
-    <ClInclude Include="src\Editor\ParticleEditor.h" />
-    <ClInclude Include="src\Editor\ParticleEmission.h" />
-    <ClInclude Include="src\Game\Menu.h" />
-    <ClInclude Include="src\KenjiGUI\MyButton.h" />
-    <ClInclude Include="src\Game\GameTime.h" />
     <ClInclude Include="..\..\..\..\..\..\..\Temp\of_v0.9.8_vs_release\addons\ofxGui\src\ofxBaseGui.h" />
     <ClInclude Include="..\..\..\..\..\..\..\Temp\of_v0.9.8_vs_release\addons\ofxGui\src\ofxButton.h" />
     <ClInclude Include="..\..\..\..\..\..\..\Temp\of_v0.9.8_vs_release\addons\ofxGui\src\ofxGui.h" />
@@ -68,7 +36,21 @@
     <ClInclude Include="..\..\..\..\..\..\..\Temp\of_v0.9.8_vs_release\addons\ofxGui\src\ofxSlider.h" />
     <ClInclude Include="..\..\..\..\..\..\..\Temp\of_v0.9.8_vs_release\addons\ofxGui\src\ofxSliderGroup.h" />
     <ClInclude Include="..\..\..\..\..\..\..\Temp\of_v0.9.8_vs_release\addons\ofxGui\src\ofxToggle.h" />
+    <ClInclude Include="src\Editor\Gui.h" />
+    <ClInclude Include="src\Editor\Particle.h" />
+    <ClInclude Include="src\Editor\ParticleEditor.h" />
+    <ClInclude Include="src\Editor\ParticleEmission.h" />
+    <ClInclude Include="src\Game\Bullet.h" />
+    <ClInclude Include="src\Game\BulletControl.h" />
+    <ClInclude Include="src\Game\Enemy.h" />
     <ClInclude Include="src\Game\EnemyControl.h" />
+    <ClInclude Include="src\Game\GameObject.h" />
+    <ClInclude Include="src\Game\GameStats.h" />
+    <ClInclude Include="src\Game\GameTime.h" />
+    <ClInclude Include="src\Game\Menu.h" />
+    <ClInclude Include="src\Game\Player.h" />
+    <ClInclude Include="src\KenjiGUI\MyButton.h" />
+    <ClInclude Include="src\ofApp.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="icon.rc" />

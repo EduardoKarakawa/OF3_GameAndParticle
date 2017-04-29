@@ -9,7 +9,7 @@ EnemyControl::EnemyControl()
 	lastTime = 0;
 }
 
-void EnemyControl::Update(int time, float deltaTime, ofVec2f playerPos, vector<Bullet*> bullet)
+void EnemyControl::Update(int time, float deltaTime, ofVec2f playerPos, BulletControl *bullet)
 {
 	//Verfica se está no momento para criar novos inimigos
 	if (time % 6 == 0 && time != lastTime)
@@ -29,16 +29,16 @@ void EnemyControl::Update(int time, float deltaTime, ofVec2f playerPos, vector<B
 	}
 
 	//Percorre a lista de tiros
-	for (int i = 0; i < bullet.size(); i++)
+	for (int i = 0; i < bullet->GetVectorSize(); i++)
 	{
 		//Verifica se o tiro "i" colidiu com algum enemy
 		for (int j = 0; j < enemy.size(); j++)
 		{
-			if (enemy.at(j)->enemyLife(bullet.at(i)->GetPosition()) == false)
+			if (enemy.at(j)->enemyLife(bullet->GetBulletPosition(i)) == false)
 			{
 				//Se colidiu, elimina o inimigo e o tiro
 				enemy.erase(enemy.begin() + j);
-				bullet.erase(bullet.begin() + i);
+				bullet->EraseBullet(i);
 				i--;
 				j--;
 			}

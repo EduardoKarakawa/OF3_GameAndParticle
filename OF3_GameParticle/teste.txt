@@ -1,0 +1,8 @@
+<Sprite> /sprites/particula.png
+<Size> 30.000000
+<Position> 730.000000 309.000000
+<Direction> 627.599976 309.000000
+<LifeTime> 1.500000
+<Velocity> 500.000000
+<TimeSpaw> 0.010797
+<Color> 255 159 17 255
