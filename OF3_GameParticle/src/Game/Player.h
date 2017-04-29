@@ -16,7 +16,6 @@ private:
 	int m_radius, m_keyArrow;
 	float m_speed;
 	float m_cooldownShooting;
-	vector<Bullet*> m_listBullet;
 
 public:
 	Player(int width, int height, float speed);

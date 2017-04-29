@@ -17,7 +17,7 @@ private:
 public:
 	Bullet(ofVec2f position, int direcao);
 
-	void Update(float &deltaTime);
+	bool Update(float &deltaTime);
 	void Draw();
 
 };
