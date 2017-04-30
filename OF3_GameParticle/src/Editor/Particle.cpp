@@ -22,6 +22,7 @@ void Particle::Setup(ofVec2f origin, ofVec2f direction, float openAngle, float s
 	m_lifeTime = lifeTime;
 	m_startOpacity = startOpacity;
 	m_opacity = startOpacity;
+	m_isDead = false;
 }
 
 void Particle::Update(ofVec2f origin, float deltaTime)
@@ -35,12 +36,15 @@ void Particle::Update(ofVec2f origin, float deltaTime)
 	// Decrementa a opacidade de acordo com o tempo de vida da particula
 	m_opacity -= m_opacity < 0 ? 0 : m_startOpacity / m_lifeTime * deltaTime;
 
+	if (m_lifeTime) {
+		m_isDead = true;
+	}
 }
 
 bool Particle::IsLife()
 {
 	// Retorna um true caso o tempo de vida da particula ainda for maior que 0
-	return m_lifeTime > 0.0f;
+	return m_lifeTime >= 0.0f;
 }
 
 void Particle::Draw(ofImage sprite, ofColor color, ofVec2f origin)
