@@ -17,6 +17,7 @@ Storage& Storage::instance() {
 //método salvar recebe como parâmetro por referência uma partícula criada
 //string referente ao nome do documento de texto (xml)
 void Storage::save(const ParticleEmission &particle, const string &name) {
+
 	//cria um documento de texto(xml)
 	ofXml xml;
 	//cria uma tag principal chamada EMITTER
