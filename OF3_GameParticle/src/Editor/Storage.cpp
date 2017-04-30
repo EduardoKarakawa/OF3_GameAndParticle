@@ -14,6 +14,9 @@ Storage& Storage::instance() {
 }
 
 
+void Storage::newConf(Gui &guiParticle) {
+	guiParticle.Init();
+}
 
 //método salvar recebe como parâmetro por referência uma partícula criada
 //string referente ao nome do documento de texto (xml)

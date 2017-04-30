@@ -17,6 +17,8 @@ class Storage {
 		Storage();
 	public:
 		static Storage& instance();
+		void newConf(Gui &guiParticle);
 		void save(const ParticleEmission &particle);
 		void load(Gui &guiParticle);
+
 };
