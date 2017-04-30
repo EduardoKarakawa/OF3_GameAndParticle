@@ -17,7 +17,7 @@ Player::Player(std::string tag, int width, int height, float speed)
 	m_keyA = false;
 	m_keyD = false;
 	m_position.set(width, height);
-	m_particle = ParticleEmission().SearchConfig(m_tag, &m_position);
+//	m_particle = ParticleEmission().SearchConfig(m_tag, &m_position);
 	
 	// Velocidade do personagem
 	m_speed = speed;

@@ -8,7 +8,7 @@
 class Menu {
 	private:
 		int m_option;
-		//ofImage logo;
+		ofImage logo;
 		std::vector<MyButton> m_buttonList;
 
 	public:

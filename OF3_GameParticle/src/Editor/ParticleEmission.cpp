@@ -1,5 +1,6 @@
 #include "ParticleEmission.h"
 
+
 ParticleEmission::ParticleEmission(){}
 ParticleEmission::~ParticleEmission(){}
 ParticleEmission::ParticleEmission(std::string tag, ofVec2f * fatherPosition) {
@@ -27,12 +28,24 @@ void ParticleEmission::SetSpawnTime(float timeSpawn)		{ m_timeSpawnParticle = ti
 void ParticleEmission::SetColor(ofColor color)				{ m_color = color; }
 void ParticleEmission::SetSizeParticle(float radius)		{ m_sprite.resize(radius, radius); }
 
+const ofVec2f ParticleEmission::GetOrigin() const { return m_positionOrigin; }
+const ofVec2f ParticleEmission::GetDirection() const { return m_direction; }
+const float ParticleEmission::GetOpenAngle() const { return m_openAngle; }
+const float ParticleEmission::GetSpeed() const { return m_velocity; }
+const float ParticleEmission::GetLifeTime() const { return m_maxLifeTime; }
+const string ParticleEmission::GetSprite() const { return m_spriteLocal; }
+const float ParticleEmission::GetSpawnTime() const { return m_timeSpawnParticle; }
+const ofColor ParticleEmission::GetColor() const { return m_color; }
+const float ParticleEmission::GetSizeParticle() const { return m_radius; }
+
 
 ParticleEmission::ParticleEmission(ofVec2f origin, ofVec2f direction, float openAngle, float speed, float lifeTime, float timeSpawn, string sprite, float size)
 {
 	// Inicia os parametros da sistema de particula novo
 	m_spriteLocal = sprite;
+	m_spriteLocal = sprite;
 	m_sprite.loadImage(m_spriteLocal);
+	m_radius = size;
 	m_sprite.resize(size, size);
 	m_positionOrigin = origin;
 	SetDirection(direction);
@@ -63,12 +76,7 @@ void ParticleEmission::Update(float deltaTime)
 
 		for (aux = m_particles.begin(); aux < m_particles.end(); aux++) {
 			// Atualiza a particula
-			if (m_fatherPosition != nullptr) {
-				aux->Update(*m_fatherPosition + m_positionOrigin, deltaTime);
-			}
-			else {
 				aux->Update(m_positionOrigin, deltaTime);
-			}
 
 			// Verifica se a particle ultrapassou o tempo de vida, se sim ela eh destruida
 			if (!aux->IsLife()) {
@@ -86,12 +94,7 @@ void ParticleEmission::Draw()
 		// Percorre a lista de particular desenhando elas
 		std::vector<Particle>::iterator aux;	// Iterator para percorrer a lista de particles
 		for (aux = m_particles.begin(); aux != m_particles.end(); aux++) {
-			if (m_fatherPosition == nullptr) {
-				aux->Draw(m_sprite, m_color, *m_fatherPosition + m_positionOrigin);
-			}
-			else {
 				aux->Draw(m_sprite, m_color, m_positionOrigin);
-			}
 		}
 	}
 }
@@ -113,56 +116,34 @@ void ParticleEmission::CreateParticle()
 }
 
 
-// Coloca em uma string todos os parametros do emissor de particula para salvar em um file
-void ParticleEmission::SaveParticleConfig(std::string name) {
-	ofstream file;
-	file.open(name, std::ofstream::out);
-	if (file.is_open()) {
 
-		std::string out = "<Sprite> " + m_spriteLocal;
-		out += "\n<Size> " + std::to_string(m_sprite.getWidth());
-		out += "\n<Position> " + std::to_string(m_positionOrigin.x) + ' ' + std::to_string(m_positionOrigin.y);
-		out += "\n<Direction> " + std::to_string(m_direction.x) + ' ' + std::to_string(m_direction.y);
-		out += "\n<LifeTime> " + std::to_string(m_maxLifeTime);
-		out += "\n<Velocity> " + std::to_string(m_velocity);
-		out += "\n<TimeSpaw> " + std::to_string(m_spawnTimeCont);
-		out += "\n<Color> " + std::to_string(m_color.r) + ' ' + std::to_string(m_color.g) + ' ' + std::to_string(m_color.b) + ' ' + std::to_string(m_color.a);
-
-		file << out;
-
-		file.close();
-	}
-}
-
-
-
-// Funcao para procurar uma configuracao de particula
-ParticleEmission * ParticleEmission::SearchConfig(std::string tag, ofVec2f * fatherPosition) {
-	std::string path = "particles";
-	ofDirectory directory(path);
-
-	// A variavel director so ira pegar os arquivos com extensao ".txt"
-	directory.allowExt("txt");
-	directory.listDir();
-
-	// Verifica se o foi possivel abrir o directorio e se tem algum arquivo
-	if (directory.isDirectory() && directory.size() > 0) {
-		for (int i = 0; i < directory.size(); i++) {
-			std::string location = directory.getAbsolutePath() + "\\" + directory.getName(i);
-			std::ifstream file(location);
-			std::string isTag, theTag;
-
-			file >> isTag >> theTag;
-
-			// Verifica as tags
-			if (isTag == "<Tag>" && theTag == tag) {
-				return new ParticleEmission(tag, fatherPosition);
-			}
-			else {
-				std::cout << "Nao carregou" << std::endl;
-			}
-		}
-	}
-
-	return nullptr;
-}
+//// Funcao para procurar uma configuracao de particula
+//ParticleEmission * ParticleEmission::SearchConfig(std::string tag, ofVec2f * fatherPosition) {
+//	std::string path = "particles";
+//	ofDirectory directory(path);
+//
+//	// A variavel director so ira pegar os arquivos com extensao ".txt"
+//	directory.allowExt("txt");
+//	directory.listDir();
+//
+//	// Verifica se o foi possivel abrir o directorio e se tem algum arquivo
+//	if (directory.isDirectory() && directory.size() > 0) {
+//		for (int i = 0; i < directory.size(); i++) {
+//			std::string location = directory.getAbsolutePath() + "\\" + directory.getName(i);
+//			std::ifstream file(location);
+//			std::string isTag, theTag;
+//
+//			file >> isTag >> theTag;
+//
+//			// Verifica as tags
+//			if (isTag == "<Tag>" && theTag == tag) {
+//				return new ParticleEmission(tag, fatherPosition);
+//			}
+//			else {
+//				std::cout << "Nao carregou" << std::endl;
+//			}
+//		}
+//	}
+//
+//	return nullptr;
+//}

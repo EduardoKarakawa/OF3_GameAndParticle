@@ -53,7 +53,6 @@ void Gui::Update(ParticleEmission &emissor) {
 	emissor.SetColor(color);
 	if (saveButton) {
 		saveButton = false;
-		emissor.SaveParticleConfig("teste.txt");
 	}
 	//gui.getButton("saveButton")
 }

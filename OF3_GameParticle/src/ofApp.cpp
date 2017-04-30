@@ -150,7 +150,11 @@ void ofApp::keyPressed(int key) {
 
 	case 2://EDITOR
 		if (key == 'h' || key == 'H') {
-			//gui->hide();
+			partEditor.Save();
+		}
+		if (key == 'l' || key == 'L') {
+			partEditor.Load();
+			cout << "1 apertou L" << endl;
 		}
 		break;
 
