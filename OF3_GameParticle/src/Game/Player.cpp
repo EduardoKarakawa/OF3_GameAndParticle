@@ -1,8 +1,9 @@
 #include "Player.h"
 
 // Construtor do player
-Player::Player(int width, int height, float speed)
+Player::Player(std::string tag, int width, int height, float speed)
 {
+	m_tag = tag;
 	m_radius = 25;
 	m_keyArrow = false;
 	m_keyRight = false;

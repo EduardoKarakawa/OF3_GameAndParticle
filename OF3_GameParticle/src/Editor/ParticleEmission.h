@@ -28,6 +28,7 @@ class ParticleEmission
 
 	public:
 		ParticleEmission();
+		ParticleEmission(std::string tag);
 		~ParticleEmission();
 
 		void Setup(ofVec2f origin, ofVec2f direction, float openAngle, float speed, float lifeTime, float timeSpawn, string sprite, float size);
@@ -45,6 +46,7 @@ class ParticleEmission
 		void SetSprite(string sprite);
 		void SetSpawnTime(float timeSpawn);
 		void SetColor(ofColor color);
+
 		void SearchConfig();
 
 		const ofVec2f GetOrigin() const;
@@ -57,6 +59,8 @@ class ParticleEmission
 		const ofColor GetColor() const;
 		const float GetSizeParticle() const;
 
+
+		void SearchConfig(std::string tag);
 		void SaveParticleConfig(std::string name);
 
 };
