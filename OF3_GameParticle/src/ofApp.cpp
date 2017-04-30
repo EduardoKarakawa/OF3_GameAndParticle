@@ -154,6 +154,7 @@ void ofApp::keyPressed(int key) {
 		}
 		if (key == 'l' || key == 'L') {
 			partEditor.Load();
+			cout << "1 apertou L" << endl;
 		}
 		break;
 

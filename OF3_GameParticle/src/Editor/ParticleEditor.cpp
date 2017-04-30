@@ -50,5 +50,7 @@ void ParticleEditor::Save() {
 }
 
 void ParticleEditor::Load() {
+	cout << "2 Entrou no ParticleEditor::Load()" << endl;
 	STORAGE.load(m_particlesList, "teste.xml");
+	
 }
