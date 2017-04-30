@@ -2,7 +2,6 @@
 void Menu::Setup()
 {
 	logo.loadImage("particle_editor.png");
-	ofBackground(0, 0, 0);
 	m_buttonList.push_back(MyButton("Start Game", false, ofVec2f(ofGetWidth() / 2 - 100, (ofGetHeight() / 2)), 200, 70));
 	m_buttonList.push_back(MyButton("Particle Editor", false, ofVec2f(ofGetWidth() / 2 - 100, (ofGetHeight() / 2) + 100), 200, 70));
 	m_buttonList.push_back(MyButton("Exit", false, ofVec2f(ofGetWidth() / 2 - 100, (ofGetHeight() / 2) + 200), 200, 70));
@@ -28,6 +27,7 @@ int Menu::Update() {
 }
 void Menu::Draw() {
 	ofSetColor(255, 255, 255);
+	ofBackground(0, 0, 0);
 	logo.draw(100, 50);
 	for (MyButton i : m_buttonList) {
 		i.Draw();

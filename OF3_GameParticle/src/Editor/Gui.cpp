@@ -17,7 +17,7 @@ void Gui::Init() {
 	gui.add(drawParameters.setup		("Show Direction/Cone", true));
 
 	// Define o tempo de vida da particula
-	gui.add(lifeTime.setup				("Life Time: ", 1.5f, 1.0f / 500.0f, 25));
+	gui.add(lifeTime.setup				("Life Time: ", 1.5f, 0.2f, 25));
 	
 	// Ajusta o tempo de spawn de uma particula
 	gui.add(timeSpawn.setup				("Time Spawn: ", 0.03f, 1.0f / 500.0f, 1.0f));
@@ -48,9 +48,14 @@ void Gui::Init() {
 	gui.add(color.setup					("Color: ", ofColor(255, 159, 17), ofColor(0, 0), ofColor(255, 255)));
 
 	// Botao de save
-	m_saveButton = MyButton("Save Particle", false, 0, ofGetHeight() - 50, 200, 50);
+	m_saveButton = MyButton("Save", false, 0, ofGetHeight() - 50, 100, 50);
 	m_saveButton.SetColor(ofColor(120, 120, 120), ofColor(80, 80, 80));
 
+	m_loadButton = MyButton("Load", false, 103, ofGetHeight() - 50, 100, 50);
+	m_loadButton.SetColor(ofColor(120, 120, 120), ofColor(80, 80, 80));
+
+	m_newButton = MyButton("New Particle", false, 0, ofGetHeight() - 100, 203, 50);
+	m_newButton.SetColor(ofColor(120, 120, 120), ofColor(80, 80, 80));
 
 	sprite = "/sprites/particula.png";
 
@@ -59,8 +64,6 @@ void Gui::Init() {
 
 
 void Gui::Update(ParticleEmission &emissor) {
-	m_saveButton.SetPosition(0, ofGetHeight() - 50);
-	
 	ChangeDirectionAndPosition();
 
 	emissor.SetOrigin(worldPos);
@@ -72,11 +75,19 @@ void Gui::Update(ParticleEmission &emissor) {
 	emissor.SetSprite(sprite);
 	emissor.SetSizeParticle(radius);
 	emissor.SetColor(color);
+
+	m_saveButton.SetPosition(0, ofGetHeight() - 50);
+	m_loadButton.SetPosition(103, ofGetHeight() - 50);
+	m_newButton.SetPosition(0, ofGetHeight() - 103);
 	m_saveButton.Update();
+	m_loadButton.Update();
+	m_newButton.Update();
 }
 
 void Gui::Draw() {
 	m_saveButton.Draw();
+	m_newButton.Draw();
+	m_loadButton.Draw();
 	if (!buttonHide) {
 		gui.draw();
 	}

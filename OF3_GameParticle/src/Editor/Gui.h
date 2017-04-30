@@ -22,7 +22,7 @@ class Gui {
 		float buttonHide;
 		ofVec2f mousePositon, antPosition;
 	public: 
-		MyButton m_saveButton;
+		MyButton m_saveButton, m_newButton, m_loadButton;
 
 	public:
 		void Init();

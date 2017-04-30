@@ -46,6 +46,7 @@ void ofApp::update() {
 
 		// ------------------------------ GAME -------------------------------------------------
 	case 1:
+		ofSetBackgroundColor(255, 255, 255);
 		if (startTime == 0)
 		{
 			startTime = 1;

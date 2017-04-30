@@ -20,6 +20,7 @@ void ParticleEditor::Update(float &deltaTime) {
 	m_guiEditor.Update(m_particlesList);
 	m_particlesList.Update(deltaTime);
 
+	// Verifica se o botao Save foi clicado e chama a funcao
 	if (m_guiEditor.m_saveButton.IsPressed()) {
 		Save();
 		m_guiEditor.m_saveButton.SetValue(false);
