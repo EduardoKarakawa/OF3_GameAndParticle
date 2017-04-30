@@ -19,7 +19,7 @@ private:
 	float m_cooldownShooting;
 
 public:
-	Player(int width, int height, float speed);
+	Player(std::string tag, int width, int height, float speed);
 
 	void AddCounter();
 
@@ -29,9 +29,5 @@ public:
 	void Release(int a);
 
 	int GetArrowKey() const;
-	// int GetBulletKey() const; virou bool GetShooting();--------------------------
 	bool GetShooting();
-	// Não lembro o que tinha aqui, mas foi apagado HSUAHSUHAUH
-	// GetPosition foi movido para o GameObject-------------------------------------
-
 };

@@ -9,9 +9,10 @@
 class ParticleEmission
 {
 	private:
-		std::vector<Particle> m_particles;
+		ofVec2f * m_fatherPosition;
+		std::vector<Particle> m_particles; 
 		std::string m_spriteLocal;
-		std::string m_father;
+		std::string m_fatherTag;
 		ofImage m_sprite;
 		ofVec2f m_positionOrigin;
 		ofVec2f m_direction;
@@ -21,15 +22,17 @@ class ParticleEmission
 		float m_velocity;
 		float m_timeSpawnParticle;
 		float m_spawnTimeCont;
+		float m_radius;
 		bool m_enableParticles;
 
 
 
 	public:
 		ParticleEmission();
+		ParticleEmission(std::string tag, ofVec2f * fatherPosition);
+		ParticleEmission(ofVec2f origin, ofVec2f direction, float openAngle, float speed, float lifeTime, float timeSpawn, string sprite, float size);
 		~ParticleEmission();
 
-		void Setup(ofVec2f origin, ofVec2f direction, float openAngle, float speed, float lifeTime, float timeSpawn, string sprite, float size);
 		void Update(float deltaTime);
 		void CreateParticle();
 		void Draw();
@@ -44,9 +47,19 @@ class ParticleEmission
 		void SetSprite(string sprite);
 		void SetSpawnTime(float timeSpawn);
 		void SetColor(ofColor color);
-		void SearchConfig();
 
-		void SaveParticleConfig(std::string name);
+		//ParticleEmission * SearchConfig(std::string tag, ofVec2f * fatherPosition);
+
+		const ofVec2f GetOrigin() const;
+		const ofVec2f GetDirection() const;
+		const float GetOpenAngle() const;
+		const float GetSpeed() const;
+		const float GetLifeTime() const;
+		const string GetSprite() const;
+		const float GetSpawnTime() const;
+		const ofColor GetColor() const;
+		const float GetSizeParticle() const;
+		const std::string GetFatherTag() const;
 
 };
 

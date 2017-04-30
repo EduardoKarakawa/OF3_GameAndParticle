@@ -4,10 +4,13 @@
 #include "ofVec2f.h"
 #include "ofGraphics.h"
 #include "ofAppRunner.h"
+#include "../Editor/ParticleEmission.h"
 
 class GameObject : public ofBaseApp
 {
 protected:
+	std::string m_tag;
+	ParticleEmission * m_particle;
 	ofVec2f m_position;
 	int m_width;
 	int m_height;

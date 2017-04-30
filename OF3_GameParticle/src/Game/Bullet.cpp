@@ -32,9 +32,7 @@ Bullet::Bullet(ofVec2f position, int tecla)
 	m_speed = BULLET_SPEED;
 		
 	// Define as cores do tiro
-	m_r = 0.8;
-	m_g = 0.2;
-	m_b = 0.2;
+	color.set(0.8f, 0.2f, 0.2f);
 }
 
 
@@ -58,7 +56,7 @@ void Bullet::Draw()
 {
 	// Verifica se o tiro esta dentro da tela usando OnScreen() que eh uma funcao que esta na classe GameObject
 	// e desenha ela
-	ofSetColor(m_r, m_g, m_b);
+	ofSetColor(color);
 	ofDrawCircle(m_position.x, m_position.y, m_radius);
 
 }

@@ -1,8 +1,9 @@
 #include "Player.h"
 
 // Construtor do player
-Player::Player(int width, int height, float speed)
+Player::Player(std::string tag, int width, int height, float speed)
 {
+	m_tag = tag;
 	m_radius = 25;
 	m_keyArrow = false;
 	m_keyRight = false;
@@ -16,6 +17,7 @@ Player::Player(int width, int height, float speed)
 	m_keyA = false;
 	m_keyD = false;
 	m_position.set(width, height);
+//	m_particle = ParticleEmission().SearchConfig(m_tag, &m_position);
 	
 	// Velocidade do personagem
 	m_speed = speed;
@@ -36,6 +38,11 @@ void Player::Update(float &deltaTime, EnemyControl enemys)
 	// Atualiza a contagem de tempo para o cooldown de tiro
 	if (m_cooldownShooting <= MAX_TIME_SHOOTING) {
 		m_cooldownShooting += deltaTime;
+	}
+
+
+	if (m_particle != nullptr) {
+		m_particle->Update(deltaTime);
 	}
 
 	// Calcula uma velocidade pegando o produto do speed e deltaTime para que o player ande igual em qualquer pc
@@ -67,6 +74,7 @@ void Player::Update(float &deltaTime, EnemyControl enemys)
 // Desenha o Player
 void Player::Draw()
 {
+
 	// Verifica se o player esta dentro da tela e desenha ele
 	if (OnScreen()) 
 	{
@@ -74,6 +82,9 @@ void Player::Draw()
 		ofSetColor(0,0,0);
 		ofDrawCircle(m_position.x, m_position.y, m_radius);
 
+		if (m_particle != nullptr) {
+			m_particle->Draw();
+		}
 	}
 }
 
