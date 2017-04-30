@@ -1,5 +1,16 @@
 #include "Gui.h"
 
+void Gui::SetSprite(string sprite) { this->sprite = sprite; }
+void Gui::SetOrigin(ofVec2f origin) { this->worldPos = origin; }
+void Gui::SetDirection(ofVec2f direction) { this->direction = direction;}
+void Gui::SetOpenAngle(float openAngle) { this->angle = openAngle; }
+void Gui::SetSpeed(float speed) { this->velocity = speed; }
+void Gui::SetSizeParticle(float radius) { this->radius = radius; }
+void Gui::SetLifeTime(float lifeTime) { this->lifeTime = lifeTime; }
+void Gui::SetSpawnTime(float timeSpawn) { this->timeSpawn = timeSpawn; }
+void Gui::SetColor(ofColor color) { this->color = color; }
+
+
 void Gui::Init() {
 	gui.setup();
 	// Desenha a direcao e cone de spawn
@@ -39,22 +50,29 @@ void Gui::Init() {
 	// Botao de save
 	gui.add(saveButton.setup			("Salve", false, 100, 50));
 
+	sprite = "/sprites/particula.png";
 }
 
+
 void Gui::Update(ParticleEmission &emissor) {
+
+
+
 	ChangeDirectionAndPosition();
-	emissor.SetDirection(direction);
+
 	emissor.SetOrigin(worldPos);
-	emissor.SetLifeTime(lifeTime);
+	emissor.SetDirection(direction);
 	emissor.SetOpenAngle(angle);
-	emissor.SetSizeParticle(radius);
 	emissor.SetSpeed(velocity);
+	emissor.SetLifeTime(lifeTime);
 	emissor.SetSpawnTime(timeSpawn);
+	emissor.SetSprite(sprite);
+	emissor.SetSizeParticle(radius);
 	emissor.SetColor(color);
+
 	if (saveButton) {
 		saveButton = false;
 	}
-	//gui.getButton("saveButton")
 }
 
 void Gui::Draw() {
@@ -69,6 +87,7 @@ void Gui::Draw() {
 
 
 }
+
 
 void Gui::Hide() {
 	buttonHide = !buttonHide;
@@ -107,6 +126,7 @@ void Gui::ChangeDirectionAndPosition()
 	}
 
 }
+
 
 void Gui::DrawDirectionAndCone(ofVec2f posit, ofVec2f direct)
 {	

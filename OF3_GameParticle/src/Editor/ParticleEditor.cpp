@@ -42,11 +42,16 @@ void ParticleEditor::SetMousePosition(int &x, int &y) {
 }
 
 void ParticleEditor::Save() {
+
+	//chama metodo save da classe Storage, parâmetros: ParticleEmission e string
+
 	STORAGE.save(m_particlesList, "teste.xml");
 }
 
 void ParticleEditor::Load() {
 	cout << "2 Entrou no ParticleEditor::Load()" << endl;
-	STORAGE.load(m_particlesList, "teste.xml");
+
+	//chama metodo load da classe Storage, parâmetros: ParticleEmission e string
+	STORAGE.load(m_guiEditor, "teste.xml");
 	
 }

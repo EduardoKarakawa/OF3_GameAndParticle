@@ -26,7 +26,10 @@ void ParticleEmission::SetLifeTime(float lifeTime)			{ m_maxLifeTime = lifeTime;
 void ParticleEmission::SetSprite(string sprite)				{ m_sprite.loadImage(sprite); }
 void ParticleEmission::SetSpawnTime(float timeSpawn)		{ m_timeSpawnParticle = timeSpawn; }
 void ParticleEmission::SetColor(ofColor color)				{ m_color = color; }
-void ParticleEmission::SetSizeParticle(float radius)		{ m_sprite.resize(radius, radius); }
+void ParticleEmission::SetSizeParticle(float radius)		{ m_radius = radius; }
+
+
+//criei metodos getters pra poder pegar os valores e salvar
 
 const ofVec2f ParticleEmission::GetOrigin() const { return m_positionOrigin; }
 const ofVec2f ParticleEmission::GetDirection() const { return m_direction; }
@@ -37,6 +40,7 @@ const string ParticleEmission::GetSprite() const { return m_spriteLocal; }
 const float ParticleEmission::GetSpawnTime() const { return m_timeSpawnParticle; }
 const ofColor ParticleEmission::GetColor() const { return m_color; }
 const float ParticleEmission::GetSizeParticle() const { return m_radius; }
+
 
 
 ParticleEmission::ParticleEmission(ofVec2f origin, ofVec2f direction, float openAngle, float speed, float lifeTime, float timeSpawn, string sprite, float size)
@@ -61,6 +65,8 @@ ParticleEmission::ParticleEmission(ofVec2f origin, ofVec2f direction, float open
 
 void ParticleEmission::Update(float deltaTime)
 {
+	m_sprite.resize(m_radius, m_radius);
+
 	if (m_enableParticles) {
 		// Atualiza a lista de particulas do sistema de particula, chama o DestroyParticle se a particula atingiu o tempo maximo de vida
 		// cria uma nova particula caso o tempo ultrapasse o tempo de spawn
@@ -115,6 +121,33 @@ void ParticleEmission::CreateParticle()
 	}
 }
 
+//
+//
+//// Coloca em uma string todos os parametros do emissor de particula para salvar em um file
+//void ParticleEmission::SaveParticleConfig(std::string name) {
+//
+//	
+//
+//	/*ofstream file;
+//	file.open(name, std::ofstream::out);
+//	if (file.is_open()) {
+//
+//		std::string out = "<Sprite> " + m_spriteLocal;
+//		out += "\n<Size> " + std::to_string(m_sprite.getWidth());
+//		out += "\n<Position> " + std::to_string(m_positionOrigin.x) + ' ' + std::to_string(m_positionOrigin.y);
+//		out += "\n<Direction> " + std::to_string(m_direction.x) + ' ' + std::to_string(m_direction.y);
+//		out += "\n<LifeTime> " + std::to_string(m_maxLifeTime);
+//		out += "\n<Velocity> " + std::to_string(m_velocity);
+//		out += "\n<TimeSpaw> " + std::to_string(m_spawnTimeCont);
+//		out += "\n<Color> " + std::to_string(m_color.r) + ' ' + std::to_string(m_color.g) + ' ' + std::to_string(m_color.b) + ' ' + std::to_string(m_color.a);
+//
+//		file << out;
+//
+//		file.close();
+//	}*/
+//}
+//
+//
 
 
 //// Funcao para procurar uma configuracao de particula
