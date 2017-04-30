@@ -5,7 +5,6 @@ GameObject::GameObject()
 	frameIndex = 0;
 	m_iFrame = frameIndex;
 	m_sequenceFPS = 12;
-	m_particle = new ParticleEmission(m_tag);
 }
 
 

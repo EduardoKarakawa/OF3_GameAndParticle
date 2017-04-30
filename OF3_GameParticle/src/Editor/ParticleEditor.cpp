@@ -7,7 +7,7 @@ ParticleEditor::ParticleEditor()
 
 void ParticleEditor::Setup() {
 	LoadParticles();
-	m_particlesList.Setup(	ofVec2f(ofGetWidth() / 2.0f, ofGetHeight() / 2.0f), 
+	m_particlesList = ParticleEmission(	ofVec2f(ofGetWidth() / 2.0f, ofGetHeight() / 2.0f), 
 							ofVec2f(ofGetWidth() / 2.0f, ofGetHeight() / 2.0f - 50),
 							50, 50, 2, 1.0f / 5.0f, 
 							"/sprites/particula.png", 30);
@@ -33,10 +33,6 @@ void ParticleEditor::LoadParticles()
 	{
 		directory.allowExt("txt");
 		directory.listDir();
-		std::cout << "Leu o diretorio " << directory.getOriginalDirectory() << std::endl << "Total  de arquivos " << directory.size() << std::endl;
-	}
-	else {
-		std::cout << "Nao Leu o diretorio " << directory.getOriginalDirectory() << std::endl;
 	}
 }
 
