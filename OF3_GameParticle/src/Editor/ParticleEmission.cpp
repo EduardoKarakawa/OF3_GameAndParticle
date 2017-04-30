@@ -14,6 +14,7 @@ void ParticleEmission::SetSpawnTime(float timeSpawn)		{ m_timeSpawnParticle = ti
 void ParticleEmission::SetColor(ofColor color)				{ m_color = color; }
 void ParticleEmission::SetSizeParticle(float radius)		{ m_sprite.resize(radius, radius); }
 
+//criei metodos getters pra poder pegar os valores e salvar
 const ofVec2f ParticleEmission::GetOrigin() const { return m_positionOrigin; }
 const ofVec2f ParticleEmission::GetDirection() const { return m_direction; }
 const float ParticleEmission::GetOpenAngle() const { return m_openAngle; }

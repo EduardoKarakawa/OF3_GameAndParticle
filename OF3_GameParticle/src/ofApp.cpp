@@ -150,9 +150,11 @@ void ofApp::keyPressed(int key) {
 
 	case 2://EDITOR
 		if (key == 'h' || key == 'H') {
+			//PROVISÓRIO: save tecla H
 			partEditor.Save();
 		}
 		if (key == 'l' || key == 'L') {
+			//PROVISÓRIO: save tecla L
 			partEditor.Load();
 			cout << "1 apertou L" << endl;
 		}
