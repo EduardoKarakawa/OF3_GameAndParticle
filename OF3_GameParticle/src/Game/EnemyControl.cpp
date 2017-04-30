@@ -2,10 +2,6 @@
 
 EnemyControl::EnemyControl()
 {
-	ofVec2f zero;
-	zero.set(0, 0);
-	enemy.push_back(new Enemy(zero));
-
 	lastTime = 0;
 }
 
@@ -19,7 +15,7 @@ void EnemyControl::Update(int time, float deltaTime, Player *player, GameStats *
 	}
 
 	//Verifica se existem enemys para serem processados
-	if (enemy.size() > 1)
+	if (enemy.size() > 0)
 	{
 		// Percorre a lista de inimigos para atualizar a posição deles
 		for (int i = 0; i < enemy.size(); i++)
@@ -57,9 +53,9 @@ void EnemyControl::Draw()
 {
 
 	// Desenha os Inimigos
-	if (enemy.size() > 1)
+	if (enemy.size() > 0)
 	{
-		for (int i = 1; i < enemy.size(); i++)
+		for (int i = 0; i < enemy.size(); i++)
 		{
 			enemy.at(i)->Draw();
 		}

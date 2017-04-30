@@ -24,11 +24,6 @@ Player::Player(std::string tag, int width, int height, float speed)
 	
 	// Cooldown para o player poder atirar
 	m_cooldownShooting = 0;
-
-	// Criando o primeiro tiro
-	ofVec2f zero;
-	zero.set(0, 0);
-	bullets.push_back(new Bullet(zero, -1));
 }
 
 
@@ -80,7 +75,7 @@ void Player::Update(float &deltaTime)
 	}
 
 	// Verifica se exitem tiros para serem processados
-	if (bullets.size() > 1)
+	if (bullets.size() > 0)
 	{
 		// Percorre a lista de tiros para atualizar a posicao deles
 		for (int i = 0; i < bullets.size(); i++)
@@ -115,9 +110,9 @@ void Player::Draw()
 
 	// Desenha os tiros
 
-	if (bullets.size() > 1)
+	if (bullets.size() > 0)
 	{
-		for (int i = 1; i < bullets.size(); i++)
+		for (int i = 0; i < bullets.size(); i++)
 		{
 			bullets.at(i)->Draw();
 		}
@@ -239,16 +234,19 @@ bool Player::GetShooting()
 	return false;
 }
 
+// Apaga o tiro desejado
 void Player::EraseBullet(int i)
 {
 	bullets.erase(bullets.begin() + i);
 }
 
+// Passa o valor do tamanho do vetor dos tiros
 int Player::GetVectorBulSize() const
 {
 	return bullets.size();
 }
 
+// Passa o valor da posição de um determinado tiro
 ofVec2f Player::GetBulletPosition(int i) const
 {
 	if (i < bullets.size())
