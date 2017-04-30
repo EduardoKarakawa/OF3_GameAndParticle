@@ -29,6 +29,7 @@ void ParticleEditor::Update(float &deltaTime) {
 	}
 	else if (m_guiEditor.m_newButton.IsPressed()) {
 		New();
+		m_particlesList.m_particles.clear();
 		m_guiEditor.m_loadButton.SetValue(false);
 	}
 

@@ -69,35 +69,36 @@ void ParticleEmission::Update(float deltaTime)
 {
 	m_sprite.resize(m_radius, m_radius);
 
-	if (m_enableParticles) {
+	//if (m_enableParticles) {
 		// Atualiza a lista de particulas do sistema de particula, chama o DestroyParticle se a particula atingiu o tempo maximo de vida
 		// cria uma nova particula caso o tempo ultrapasse o tempo de spawn
 		m_spawnTimeCont += ofGetLastFrameTime();
 
-		// Cria uma particula
-		CreateParticle();
-	}
+	//}
 
-	if (m_particles.size() > 1) {
+	if (m_particles.size() > 0) {
 		// Verifica as particulas que ultrapassaram o tempo maximo de vida e exclui eles do vetor
-		std::vector<Particle>::iterator aux;	// Iterator para percorrer a lista de particles
-
-		for (aux = m_particles.begin(); aux < m_particles.end(); aux++) {
-			// Atualiza a particula
-				aux->Update(m_positionOrigin, deltaTime);
-
-			// Verifica se a particle ultrapassou o tempo de vida, se sim ela eh destruida
-			if (!aux->IsLife()) {
-				aux = m_particles.erase(aux);
+		for (int i = 0; i < m_particles.size(); i++) {
+			// Atualiza a particula a particula que estiver viva
+			if (m_particles[i].IsLife()) {
+				m_particles[i].Update(m_positionOrigin, deltaTime);
+			}		
+			else {
+				m_particles[i].Setup(m_positionOrigin, m_direction, m_openAngle, m_velocity, m_maxLifeTime, m_color.a);
+				m_spawnTimeCont -= m_timeSpawnParticle;
 			}
 		}
 	}
+
+	CreateParticle();
+
 
 }
 
 
 void ParticleEmission::Draw()
 {
+	ofDrawBitmapString(ofToString(m_particles.size()), 30, 500);
 	if (m_particles.size() > 0) {
 		// Percorre a lista de particular desenhando elas
 		std::vector<Particle>::iterator aux;	// Iterator para percorrer a lista de particles
@@ -105,6 +106,7 @@ void ParticleEmission::Draw()
 				aux->Draw(m_sprite, m_color, m_positionOrigin);
 		}
 	}
+
 }
 
 
@@ -112,44 +114,17 @@ void ParticleEmission::CreateParticle()
 {
 	// Cria uma particula se ja tiver passado o tempo necessario para criar uma
 	if (m_spawnTimeCont > m_timeSpawnParticle) {
-		int tmp =  m_spawnTimeCont / m_timeSpawnParticle;
+		int tmp = m_spawnTimeCont / m_timeSpawnParticle;
 		for (int i = 0; i < tmp; i++) {
 			m_particles.push_back(Particle());
-			// uInicializa a nova particula criada
-			(m_particles.end()-1)->Setup(m_positionOrigin, m_direction, m_openAngle, m_velocity, m_maxLifeTime, m_color.a);
+			// Inicializa a nova particula criada
+			(m_particles.end() - 1)->Setup(m_positionOrigin, m_direction, m_openAngle, m_velocity, m_maxLifeTime, m_color.a);
 
 			m_spawnTimeCont -= m_timeSpawnParticle;
 		}
 	}
-}
 
-//
-//
-//// Coloca em uma string todos os parametros do emissor de particula para salvar em um file
-//void ParticleEmission::SaveParticleConfig(std::string name) {
-//
-//	
-//
-//	/*ofstream file;
-//	file.open(name, std::ofstream::out);
-//	if (file.is_open()) {
-//
-//		std::string out = "<Sprite> " + m_spriteLocal;
-//		out += "\n<Size> " + std::to_string(m_sprite.getWidth());
-//		out += "\n<Position> " + std::to_string(m_positionOrigin.x) + ' ' + std::to_string(m_positionOrigin.y);
-//		out += "\n<Direction> " + std::to_string(m_direction.x) + ' ' + std::to_string(m_direction.y);
-//		out += "\n<LifeTime> " + std::to_string(m_maxLifeTime);
-//		out += "\n<Velocity> " + std::to_string(m_velocity);
-//		out += "\n<TimeSpaw> " + std::to_string(m_spawnTimeCont);
-//		out += "\n<Color> " + std::to_string(m_color.r) + ' ' + std::to_string(m_color.g) + ' ' + std::to_string(m_color.b) + ' ' + std::to_string(m_color.a);
-//
-//		file << out;
-//
-//		file.close();
-//	}*/
-//}
-//
-//
+}
 
 
 //// Funcao para procurar uma configuracao de particula
