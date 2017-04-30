@@ -1,6 +1,7 @@
 #pragma once
 #include "Enemy.h"
-#include "BulletControl.h"
+#include "Player.h"
+#include "GameStats.h"
 
 class EnemyControl
 {
@@ -11,7 +12,9 @@ private:
 public:
 	EnemyControl();
 
-	void Update(int time, float deltaTime, ofVec2f playerPos, BulletControl *bullet);
+	void Update(int time, float deltaTime, Player *player, GameStats *gameS);
 	void Draw();
 
+	int GetVectorSize() const;
+	ofVec2f GetEnemyPos(int i) const;
 };

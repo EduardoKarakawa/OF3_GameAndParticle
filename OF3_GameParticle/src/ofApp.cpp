@@ -18,9 +18,6 @@ void ofApp::setup() {
 	//Inicia o enemy
 	enemys = new EnemyControl();
 
-	// Inicia o tiro
-	bullets = new BulletControl();
-
 	// Configura o Editor de Particula
 	partEditor.Setup();
 
@@ -55,10 +52,7 @@ void ofApp::update() {
 		gamePlayer->Update(deltaTime);
 
 		// Cria novos enemys, atualiza a posição e elimina os que levaram dano
-		enemys->Update(time, deltaTime, gamePlayer->GetPosition(), bullets);
-
-		// Cria novos tiros, atualiza a posição e elimina os que sairam da tela e que receberam dano
-		bullets->Update(gamePlayer, deltaTime);
+		enemys->Update(time, deltaTime, gamePlayer, gameStats);
 		
 		gameTime->EndTime();
 		break;
@@ -92,9 +86,6 @@ void ofApp::draw() {
 		// Desenha o Player
 		gamePlayer->Draw();
 
-		// Desenha os tiros
-		bullets->Draw();
-		
 		// Desenha os enemys
 		enemys->Draw();
 

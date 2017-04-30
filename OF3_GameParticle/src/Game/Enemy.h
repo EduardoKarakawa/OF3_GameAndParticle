@@ -2,7 +2,6 @@
 #include "GameObject.h"
 #include "ofGraphics.h"
 #include "ofMain.h"
-#include "Player.h"
 
 class Enemy : public GameObject
 {
@@ -18,8 +17,5 @@ public:
 	void Update(ofVec2f playerPos, float &deltaTime);
 	void Draw();
 	bool enemyLife(ofVec2f bul);
-
-	int GetVectorSize() const;
-	ofVec2f GetEnemyPos(int i) const;
 
 };

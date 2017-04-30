@@ -24,6 +24,11 @@ Player::Player(std::string tag, int width, int height, float speed)
 	
 	// Cooldown para o player poder atirar
 	m_cooldownShooting = 0;
+
+	// Criando o primeiro tiro
+	ofVec2f zero;
+	zero.set(0, 0);
+	bullets.push_back(new Bullet(zero, -1));
 }
 
 
@@ -33,7 +38,7 @@ void Player::AddCounter()
 }
 
 
-void Player::Update(float &deltaTime, EnemyControl enemys)
+void Player::Update(float &deltaTime)
 {
 	// Atualiza a contagem de tempo para o cooldown de tiro
 	if (m_cooldownShooting <= MAX_TIME_SHOOTING) {
@@ -67,6 +72,27 @@ void Player::Update(float &deltaTime, EnemyControl enemys)
 	}
 
 
+	// Verifica se o player atirou e cria um novo tiro
+	if (this->GetShooting())
+	{
+		this->AddCounter();
+		bullets.push_back(new Bullet(this->GetPosition(), this->GetArrowKey()));
+	}
+
+	// Verifica se exitem tiros para serem processados
+	if (bullets.size() > 1)
+	{
+		// Percorre a lista de tiros para atualizar a posicao deles
+		for (int i = 0; i < bullets.size(); i++)
+		{
+			bool bulletLife = true;
+			bulletLife = bullets.at(i)->Update(deltaTime);
+			// Percorre a lista de enemys para verificar a colisão com o tiro
+
+			if (bulletLife == false) this->EraseBullet(i);
+		}
+
+	}
 
 }
 
@@ -84,6 +110,16 @@ void Player::Draw()
 
 		if (m_particle != nullptr) {
 			m_particle->Draw();
+		}
+	}
+
+	// Desenha os tiros
+
+	if (bullets.size() > 1)
+	{
+		for (int i = 1; i < bullets.size(); i++)
+		{
+			bullets.at(i)->Draw();
 		}
 	}
 }
@@ -201,4 +237,22 @@ bool Player::GetShooting()
 		return true;
 	}
 	return false;
+}
+
+void Player::EraseBullet(int i)
+{
+	bullets.erase(bullets.begin() + i);
+}
+
+int Player::GetVectorBulSize() const
+{
+	return bullets.size();
+}
+
+ofVec2f Player::GetBulletPosition(int i) const
+{
+	if (i < bullets.size())
+		return bullets.at(i)->GetPosition();
+	else
+		return ofVec2f(0, 0);
 }
