@@ -31,7 +31,7 @@ void Player::AddCounter()
 }
 
 
-void Player::Update(float &deltaTime)
+void Player::Update(float &deltaTime, EnemyControl enemys)
 {
 	// Atualiza a contagem de tempo para o cooldown de tiro
 	if (m_cooldownShooting <= MAX_TIME_SHOOTING) {
@@ -58,6 +58,8 @@ void Player::Update(float &deltaTime)
 	{
 		m_position.x-= tmpVelocity;
 	}
+
+
 
 }
 

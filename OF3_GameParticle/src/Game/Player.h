@@ -4,6 +4,7 @@
 #include "ofGraphics.h"
 #include "ofMain.h"
 #include "Bullet.h"
+#include "EnemyControl.h"
 
 
 #define MAX_TIME_SHOOTING 0.2f
@@ -22,7 +23,7 @@ public:
 
 	void AddCounter();
 
-	void Update(float &deltaTime);
+	void Update(float &deltaTime, EnemyControl enemys);
 	void Draw();
 	void Press(int a);
 	void Release(int a);

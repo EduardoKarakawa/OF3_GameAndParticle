@@ -8,8 +8,7 @@ Enemy::Enemy(ofVec2f playerPos)
 	m_g = 0.25;
 	m_b = 0.6;
 
-	m_life = 2;
-	m_speed = 80%rand()+10;
+	m_speed = 80 % rand() + 10;
 	m_radius = 27;
 	int pos;
 	do {
@@ -44,11 +43,7 @@ bool Enemy::enemyLife(ofVec2f bul)
 	//if ((bul.x - 10) <= (m_position.x + 27) && (bul.x + 10) >= (m_position.x - 27) && (bul.y - 10) <= (m_position.y + 27) && (bul.y + 10) >= (m_position.y - 27))
 	if (bul.distance(m_position) <= 37)
 	{
-		m_life--;
-		if (m_life <= 0)
-		{
-			return false;
-		}
+		return false;
 	}
 	return true;
 }
