@@ -22,7 +22,6 @@ void Storage::save(const ParticleEmission &particle) {
 	ofFileDialogResult file = ofSystemSaveDialog("default.xml", "Save");
 	if (file.bSuccess) {
 		string path = file.getPath() + ".xml";
-		std::cout << file.getName() << std::endl;
 		//cria um documento de texto(xml)
 		ofXml xml;
 		//cria uma tag principal chamada EMITTER

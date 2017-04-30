@@ -17,14 +17,22 @@ void ParticleEditor::Setup() {
 
 
 void ParticleEditor::Update(float &deltaTime) {
-	m_guiEditor.Update(m_particlesList);
-	m_particlesList.Update(deltaTime);
-
 	// Verifica se o botao Save foi clicado e chama a funcao
 	if (m_guiEditor.m_saveButton.IsPressed()) {
 		Save();
 		m_guiEditor.m_saveButton.SetValue(false);
 	}
+	// Verifica se o botao Load foi clicado e chama a funcao
+	else if (m_guiEditor.m_loadButton.IsPressed()) {
+		Load();
+		m_guiEditor.m_loadButton.SetValue(false);
+	}
+
+	m_guiEditor.Update(m_particlesList);
+	m_particlesList.Update(deltaTime);
+	
+
+
 }
 
 void ParticleEditor::Draw() {
