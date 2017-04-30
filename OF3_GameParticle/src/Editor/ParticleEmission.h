@@ -10,7 +10,6 @@ class ParticleEmission
 {
 	private:
 		ofVec2f * m_fatherPosition;
-		std::vector<Particle> m_particles; 
 		std::string m_spriteLocal;
 		std::string m_fatherTag;
 		ofImage m_sprite;
@@ -24,6 +23,9 @@ class ParticleEmission
 		float m_spawnTimeCont;
 		float m_radius;
 		bool m_enableParticles;
+		
+	public:
+		std::vector<Particle> m_particles; 
 
 
 

@@ -6,6 +6,7 @@
 class Particle
 {
 	private:
+		bool m_isDead;
 		ofVec2f m_position;
 		ofVec2f m_direction;
 		float m_lifeTime;

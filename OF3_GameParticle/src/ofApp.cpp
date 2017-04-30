@@ -43,6 +43,7 @@ void ofApp::update() {
 
 		// ------------------------------ GAME -------------------------------------------------
 	case 1:
+		ofSetBackgroundColor(255, 255, 255);
 		if (startTime == 0)
 		{
 			startTime = 1;
@@ -140,10 +141,6 @@ void ofApp::keyPressed(int key) {
 		break;
 
 	case 2://EDITOR
-		if (key == 'h' || key == 'H') {
-			//PROVISÓRIO: save tecla H
-			partEditor.Save();
-		}
 		if (key == 'l' || key == 'L') {
 			//PROVISÓRIO: save tecla L
 			partEditor.Load();

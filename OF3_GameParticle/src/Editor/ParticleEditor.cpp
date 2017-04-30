@@ -3,7 +3,7 @@
 
 ParticleEditor::ParticleEditor()
 {
-	//m_guiEditor.Init();
+	m_guiEditor.Init();
 }
 
 void ParticleEditor::Setup() {
@@ -17,13 +17,28 @@ void ParticleEditor::Setup() {
 
 
 void ParticleEditor::Update(float &deltaTime) {
-	m_guiEditor.Update(m_particlesList);
-	m_particlesList.Update(deltaTime);
-
+	// Verifica se o botao Save foi clicado e chama a funcao
 	if (m_guiEditor.m_saveButton.IsPressed()) {
 		Save();
 		m_guiEditor.m_saveButton.SetValue(false);
 	}
+	// Verifica se o botao Load foi clicado e chama a funcao
+	else if (m_guiEditor.m_loadButton.IsPressed()) {
+		Load();
+		m_guiEditor.m_loadButton.SetValue(false);
+	}
+	else if (m_guiEditor.m_newButton.IsPressed()) {
+		New();
+		m_particlesList.m_particles.clear();
+		m_guiEditor.m_loadButton.SetValue(false);
+	}
+
+		m_guiEditor.Update(m_particlesList);
+		m_particlesList.Update(deltaTime);
+
+	
+
+
 }
 
 void ParticleEditor::Draw() {
@@ -46,17 +61,24 @@ void ParticleEditor::SetMousePosition(int &x, int &y) {
 	m_guiEditor.SetMousePosition(x, y);
 }
 
+void ParticleEditor::New() {
+
+	//chama metodo save da classe Storage, parâmetros: ParticleEmission e string
+
+	STORAGE.newConf(m_guiEditor);
+}
+
 void ParticleEditor::Save() {
 
 	//chama metodo save da classe Storage, parâmetros: ParticleEmission e string
 
-	STORAGE.save(m_particlesList, "teste.xml");
+	STORAGE.save(m_particlesList);
 }
 
 void ParticleEditor::Load() {
 	cout << "2 Entrou no ParticleEditor::Load()" << endl;
 
 	//chama metodo load da classe Storage, parâmetros: ParticleEmission e string
-	STORAGE.load(m_guiEditor, "teste.xml");
+	STORAGE.load(m_guiEditor);
 	
 }
