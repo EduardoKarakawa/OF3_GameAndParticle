@@ -14,6 +14,9 @@ Storage& Storage::instance() {
 }
 
 
+void Storage::newConf(Gui &guiParticle) {
+	guiParticle.Init();
+}
 
 //método salvar recebe como parâmetro por referência uma partícula criada
 //string referente ao nome do documento de texto (xml)
@@ -22,7 +25,6 @@ void Storage::save(const ParticleEmission &particle) {
 	ofFileDialogResult file = ofSystemSaveDialog("default.xml", "Save");
 	if (file.bSuccess) {
 		string path = file.getPath() + ".xml";
-		std::cout << file.getName() << std::endl;
 		//cria um documento de texto(xml)
 		ofXml xml;
 		//cria uma tag principal chamada EMITTER

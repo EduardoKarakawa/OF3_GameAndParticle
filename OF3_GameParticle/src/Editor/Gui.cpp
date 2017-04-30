@@ -54,7 +54,7 @@ void Gui::Init() {
 	m_loadButton = MyButton("Load", false, 103, ofGetHeight() - 50, 100, 50);
 	m_loadButton.SetColor(ofColor(120, 120, 120), ofColor(80, 80, 80));
 
-	m_newButton = MyButton("New Particle", false, 0, ofGetHeight() - 100, 203, 50);
+	m_newButton = MyButton("Reset Particle", false, 0, ofGetHeight() - 100, 203, 50);
 	m_newButton.SetColor(ofColor(120, 120, 120), ofColor(80, 80, 80));
 
 	sprite = "/sprites/particula.png";
