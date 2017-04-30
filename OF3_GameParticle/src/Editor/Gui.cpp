@@ -59,7 +59,7 @@ void Gui::Init() {
 
 
 void Gui::Update(ParticleEmission &emissor) {
-
+	m_saveButton.SetPosition(0, ofGetHeight() - 50);
 	
 	ChangeDirectionAndPosition();
 
