@@ -150,10 +150,6 @@ void ofApp::keyPressed(int key) {
 		break;
 
 	case 2://EDITOR
-		if (key == 'h' || key == 'H') {
-			//PROVISÓRIO: save tecla H
-			partEditor.Save();
-		}
 		if (key == 'l' || key == 'L') {
 			//PROVISÓRIO: save tecla L
 			partEditor.Load();
