@@ -1,4 +1,5 @@
 #include "ParticleEditor.h"
+#include "Storage.h"
 
 ParticleEditor::ParticleEditor()
 {
@@ -25,7 +26,6 @@ void ParticleEditor::Draw() {
 	m_particlesList.Draw();
 }
 
-
 void ParticleEditor::LoadParticles()
 {
 	ofDirectory directory("/particles");
@@ -43,4 +43,12 @@ void ParticleEditor::LoadParticles()
 
 void ParticleEditor::SetMousePosition(int &x, int &y) {
 	m_guiEditor.SetMousePosition(x, y);
+}
+
+void ParticleEditor::Save() {
+	STORAGE.save(m_particlesList, "teste.xml");
+}
+
+void ParticleEditor::Load() {
+	STORAGE.load(m_particlesList, "teste.xml");
 }

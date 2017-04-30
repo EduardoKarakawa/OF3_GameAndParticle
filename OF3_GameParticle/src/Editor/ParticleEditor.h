@@ -19,5 +19,7 @@ class ParticleEditor{
 		void Setup();
 		void Update(float &deltaTime);
 		void Draw();
+		void Save();
+		void Load();
 		void SetMousePosition(int &x, int &y);
 };
