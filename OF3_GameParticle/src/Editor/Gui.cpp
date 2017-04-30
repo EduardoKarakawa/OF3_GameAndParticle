@@ -48,16 +48,19 @@ void Gui::Init() {
 	gui.add(color.setup					("Color: ", ofColor(255, 159, 17), ofColor(0, 0), ofColor(255, 255)));
 
 	// Botao de save
-	gui.add(saveButton.setup			("Salve", false, 100, 50));
+	m_saveButton = MyButton("Save Particle", false, 0, ofGetHeight() - 50, 200, 50);
+	m_saveButton.SetColor(ofColor(120, 120, 120), ofColor(80, 80, 80));
+
 
 	sprite = "/sprites/particula.png";
+
+
 }
 
 
 void Gui::Update(ParticleEmission &emissor) {
 
-
-
+	
 	ChangeDirectionAndPosition();
 
 	emissor.SetOrigin(worldPos);
@@ -69,14 +72,11 @@ void Gui::Update(ParticleEmission &emissor) {
 	emissor.SetSprite(sprite);
 	emissor.SetSizeParticle(radius);
 	emissor.SetColor(color);
-
-	if (saveButton) {
-		saveButton = false;
-	}
+	m_saveButton.Update();
 }
 
 void Gui::Draw() {
-
+	m_saveButton.Draw();
 	if (!buttonHide) {
 		gui.draw();
 	}
@@ -93,11 +93,9 @@ void Gui::Hide() {
 	buttonHide = !buttonHide;
 }
 
-
 void Gui::SetMousePosition(int x, int y) {
 	mousePositon.set(x, y);
 }
-
 
 void Gui::ChangeDirectionAndPosition()
 {

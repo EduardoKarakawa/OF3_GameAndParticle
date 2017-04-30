@@ -3,10 +3,11 @@
 
 ParticleEditor::ParticleEditor()
 {
-	m_guiEditor.Init();
+	//m_guiEditor.Init();
 }
 
 void ParticleEditor::Setup() {
+	m_guiEditor.Init();
 	LoadParticles();
 	m_particlesList = ParticleEmission(	ofVec2f(ofGetWidth() / 2.0f, ofGetHeight() / 2.0f), 
 							ofVec2f(ofGetWidth() / 2.0f, ofGetHeight() / 2.0f - 50),
@@ -19,6 +20,10 @@ void ParticleEditor::Update(float &deltaTime) {
 	m_guiEditor.Update(m_particlesList);
 	m_particlesList.Update(deltaTime);
 
+	if (m_guiEditor.m_saveButton.IsPressed()) {
+		Save();
+		m_guiEditor.m_saveButton.SetValue(false);
+	}
 }
 
 void ParticleEditor::Draw() {

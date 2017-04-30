@@ -5,6 +5,7 @@ ParticleEmission::ParticleEmission(){}
 ParticleEmission::~ParticleEmission(){}
 ParticleEmission::ParticleEmission(std::string tag, ofVec2f * fatherPosition) {
 	m_fatherPosition = fatherPosition;
+	m_fatherTag = tag;
 	m_spriteLocal = "/sprites/particula.png";
 	m_sprite.loadImage(m_spriteLocal);
 	m_sprite.resize(10, 10);
@@ -29,6 +30,7 @@ void ParticleEmission::SetColor(ofColor color)				{ m_color = color; }
 void ParticleEmission::SetSizeParticle(float radius)		{ m_radius = radius; }
 
 
+
 //criei metodos getters pra poder pegar os valores e salvar
 
 const ofVec2f ParticleEmission::GetOrigin() const { return m_positionOrigin; }
@@ -40,7 +42,7 @@ const string ParticleEmission::GetSprite() const { return m_spriteLocal; }
 const float ParticleEmission::GetSpawnTime() const { return m_timeSpawnParticle; }
 const ofColor ParticleEmission::GetColor() const { return m_color; }
 const float ParticleEmission::GetSizeParticle() const { return m_radius; }
-
+const std::string ParticleEmission::GetFatherTag() const { return m_fatherTag; }
 
 
 ParticleEmission::ParticleEmission(ofVec2f origin, ofVec2f direction, float openAngle, float speed, float lifeTime, float timeSpawn, string sprite, float size)

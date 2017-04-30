@@ -5,6 +5,7 @@
 #include "ofxLabel.h"
 #include "ParticleEmission.h"
 #include "of3dUtils.h"
+#include "../KenjiGUI/MyButton.h"
 
 
 class Gui {
@@ -20,6 +21,8 @@ class Gui {
 		ofxPanel gui;
 		float buttonHide;
 		ofVec2f mousePositon, antPosition;
+	public: 
+		MyButton m_saveButton;
 
 	public:
 		void Init();
