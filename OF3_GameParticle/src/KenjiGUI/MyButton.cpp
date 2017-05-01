@@ -3,14 +3,14 @@
 
 // Geters para pegar informacoes do botao
 const bool & MyButton::IsPressed()		const { return m_pressed; }
-const std::string & MyButton::GetName() const { return m_name; }
+const std::string & MyButton::GetText() const { return m_text; }
 const ofVec2f & MyButton::GetPosition() const { return m_position; }
 
 // Seters para alterar algum parametro do botao
 void MyButton::SetPosition(ofVec2f &position)		{ m_position.set(position); }
 void MyButton::SetPosition(int x, int y)			{ m_position.set(x, y); }
 void MyButton::SetValue(bool newValue)				{ m_pressed = newValue; }
-void MyButton::SetName(std::string &name)			{ m_name = name; }
+void MyButton::SetText(std::string text)			{ m_text = text; }
 
 void MyButton::SetColorDefault(ofColor &color)				{ m_colorDefault.set(color); }
 void MyButton::SetColorDefault(int r, int g, int b, int a)	{ m_colorDefault.set(r, g, b, a); }
@@ -89,24 +89,24 @@ MyButton::MyButton()
 
 
 // Construtor para o botao
-MyButton::MyButton(std::string name, bool value, ofVec2f &position, int width, int heigth) {
+MyButton::MyButton(std::string text, bool value, ofVec2f &position, int width, int heigth) {
 	m_pressed = value;
 	m_position.set(position);
 	m_width = width;
 	m_height = heigth;
-	m_name = name;
+	m_text = text;
 	m_font.load("C:/Windows/Fonts/tahoma.ttf", 20);
 	m_mousePressed = false;
 }
 
 
 // Construtor para o botao
-MyButton::MyButton(std::string name, bool value, int x, int y, int width, int heigth) {
+MyButton::MyButton(std::string text, bool value, int x, int y, int width, int heigth) {
 	m_pressed = value;
 	m_position.set(x, y);
 	m_width = width;
 	m_height = heigth;
-	m_name = name;
+	m_text = text;
 	m_font.load("C:/Windows/Fonts/tahoma.ttf", 20);
 	m_mousePressed = false;
 }
@@ -155,9 +155,9 @@ void MyButton::DrawSprite() {
 	}
 
 	ofSetColor(m_fontColor);
-	m_font.drawString(	m_name,
-						m_position.x + m_width / 2.0f - m_font.stringWidth(m_name) / 2.0f,
-						m_position.y + m_height / 2.0f + m_font.stringHeight(m_name) / 2.0f);
+	m_font.drawString(	m_text,
+						m_position.x + m_width / 2.0f - m_font.stringWidth(m_text) / 2.0f,
+						m_position.y + m_height / 2.0f + m_font.stringHeight(m_text) / 2.0f);
 }
 
 
@@ -168,9 +168,9 @@ void MyButton::DrawSquare() {
 	ofDrawRectangle(m_position, m_width, m_height);
 
 	ofSetColor(m_fontColor);
-	m_font.drawString(	m_name, 
-						m_position.x + m_width / 2.0f - m_font.stringWidth(m_name) / 2.0f, 
-						m_position.y + m_height / 2.0f + m_font.stringHeight(m_name) / 2.0f);
+	m_font.drawString(	m_text, 
+						m_position.x + m_width / 2.0f - m_font.stringWidth(m_text) / 2.0f, 
+						m_position.y + m_height / 2.0f + m_font.stringHeight(m_text) / 2.0f);
 
 }
 

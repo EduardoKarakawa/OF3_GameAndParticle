@@ -11,6 +11,7 @@ void ParticleEmission::SetSprite(string sprite)				{ m_sprite.loadImage(sprite);
 void ParticleEmission::SetSpawnTime(float timeSpawn)		{ m_timeSpawnParticle = timeSpawn; }
 void ParticleEmission::SetColor(ofColor color)				{ m_color = color; }
 void ParticleEmission::SetSizeParticle(float radius)		{ m_radius = radius; }
+void ParticleEmission::SetParticleProcess(bool process)		{ m_enableParticles = process;}
 
 
 
@@ -94,9 +95,9 @@ ParticleEmission::ParticleEmission(ofVec2f origin, ofVec2f direction, float open
 
 void ParticleEmission::Update(float deltaTime)
 {
-	m_sprite.resize(m_radius, m_radius);
 
 	if (m_enableParticles) {
+		m_sprite.resize(m_radius, m_radius);
 		// Atualiza a lista de particulas do sistema de particula, chama o DestroyParticle se a particula atingiu o tempo maximo de vida
 		// cria uma nova particula caso o tempo ultrapasse o tempo de spawn
 		m_spawnTimeCont += ofGetLastFrameTime();

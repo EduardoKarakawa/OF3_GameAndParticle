@@ -23,7 +23,7 @@ void Storage::reset(Gui &guiParticle, ParticleEmission & particleList) {
 //método salvar recebe como parâmetro por referência uma partícula criada
 //string referente ao nome do documento de texto (xml)
 void Storage::save(const ParticleEmission &particle) {
-	//
+	
 	ofFileDialogResult file = ofSystemSaveDialog("default.xml", "Save");
 	if (file.bSuccess) {
 		string path = file.getPath() + ".xml";

@@ -22,7 +22,8 @@ class Gui {
 		ofVec2f mousePositon, antPosition;
 		bool worldPosToMouse, directionPosToMouse; //check button 
 	public: 
-		MyButton m_saveButton, m_newButton, m_loadButton;
+		MyButton m_saveButton, m_resetButton, m_loadButton;
+		MyButton m_playButton;
 
 	public:
 		void Init();
