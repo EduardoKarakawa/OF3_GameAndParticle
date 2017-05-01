@@ -46,4 +46,5 @@ class Gui {
 
 		void MoveOriginParticle();
 		void MoveDirectionParticle();
+		bool ParameterHasChanged(const ParticleEmission &emissor);
 };

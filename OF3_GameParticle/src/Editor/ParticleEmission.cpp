@@ -45,6 +45,7 @@ ParticleEmission::ParticleEmission(std::string tag, ofVec2f * fatherPosition) {
 	m_color = ofColor(255, 255, 255);
 	m_particles.clear();
 	m_particlesDead.clear();
+	m_timeCountSweep = 0;
 }
 
 
@@ -65,6 +66,7 @@ ParticleEmission::ParticleEmission(){
 	m_color = ofColor(255, 255, 255);
 	m_particles.clear();
 	m_particlesDead.clear();
+	m_timeCountSweep = 0;
 }
 
 
@@ -86,6 +88,7 @@ ParticleEmission::ParticleEmission(ofVec2f origin, ofVec2f direction, float open
 	m_color = ofColor(255, 255, 255);
 	m_particles.clear();
 	m_particlesDead.clear();
+	m_timeCountSweep = 0;
 }
 
 
@@ -97,7 +100,7 @@ void ParticleEmission::Update(float deltaTime)
 		// Atualiza a lista de particulas do sistema de particula, chama o DestroyParticle se a particula atingiu o tempo maximo de vida
 		// cria uma nova particula caso o tempo ultrapasse o tempo de spawn
 		m_spawnTimeCont += ofGetLastFrameTime();
-
+		m_timeCountSweep += ofGetLastFrameTime();
 
 		// Percorre a lista de particulas atualizando a posicao das que estao vivas
 		if (m_particles.size() > 0) {
@@ -120,7 +123,7 @@ void ParticleEmission::Update(float deltaTime)
 				}
 			}
 		}
-
+		ListSweeping(false);
 		CreateParticle();
 	}
 
@@ -172,6 +175,22 @@ void ParticleEmission::CreateParticle()
 				m_spawnTimeCont -= m_timeSpawnParticle;
 			}
 		}
+	}
+
+}
+
+
+void ParticleEmission::ListSweeping(bool speegin) {
+	// A cada x segundos eh feito uma limpeza nos vectors de particula
+	// Essa funcao tbm sera usada na GUI.cpp para limpar
+	if (m_timeCountSweep > 30.0f || speegin) {
+		for (int i = 0; i < m_particles.size(); i++) {
+			if (!m_particles[i].IsLife()) {
+				m_particles.erase(m_particles.begin() + i);
+			}
+		}
+		m_particlesDead.clear();
+		m_timeCountSweep = 0;
 	}
 
 }

@@ -67,16 +67,18 @@ void Gui::Init() {
 
 void Gui::Update(ParticleEmission &emissor) {
 	ChangeDirectionAndPosition();
-
-	emissor.SetOrigin(worldPos);
-	emissor.SetDirection(direction);
-	emissor.SetOpenAngle(angle);
-	emissor.SetSpeed(velocity);
-	emissor.SetLifeTime(lifeTime);
-	emissor.SetSpawnTime(timeSpawn);
-	emissor.SetSprite(sprite);
-	emissor.SetSizeParticle(radius);
-	emissor.SetColor(color);
+	if (ParameterHasChanged(emissor)) {
+		emissor.SetOrigin(worldPos);
+		emissor.SetDirection(direction);
+		emissor.SetOpenAngle(angle);
+		emissor.SetSpeed(velocity);
+		emissor.SetLifeTime(lifeTime);
+		emissor.SetSpawnTime(timeSpawn);
+		emissor.SetSprite(sprite);
+		emissor.SetSizeParticle(radius);
+		emissor.SetColor(color);
+		emissor.ListSweeping(true);
+	}
 
 	m_saveButton.SetPosition(0, ofGetHeight() - 50);
 	m_loadButton.SetPosition(103, ofGetHeight() - 50);
@@ -156,4 +158,20 @@ void Gui::DrawDirectionAndCone(ofVec2f posit, ofVec2f direct)
 	openAngle.setStrokeWidth(2);
 	openAngle.rotate((atan2f(tmp.y, tmp.x) * 180.0f / PI) - angle / 2.0f, start);
 	openAngle.draw();
+}
+
+
+bool Gui::ParameterHasChanged(const ParticleEmission &emissor) {
+	// Verifica se os parametros do emissor e do gui estao diferentes
+	return (
+		emissor.GetOrigin()			!= worldPos		||
+		emissor.GetDirection()		!= direction	||
+		emissor.GetOpenAngle()		!= angle		||
+		emissor.GetSpeed()			!= velocity		||
+		emissor.GetLifeTime()		!= lifeTime		||
+		emissor.GetSpawnTime()		!= timeSpawn	||
+		emissor.GetSprite()			!= sprite		||
+		emissor.GetSizeParticle()	!= radius		||
+		emissor.GetColor()			!= color
+		);
 }

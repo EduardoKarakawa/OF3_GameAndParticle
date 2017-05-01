@@ -23,6 +23,7 @@ class ParticleEmission
 		float m_spawnTimeCont;
 		float m_radius;
 		bool m_enableParticles;
+		float m_timeCountSweep;
 		
 	public:
 		std::vector<Particle> m_particles; 
@@ -63,5 +64,7 @@ class ParticleEmission
 		const float GetSizeParticle() const;
 		const std::string GetFatherTag() const;
 
+
+		void ListSweeping(bool speegin);
 };
 
