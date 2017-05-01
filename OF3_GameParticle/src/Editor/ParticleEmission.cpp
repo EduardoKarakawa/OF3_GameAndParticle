@@ -120,8 +120,6 @@ void ParticleEmission::Update(float deltaTime)
 
 void ParticleEmission::Draw()
 {
-	ofDrawBitmapString("Tamanho do Vector de Particle: " + ofToString(m_particles.size()), 30, 500);
-	ofDrawBitmapString("Particulas Mortas para Resetar: " + ofToString(m_particlesDead.size()), 30, 530);
 	if (m_enableParticles) {
 		if (m_particles.size() > 0) {
 			// Percorre a lista de particular desenhando elas
