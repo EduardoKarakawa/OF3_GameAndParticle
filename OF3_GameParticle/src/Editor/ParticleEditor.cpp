@@ -28,7 +28,7 @@ void ParticleEditor::Update(float &deltaTime) {
 		m_guiEditor.m_loadButton.SetValue(false);
 	}
 	else if (m_guiEditor.m_newButton.IsPressed()) {
-		New();
+		Reset();
 		m_particlesList.m_particles.clear();
 		m_guiEditor.m_loadButton.SetValue(false);
 	}
@@ -61,11 +61,11 @@ void ParticleEditor::SetMousePosition(int &x, int &y) {
 	m_guiEditor.SetMousePosition(x, y);
 }
 
-void ParticleEditor::New() {
+void ParticleEditor::Reset() {
 
 	//chama metodo save da classe Storage, parâmetros: ParticleEmission e string
 
-	STORAGE.newConf(m_guiEditor);
+	STORAGE.reset(m_guiEditor, m_particlesList);
 }
 
 void ParticleEditor::Save() {

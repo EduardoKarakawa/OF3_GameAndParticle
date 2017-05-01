@@ -1,24 +1,7 @@
 #include "ParticleEmission.h"
 
 
-ParticleEmission::ParticleEmission(){}
 ParticleEmission::~ParticleEmission(){}
-ParticleEmission::ParticleEmission(std::string tag, ofVec2f * fatherPosition) {
-	m_fatherPosition = fatherPosition;
-	m_fatherTag = tag;
-	m_spriteLocal = "/sprites/particula.png";
-	m_sprite.loadImage(m_spriteLocal);
-	m_sprite.resize(10, 10);
-	m_positionOrigin = ofVec3f(100,100);
-	SetDirection(ofVec3f(-1,1));
-	m_openAngle = 75;
-	m_maxLifeTime = 5;
-	m_velocity = 50;
-	m_timeSpawnParticle = 0.1;
-	m_spawnTimeCont = 0;
-	m_enableParticles = true;
-	m_color = ofColor(255, 255, 255);
-}
 void ParticleEmission::SetOrigin(ofVec2f origin)			{ m_positionOrigin = origin; }
 void ParticleEmission::SetDirection(ofVec2f direction)		{ m_direction = direction; }
 void ParticleEmission::SetOpenAngle(float openAngle)		{ m_openAngle = openAngle; }
@@ -45,10 +28,49 @@ const float ParticleEmission::GetSizeParticle() const { return m_radius; }
 const std::string ParticleEmission::GetFatherTag() const { return m_fatherTag; }
 
 
+ParticleEmission::ParticleEmission(std::string tag, ofVec2f * fatherPosition) {
+	m_fatherPosition = fatherPosition;
+	m_fatherTag = tag;
+	m_spriteLocal = "/sprites/particula.png";
+	m_sprite.loadImage(m_spriteLocal);
+	m_sprite.resize(10, 10);
+	m_positionOrigin = ofVec3f(100,100);
+	SetDirection(ofVec3f(-1,1));
+	m_openAngle = 75;
+	m_maxLifeTime = 5;
+	m_velocity = 50;
+	m_timeSpawnParticle = 0.1;
+	m_spawnTimeCont = 0;
+	m_enableParticles = true;
+	m_color = ofColor(255, 255, 255);
+	m_particles.clear();
+	m_particlesDead.clear();
+}
+
+
+ParticleEmission::ParticleEmission(){
+	// Inicia os parametros da sistema de particula novo
+	m_spriteLocal = "/sprites/particula.png";
+	m_sprite.loadImage(m_spriteLocal);
+	m_radius = 10;
+	m_sprite.resize(m_radius, m_radius);
+	m_positionOrigin.set(ofGetWidth() / 2.0f, ofGetHeight() / 2.0f);
+	m_direction.set(m_positionOrigin.x - 1, m_positionOrigin.y);
+	m_openAngle = 45;
+	m_maxLifeTime = 10;
+	m_velocity = 10;
+	m_timeSpawnParticle = 0.2f;
+	m_spawnTimeCont = 0;
+	m_enableParticles = true;
+	m_color = ofColor(255, 255, 255);
+	m_particles.clear();
+	m_particlesDead.clear();
+}
+
+
 ParticleEmission::ParticleEmission(ofVec2f origin, ofVec2f direction, float openAngle, float speed, float lifeTime, float timeSpawn, string sprite, float size)
 {
 	// Inicia os parametros da sistema de particula novo
-	m_spriteLocal = sprite;
 	m_spriteLocal = sprite;
 	m_sprite.loadImage(m_spriteLocal);
 	m_radius = size;
@@ -62,6 +84,8 @@ ParticleEmission::ParticleEmission(ofVec2f origin, ofVec2f direction, float open
 	m_spawnTimeCont = 0;
 	m_enableParticles = true;
 	m_color = ofColor(255, 255, 255);
+	m_particles.clear();
+	m_particlesDead.clear();
 }
 
 
@@ -69,36 +93,44 @@ void ParticleEmission::Update(float deltaTime)
 {
 	m_sprite.resize(m_radius, m_radius);
 
-	//if (m_enableParticles) {
+	if (m_enableParticles) {
 		// Atualiza a lista de particulas do sistema de particula, chama o DestroyParticle se a particula atingiu o tempo maximo de vida
 		// cria uma nova particula caso o tempo ultrapasse o tempo de spawn
 		m_spawnTimeCont += ofGetLastFrameTime();
 
-	//}
 
-	if (m_particles.size() > 0) {
-		// Verifica as particulas que ultrapassaram o tempo maximo de vida e exclui eles do vetor
-		for (int i = 0; i < m_particles.size(); i++) {
-			// Atualiza a particula a particula que estiver viva
-			if (m_particles[i].IsLife()) {
-				m_particles[i].Update(m_positionOrigin, deltaTime);
-			}		
-			else {
-				m_particles[i].Setup(m_positionOrigin, m_direction, m_openAngle, m_velocity, m_maxLifeTime, m_color.a);
-				m_spawnTimeCont -= m_timeSpawnParticle;
+		// Percorre a lista de particulas atualizando a posicao das que estao vivas
+		if (m_particles.size() > 0) {
+
+			// Verifica as particulas que ultrapassaram o tempo maximo de vida e exclui eles do vetor
+			for (int i = 0; i < m_particles.size(); i++) {
+
+				// Atualiza a particula a particula que estiver viva
+				if (m_particles[i].IsLife()) {
+					m_particles[i].Update(m_positionOrigin, deltaTime);
+				}		
+				else {
+					bool adicinar = true;
+					for (int j : m_particlesDead) {
+						if (j == i) {
+							adicinar = false;
+						}
+					}
+					if(adicinar) m_particlesDead.push_back(i);
+				}
 			}
 		}
+
+		CreateParticle();
 	}
-
-	CreateParticle();
-
 
 }
 
 
 void ParticleEmission::Draw()
 {
-	ofDrawBitmapString(ofToString(m_particles.size()), 30, 500);
+	ofDrawBitmapString("Tamanho do Vector de Particle: " + ofToString(m_particles.size()), 30, 500);
+	ofDrawBitmapString("Particulas Mortas para Resetar: " + ofToString(m_particlesDead.size()), 30, 530);
 	if (m_particles.size() > 0) {
 		// Percorre a lista de particular desenhando elas
 		std::vector<Particle>::iterator aux;	// Iterator para percorrer a lista de particles
@@ -115,12 +147,30 @@ void ParticleEmission::CreateParticle()
 	// Cria uma particula se ja tiver passado o tempo necessario para criar uma
 	if (m_spawnTimeCont > m_timeSpawnParticle) {
 		int tmp = m_spawnTimeCont / m_timeSpawnParticle;
-		for (int i = 0; i < tmp; i++) {
-			m_particles.push_back(Particle());
-			// Inicializa a nova particula criada
-			(m_particles.end() - 1)->Setup(m_positionOrigin, m_direction, m_openAngle, m_velocity, m_maxLifeTime, m_color.a);
 
-			m_spawnTimeCont -= m_timeSpawnParticle;
+		if (m_particlesDead.size() > 0) {
+			//std::cout << m_particlesDead.size()  << "  "  << tmp << std::endl;
+			for (int i = 0; i < m_particlesDead.size(); i++) {
+				/*std::cout << "Resetou uma particula" << std::endl;*/
+				// Inicializa a particula que esta morta
+				if (tmp > 0) {
+					m_particles[m_particlesDead[i]] = Particle(m_positionOrigin, m_direction, m_openAngle, m_velocity, m_maxLifeTime, m_color.a);
+					m_particlesDead.erase(m_particlesDead.begin() + i);
+					tmp--;
+					m_spawnTimeCont -= m_timeSpawnParticle;
+				}
+				else {
+					break;
+				}
+			}
+		}
+		else{
+			 //Se nao particulas mortas, entao tem que ser criada uma
+			for (int i = 0; i < tmp; i++) {
+				//std::cout << "Criou uma particula nova" << std::endl;
+				m_particles.push_back(Particle(m_positionOrigin, m_direction, m_openAngle, m_velocity, m_maxLifeTime, m_color.a));
+				m_spawnTimeCont -= m_timeSpawnParticle;
+			}
 		}
 	}
 

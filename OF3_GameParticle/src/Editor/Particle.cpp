@@ -11,7 +11,7 @@ Particle::Particle()
 }
 Particle::~Particle(){}
 
-void Particle::Setup(ofVec2f origin, ofVec2f direction, float openAngle, float speed, float lifeTime, float startOpacity)
+Particle::Particle(ofVec2f origin, ofVec2f direction, float openAngle, float speed, float lifeTime, float startOpacity)
 {
 	// Inicia os parametros da particula, criar uma direcao aleatoria para a particula de acordo com a direcao e angulo de abertura passada.
 	m_position = origin;

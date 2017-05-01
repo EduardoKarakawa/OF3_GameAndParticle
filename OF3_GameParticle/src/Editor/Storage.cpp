@@ -14,8 +14,10 @@ Storage& Storage::instance() {
 }
 
 
-void Storage::newConf(Gui &guiParticle) {
+void Storage::reset(Gui &guiParticle, ParticleEmission & particleList) {
 	guiParticle.Init();
+	particleList = ParticleEmission();
+
 }
 
 //método salvar recebe como parâmetro por referência uma partícula criada

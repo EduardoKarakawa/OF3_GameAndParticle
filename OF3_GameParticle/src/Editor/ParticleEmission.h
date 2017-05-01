@@ -26,7 +26,7 @@ class ParticleEmission
 		
 	public:
 		std::vector<Particle> m_particles; 
-
+		std::vector<int> m_particlesDead;
 
 
 	public:
