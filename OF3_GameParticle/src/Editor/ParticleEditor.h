@@ -9,9 +9,11 @@
 
 class ParticleEditor{
 	private:
-		Gui m_guiEditor;
 		ParticleEmission m_particlesList;
 		
+	public:
+		Gui m_guiEditor;
+
 
 	public:
 		ParticleEditor();

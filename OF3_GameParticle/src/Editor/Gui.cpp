@@ -9,6 +9,8 @@ void Gui::SetSizeParticle(float radius) { this->radius = radius; }
 void Gui::SetLifeTime(float lifeTime) { this->lifeTime = lifeTime; }
 void Gui::SetSpawnTime(float timeSpawn) { this->timeSpawn = timeSpawn; }
 void Gui::SetColor(ofColor color) { this->color = color; }
+void Gui::MoveOriginParticle() { worldPosToMouse = !worldPosToMouse; }
+void Gui::MoveDirectionParticle() { directionPosToMouse = !directionPosToMouse; }
 
 
 void Gui::Init() {
@@ -31,21 +33,22 @@ void Gui::Init() {
 	// Raio para definir o tamanho da particula
 	gui.add(radius.setup				("Radius Particle: ", 30, 10, 300));
 
-	// Habilita para mover para o mouse
-	gui.add(worldPosToMouse.setup		("Origin to Mouse", false));
 
 	//Slider para setar a Posicao de Origem
 	gui.add(worldPos.setup				("Position Emissor: ",	ofVec2f(ofGetWidth()*.5, ofGetHeight()*.5), 
 																ofVec2f(0, 0), ofVec2f(ofGetWidth(), ofGetHeight())));
-
-	// Habilita para mover para o mouse
-	gui.add(directionPosToMouse.setup	("Direction to Mouse", false));
 
 	//Slider para setar a Direcao
 	gui.add(direction.setup				("Direction: ",	ofVec2f(ofGetWidth()*.4, ofGetHeight()*.5),
 														ofVec2f(0, 0), ofVec2f(ofGetWidth(), ofGetHeight()))); 
 	// Muda a cor das particulas
 	gui.add(color.setup					("Color: ", ofColor(255, 159, 17), ofColor(0, 0), ofColor(255, 255)));
+
+
+	// Define se esta movimentando a origem ou a direcao para falso
+	worldPosToMouse = false;
+	directionPosToMouse = false;
+
 
 	// Botao de save
 	m_saveButton = MyButton("Save", false, 0, ofGetHeight() - 50, 100, 50);
@@ -61,7 +64,6 @@ void Gui::Init() {
 
 
 }
-
 
 void Gui::Update(ParticleEmission &emissor) {
 	ChangeDirectionAndPosition();
@@ -99,7 +101,6 @@ void Gui::Draw() {
 
 }
 
-
 void Gui::Hide() {
 	buttonHide = !buttonHide;
 }
@@ -135,7 +136,6 @@ void Gui::ChangeDirectionAndPosition()
 	}
 
 }
-
 
 void Gui::DrawDirectionAndCone(ofVec2f posit, ofVec2f direct)
 {	

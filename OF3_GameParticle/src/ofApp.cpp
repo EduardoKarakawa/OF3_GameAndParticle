@@ -141,10 +141,11 @@ void ofApp::keyPressed(int key) {
 		break;
 
 	case 2://EDITOR
-		if (key == 'l' || key == 'L') {
-			//PROVISÓRIO: save tecla L
-			partEditor.Load();
-			cout << "1 apertou L" << endl;
+		if (key == 'm' || key == 'M') {
+			partEditor.m_guiEditor.MoveOriginParticle();
+		}
+		if (key == 'd' || key == 'D') {
+			partEditor.m_guiEditor.MoveDirectionParticle();
 		}
 		break;
 
