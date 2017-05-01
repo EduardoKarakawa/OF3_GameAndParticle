@@ -7,6 +7,7 @@
 #include "ofFileUtils.h"
 
 
+
 class ParticleEditor{
 	private:
 		ParticleEmission m_particlesList;

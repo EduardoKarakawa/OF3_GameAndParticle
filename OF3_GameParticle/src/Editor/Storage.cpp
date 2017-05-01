@@ -23,7 +23,7 @@ void Storage::reset(Gui &guiParticle, ParticleEmission & particleList) {
 //método salvar recebe como parâmetro por referência uma partícula criada
 //string referente ao nome do documento de texto (xml)
 void Storage::save(const ParticleEmission &particle) {
-	
+	std::string fatherTag = ofSystemTextBoxDialog("Digite a Tag do objeto Pai:", "");
 	ofFileDialogResult file = ofSystemSaveDialog("default.xml", "Save");
 	if (file.bSuccess) {
 		string path = file.getPath() + ".xml";
@@ -34,7 +34,7 @@ void Storage::save(const ParticleEmission &particle) {
 		//entra na tag EMITTER
 		xml.setTo("EMITTER");
 		//cria "subtags" dentro da tag EMITTER com todos os parâmetros necessários
-
+		xml.addValue("Father", fatherTag);
 		xml.addValue("Sprite", particle.GetSprite());
 		xml.addValue("Size", particle.GetSizeParticle());
 		xml.addValue("Position", particle.GetOrigin());
@@ -118,4 +118,9 @@ void Storage::load(Gui &guiParticle) {
 	}
 
 	
+}
+
+
+void Storage::load(ParticleEmission &Particle, ofXml &file) {
+
 }

@@ -16,7 +16,9 @@ Enemy::Enemy(ofVec2f playerPos)
 	} while (pos == ofGetWidth());
 	m_position.set(pos, 0);
 	m_direction = (playerPos - m_position).normalize();
+	int i = rand() % 4; 
 
+	m_particle.SearchParticleConfig("Enemy" + ofToString(i), &m_position);
 }
 
 void Enemy::Update(ofVec2f playerPos, float &deltaTime)
@@ -27,10 +29,12 @@ void Enemy::Update(ofVec2f playerPos, float &deltaTime)
 	// Atualiza a posição do inimigo conforme a posição do player, para persegui-lo
 	m_direction = (playerPos - m_position).normalize();
 	m_position += m_direction*tmpVelocity;
+	m_particle.Update(deltaTime);
 }
 
 void Enemy::Draw()
 {
+	m_particle.Draw();
 	if (m_position.x <= ofGetWidth() && m_position.x >= 0 && m_position.y <= ofGetHeight() && m_position.y >= 0) {
 		ofSetColor(m_r, m_g, m_b);
 		ofDrawCircle(m_position.x, m_position.y, m_radius);

@@ -4,16 +4,25 @@
 #include "ofVec2f.h"
 #include "ofAppRunner.h"
 #include "Particle.h"
+#include "ofXml.h"
 #include <vector>
+
+enum Positions {
+	Position,
+	PositionOrigin,
+	PositionFather,
+	PositionPrevious
+};
+
 
 class ParticleEmission
 {
 	private:
-		ofVec2f * m_fatherPosition;
+		bool m_isLoad;
 		std::string m_spriteLocal;
 		std::string m_fatherTag;
 		ofImage m_sprite;
-		ofVec2f m_positionOrigin;
+		std::vector<ofVec2f*> m_position;
 		ofVec2f m_direction;
 		ofColor m_color;
 		float m_openAngle;
@@ -30,9 +39,11 @@ class ParticleEmission
 		std::vector<int> m_particlesDead;
 
 
+	private:
+		ParticleEmission(std::string tag, ofVec2f * fatherPosition);
+
 	public:
 		ParticleEmission();
-		ParticleEmission(std::string tag, ofVec2f * fatherPosition);
 		ParticleEmission(ofVec2f origin, ofVec2f direction, float openAngle, float speed, float lifeTime, float timeSpawn, string sprite, float size);
 		~ParticleEmission();
 
@@ -40,7 +51,7 @@ class ParticleEmission
 		void CreateParticle();
 		void Draw();
 
-
+		std::string enable();
 		void SetOrigin(ofVec2f origin);
 		void SetDirection(ofVec2f direction);
 		void SetOpenAngle(float openAngle);
@@ -51,8 +62,9 @@ class ParticleEmission
 		void SetSpawnTime(float timeSpawn);
 		void SetColor(ofColor color);
 		void SetParticleProcess(bool process);
+		void SetFatherTag(std::string fatherTag);
 
-		//ParticleEmission * SearchConfig(std::string tag, ofVec2f * fatherPosition);
+		void SearchParticleConfig(std::string tag, ofVec2f *fatherPosition);
 
 		const ofVec2f GetOrigin() const;
 		const ofVec2f GetDirection() const;

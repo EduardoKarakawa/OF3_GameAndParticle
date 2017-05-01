@@ -15,7 +15,6 @@ void ParticleEditor::Setup() {
 							"/sprites/particula.png", 30);
 }
 
-
 void ParticleEditor::Update(float &deltaTime) {
 	// Verifica se o botao Save foi clicado e chama a funcao
 	if (m_guiEditor.m_saveButton.IsPressed()) {
@@ -59,7 +58,6 @@ void ParticleEditor::LoadParticles()
 		directory.listDir();
 	}
 }
-
 
 void ParticleEditor::SetMousePosition(int &x, int &y) {
 	m_guiEditor.SetMousePosition(x, y);

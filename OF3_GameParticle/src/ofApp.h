@@ -8,17 +8,16 @@
 #include "Editor/ParticleEditor.h" 
 
 class ofApp : public ofBaseApp{
-private:
-	Player *gamePlayer;
-	GameStats *gameStats;
-	GameTime *gameTime;
-	EnemyControl *enemys;
-	int startTime; //Para comecer a contar o tempo do zero
-	ParticleEditor partEditor;
-	Menu menu;	// Class que gerencia o menu
+	private:
+		Player *gamePlayer;
+		GameStats *gameStats;
+		GameTime *gameTime;
+		EnemyControl *enemys;
+		int startTime;				//Para comecer a contar o tempo do zero
+		ParticleEditor partEditor;
+		Menu menu;					// Class que gerencia o menu
 
 	public:
-		//Gui* gui;
 
 		void setup();
 		void update();

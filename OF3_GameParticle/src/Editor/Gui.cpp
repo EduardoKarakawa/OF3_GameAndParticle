@@ -133,7 +133,7 @@ void Gui::ChangeDirectionAndPosition()
 		}
 	}
 
-	// Altera somente a Origem
+	// Altera a Origem e a direcao
 	if (worldPosToMouse) {
 		antPosition = worldPos;
 		worldPos = mousePositon;

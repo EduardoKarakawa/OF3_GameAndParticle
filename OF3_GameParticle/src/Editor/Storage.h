@@ -20,5 +20,6 @@ class Storage {
 		void reset(Gui &guiParticle, ParticleEmission & particleList);
 		void save(const ParticleEmission &particle);
 		void load(Gui &guiParticle);
+		void load(ParticleEmission &Particle, ofXml &file);
 
 };

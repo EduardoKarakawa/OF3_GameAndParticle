@@ -3,7 +3,6 @@
 // Construtor do player
 Player::Player(std::string tag, int width, int height, float speed)
 {
-	m_tag = tag;
 	m_radius = 25;
 	m_keyArrow = false;
 	m_keyRight = false;
@@ -23,6 +22,7 @@ Player::Player(std::string tag, int width, int height, float speed)
 	
 	// Cooldown para o player poder atirar
 	m_cooldownShooting = 0;
+	m_particle.SearchParticleConfig(tag, &m_position);
 }
 
 
@@ -34,6 +34,7 @@ void Player::AddCounter()
 
 void Player::Update(float &deltaTime)
 {
+
 	// Atualiza a contagem de tempo para o cooldown de tiro
 	if (m_cooldownShooting <= MAX_TIME_SHOOTING) {
 		m_cooldownShooting += deltaTime;
@@ -83,13 +84,16 @@ void Player::Update(float &deltaTime)
 
 	}
 
+	m_particle.Update(deltaTime);
+
 }
 
 
 // Desenha o Player
 void Player::Draw()
 {
-
+	m_particle.Draw();
+	
 	// Verifica se o player esta dentro da tela e desenha ele
 	if (OnScreen()) 
 	{
@@ -243,4 +247,8 @@ ofVec2f Player::GetBulletPosition(int i) const
 		return bullets.at(i)->GetPosition();
 	else
 		return ofVec2f(0, 0);
+}
+
+
+Player::~Player() {
 }

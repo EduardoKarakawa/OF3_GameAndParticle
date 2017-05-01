@@ -43,7 +43,7 @@ void ofApp::update() {
 
 		// ------------------------------ GAME -------------------------------------------------
 	case 1:
-		ofSetBackgroundColor(255, 255, 255);
+		ofSetBackgroundColor(200, 200, 200);
 		if (startTime == 0)
 		{
 			startTime = 1;
@@ -107,7 +107,9 @@ void ofApp::draw() {
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key) {
-
+	if (key == OF_KEY_F5) {
+		setup();
+	}
 	if (key == OF_KEY_BACKSPACE) {
 		gameStats->changeStats(0);
 	}
