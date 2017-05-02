@@ -9,7 +9,7 @@
 class MyButton
 {
 	private:
-		std::string m_name;
+		std::string m_text;
 		std::vector<ofImage> m_sprite;
 		ofColor m_colorDefault, m_colorPressed;
 		ofVec2f m_position;
@@ -21,12 +21,12 @@ class MyButton
 	
 	public:
 		MyButton();
-		MyButton(std::string name, bool value, ofVec2f &position, int width, int heigth);
-		MyButton(std::string name, bool value, int x, int y, int width, int heigth);
+		MyButton(std::string text, bool value, ofVec2f &position, int width, int heigth);
+		MyButton(std::string text, bool value, int x, int y, int width, int heigth);
 
 
 		~MyButton();
-		void SetName(std::string &name);
+		void SetText(std::string text);
 		void SetPosition(ofVec2f &position);
 		void SetPosition(int x, int y);
 		void SetColor(ofColor &colorDefault, ofColor &colorPressed);
@@ -46,7 +46,7 @@ class MyButton
 
 		const ofVec2f & GetPosition() const;
 		const bool & IsPressed()	  const;
-		const std::string & GetName() const;
+		const std::string & GetText() const;
 		void LoadFont(ofTrueTypeFont &font, ofColor &color);
 		void LoadFont(std::string &font, int size, ofColor &color);
 		void LoadFont(std::string &font, int size, int r, int g, int b, int a);

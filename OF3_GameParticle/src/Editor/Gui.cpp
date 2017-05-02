@@ -9,6 +9,8 @@ void Gui::SetSizeParticle(float radius) { this->radius = radius; }
 void Gui::SetLifeTime(float lifeTime) { this->lifeTime = lifeTime; }
 void Gui::SetSpawnTime(float timeSpawn) { this->timeSpawn = timeSpawn; }
 void Gui::SetColor(ofColor color) { this->color = color; }
+void Gui::MoveOriginParticle() { worldPosToMouse = !worldPosToMouse; }
+void Gui::MoveDirectionParticle() { directionPosToMouse = !directionPosToMouse; }
 
 
 void Gui::Init() {
@@ -31,21 +33,22 @@ void Gui::Init() {
 	// Raio para definir o tamanho da particula
 	gui.add(radius.setup				("Radius Particle: ", 30, 10, 300));
 
-	// Habilita para mover para o mouse
-	gui.add(worldPosToMouse.setup		("Origin to Mouse", false));
 
 	//Slider para setar a Posicao de Origem
 	gui.add(worldPos.setup				("Position Emissor: ",	ofVec2f(ofGetWidth()*.5, ofGetHeight()*.5), 
 																ofVec2f(0, 0), ofVec2f(ofGetWidth(), ofGetHeight())));
-
-	// Habilita para mover para o mouse
-	gui.add(directionPosToMouse.setup	("Direction to Mouse", false));
 
 	//Slider para setar a Direcao
 	gui.add(direction.setup				("Direction: ",	ofVec2f(ofGetWidth()*.4, ofGetHeight()*.5),
 														ofVec2f(0, 0), ofVec2f(ofGetWidth(), ofGetHeight()))); 
 	// Muda a cor das particulas
 	gui.add(color.setup					("Color: ", ofColor(255, 159, 17), ofColor(0, 0), ofColor(255, 255)));
+
+
+	// Define se esta movimentando a origem ou a direcao para falso
+	worldPosToMouse = false;
+	directionPosToMouse = false;
+
 
 	// Botao de save
 	m_saveButton = MyButton("Save", false, 0, ofGetHeight() - 50, 100, 50);
@@ -54,40 +57,48 @@ void Gui::Init() {
 	m_loadButton = MyButton("Load", false, 103, ofGetHeight() - 50, 100, 50);
 	m_loadButton.SetColor(ofColor(120, 120, 120), ofColor(80, 80, 80));
 
-	m_newButton = MyButton("Reset Particle", false, 0, ofGetHeight() - 100, 203, 50);
-	m_newButton.SetColor(ofColor(120, 120, 120), ofColor(80, 80, 80));
+	m_resetButton = MyButton("Reset", false, 0, ofGetHeight() - 103, 203, 50);
+	m_resetButton.SetColor(ofColor(120, 120, 120), ofColor(80, 80, 80));
+
+	m_playButton = MyButton("Play", false, ofGetWidth() / 2.0f, ofGetHeight() - 50, 100, 50);
+	m_playButton.SetColor(ofColor(120, 120, 120), ofColor(80, 80, 80));
 
 	sprite = "/sprites/particula.png";
 
 
 }
 
-
 void Gui::Update(ParticleEmission &emissor) {
 	ChangeDirectionAndPosition();
-
-	emissor.SetOrigin(worldPos);
-	emissor.SetDirection(direction);
-	emissor.SetOpenAngle(angle);
-	emissor.SetSpeed(velocity);
-	emissor.SetLifeTime(lifeTime);
-	emissor.SetSpawnTime(timeSpawn);
-	emissor.SetSprite(sprite);
-	emissor.SetSizeParticle(radius);
-	emissor.SetColor(color);
+	if (ParameterHasChanged(emissor)) {
+		emissor.SetOrigin(worldPos);
+		emissor.SetDirection(direction);
+		emissor.SetOpenAngle(angle);
+		emissor.SetSpeed(velocity);
+		emissor.SetLifeTime(lifeTime);
+		emissor.SetSpawnTime(timeSpawn);
+		emissor.SetSprite(sprite);
+		emissor.SetSizeParticle(radius);
+		emissor.SetColor(color);
+		emissor.ListSweeping(true);
+	}
 
 	m_saveButton.SetPosition(0, ofGetHeight() - 50);
 	m_loadButton.SetPosition(103, ofGetHeight() - 50);
-	m_newButton.SetPosition(0, ofGetHeight() - 103);
+	m_resetButton.SetPosition(0, ofGetHeight() - 103);
+	m_playButton.SetPosition(ofGetWidth() / 2.0f, ofGetHeight() - 50);
 	m_saveButton.Update();
 	m_loadButton.Update();
-	m_newButton.Update();
+	m_resetButton.Update();
+	m_playButton.Update();
+	m_playButton.IsPressed() ? m_playButton.SetText("Pause") : m_playButton.SetText("Play");
 }
 
 void Gui::Draw() {
 	m_saveButton.Draw();
-	m_newButton.Draw();
+	m_resetButton.Draw();
 	m_loadButton.Draw();
+	m_playButton.Draw();
 	if (!buttonHide) {
 		gui.draw();
 	}
@@ -98,7 +109,6 @@ void Gui::Draw() {
 
 
 }
-
 
 void Gui::Hide() {
 	buttonHide = !buttonHide;
@@ -123,7 +133,7 @@ void Gui::ChangeDirectionAndPosition()
 		}
 	}
 
-	// Altera somente a Origem
+	// Altera a Origem e a direcao
 	if (worldPosToMouse) {
 		antPosition = worldPos;
 		worldPos = mousePositon;
@@ -135,7 +145,6 @@ void Gui::ChangeDirectionAndPosition()
 	}
 
 }
-
 
 void Gui::DrawDirectionAndCone(ofVec2f posit, ofVec2f direct)
 {	
@@ -156,4 +165,20 @@ void Gui::DrawDirectionAndCone(ofVec2f posit, ofVec2f direct)
 	openAngle.setStrokeWidth(2);
 	openAngle.rotate((atan2f(tmp.y, tmp.x) * 180.0f / PI) - angle / 2.0f, start);
 	openAngle.draw();
+}
+
+
+bool Gui::ParameterHasChanged(const ParticleEmission &emissor) {
+	// Verifica se os parametros do emissor e do gui estao diferentes
+	return (
+		emissor.GetOrigin()			!= worldPos		||
+		emissor.GetDirection()		!= direction	||
+		emissor.GetOpenAngle()		!= angle		||
+		emissor.GetSpeed()			!= velocity		||
+		emissor.GetLifeTime()		!= lifeTime		||
+		emissor.GetSpawnTime()		!= timeSpawn	||
+		emissor.GetSprite()			!= sprite		||
+		emissor.GetSizeParticle()	!= radius		||
+		emissor.GetColor()			!= color
+		);
 }

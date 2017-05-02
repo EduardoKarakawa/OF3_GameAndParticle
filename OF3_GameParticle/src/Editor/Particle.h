@@ -16,7 +16,7 @@ class Particle
 
 	public:
 		Particle();
-		void Setup(ofVec2f origin, ofVec2f direction, float openAngle, float speed, float lifeTime, float startOpacity);
+		Particle(ofVec2f origin, ofVec2f direction, float openAngle, float speed, float lifeTime, float startOpacity);
 		void Update(ofVec2f origin, float deltaTime);
 		bool IsLife();
 		void Draw(ofImage sprite, ofColor color, ofVec2f origin);

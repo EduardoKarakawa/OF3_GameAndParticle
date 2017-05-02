@@ -3,7 +3,6 @@
 // Construtor do player
 Player::Player(std::string tag, int width, int height, float speed)
 {
-	m_tag = tag;
 	m_radius = 25;
 	m_keyArrow = false;
 	m_keyRight = false;
@@ -23,6 +22,7 @@ Player::Player(std::string tag, int width, int height, float speed)
 	
 	// Cooldown para o player poder atirar
 	m_cooldownShooting = 0;
+	m_particle.SearchParticleConfig(tag, &m_position);
 }
 
 
@@ -34,6 +34,7 @@ void Player::AddCounter()
 
 void Player::Update(float &deltaTime)
 {
+
 	// Atualiza a contagem de tempo para o cooldown de tiro
 	if (m_cooldownShooting <= MAX_TIME_SHOOTING) {
 		m_cooldownShooting += deltaTime;
@@ -60,19 +61,55 @@ void Player::Update(float &deltaTime)
 		m_position.x-= tmpVelocity;
 	}
 
+
+	// Verifica se o player atirou e cria um novo tiro
+	if (this->GetShooting())
+	{
+		this->AddCounter();
+		bullets.push_back(new Bullet(this->GetPosition(), this->GetArrowKey()));
+	}
+
+	// Verifica se exitem tiros para serem processados
+	if (bullets.size() > 0)
+	{
+		// Percorre a lista de tiros para atualizar a posicao deles
+		for (int i = 0; i < bullets.size(); i++)
+		{
+			bool bulletLife = true;
+			bulletLife = bullets.at(i)->Update(deltaTime);
+			// Percorre a lista de enemys para verificar a colisão com o tiro
+
+			if (bulletLife == false) this->EraseBullet(i);
+		}
+
+	}
+
+	m_particle.Update(deltaTime);
+
 }
 
 
 // Desenha o Player
 void Player::Draw()
 {
-
+	m_particle.Draw();
+	
 	// Verifica se o player esta dentro da tela e desenha ele
 	if (OnScreen()) 
 	{
 		// Desenha o Player
 		ofSetColor(0,0,0);
 		ofDrawCircle(m_position.x, m_position.y, m_radius);
+	}
+
+	// Desenha os tiros
+
+	if (bullets.size() > 0)
+	{
+		for (int i = 0; i < bullets.size(); i++)
+		{
+			bullets.at(i)->Draw();
+		}
 	}
 }
 
@@ -189,4 +226,29 @@ bool Player::GetShooting()
 		return true;
 	}
 	return false;
+}
+
+// Apaga o tiro desejado
+void Player::EraseBullet(int i)
+{
+	bullets.erase(bullets.begin() + i);
+}
+
+// Passa o valor do tamanho do vetor dos tiros
+int Player::GetVectorBulSize() const
+{
+	return bullets.size();
+}
+
+// Passa o valor da posição de um determinado tiro
+ofVec2f Player::GetBulletPosition(int i) const
+{
+	if (i < bullets.size())
+		return bullets.at(i)->GetPosition();
+	else
+		return ofVec2f(0, 0);
+}
+
+
+Player::~Player() {
 }

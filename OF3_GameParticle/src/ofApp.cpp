@@ -18,9 +18,6 @@ void ofApp::setup() {
 	//Inicia o enemy
 	enemys = new EnemyControl();
 
-	// Inicia o tiro
-	bullets = new BulletControl();
-
 	// Configura o Editor de Particula
 	partEditor.Setup();
 
@@ -46,7 +43,7 @@ void ofApp::update() {
 
 		// ------------------------------ GAME -------------------------------------------------
 	case 1:
-		ofSetBackgroundColor(255, 255, 255);
+		ofSetBackgroundColor(200, 200, 200);
 		if (startTime == 0)
 		{
 			startTime = 1;
@@ -56,10 +53,7 @@ void ofApp::update() {
 		gamePlayer->Update(deltaTime);
 
 		// Cria novos enemys, atualiza a posição e elimina os que levaram dano
-		enemys->Update(time, deltaTime, gamePlayer->GetPosition(), bullets);
-
-		// Cria novos tiros, atualiza a posição e elimina os que sairam da tela e que receberam dano
-		bullets->Update(gamePlayer, deltaTime);
+		enemys->Update(time, deltaTime, gamePlayer, gameStats);
 		
 		gameTime->EndTime();
 		break;
@@ -93,9 +87,6 @@ void ofApp::draw() {
 		// Desenha o Player
 		gamePlayer->Draw();
 
-		// Desenha os tiros
-		bullets->Draw();
-		
 		// Desenha os enemys
 		enemys->Draw();
 
@@ -116,7 +107,9 @@ void ofApp::draw() {
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key) {
-
+	if (key == OF_KEY_F5) {
+		setup();
+	}
 	if (key == OF_KEY_BACKSPACE) {
 		gameStats->changeStats(0);
 	}
@@ -150,10 +143,11 @@ void ofApp::keyPressed(int key) {
 		break;
 
 	case 2://EDITOR
-		if (key == 'l' || key == 'L') {
-			//PROVISÓRIO: save tecla L
-			partEditor.Load();
-			cout << "1 apertou L" << endl;
+		if (key == 'm' || key == 'M') {
+			partEditor.m_guiEditor.MoveOriginParticle();
+		}
+		if (key == 'd' || key == 'D') {
+			partEditor.m_guiEditor.MoveDirectionParticle();
 		}
 		break;
 

@@ -4,8 +4,7 @@
 #include "ofGraphics.h"
 #include "ofMain.h"
 #include "Bullet.h"
-
-
+#include "../Editor/ParticleEmission.h"
 #define MAX_TIME_SHOOTING 0.2f
 
 class Player : public GameObject
@@ -16,10 +15,12 @@ private:
 	int m_radius, m_keyArrow;
 	float m_speed;
 	float m_cooldownShooting;
+	vector<Bullet*> bullets;
+	ParticleEmission m_particle;
 
 public:
 	Player(std::string tag, int width, int height, float speed);
-
+	~Player();
 	void AddCounter();
 
 	void Update(float &deltaTime);
@@ -29,4 +30,9 @@ public:
 
 	int GetArrowKey() const;
 	bool GetShooting();
+
+	// -- Controle dos Tiros --
+	void EraseBullet(int i);
+	int GetVectorBulSize() const;
+	ofVec2f GetBulletPosition(int i) const;
 };

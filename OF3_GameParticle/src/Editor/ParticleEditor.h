@@ -7,11 +7,14 @@
 #include "ofFileUtils.h"
 
 
+
 class ParticleEditor{
 	private:
-		Gui m_guiEditor;
 		ParticleEmission m_particlesList;
 		
+	public:
+		Gui m_guiEditor;
+
 
 	public:
 		ParticleEditor();
@@ -19,7 +22,7 @@ class ParticleEditor{
 		void Setup();
 		void Update(float &deltaTime);
 		void Draw();
-		void New();
+		void Reset();
 		void Save();
 		void Load();
 		void SetMousePosition(int &x, int &y);

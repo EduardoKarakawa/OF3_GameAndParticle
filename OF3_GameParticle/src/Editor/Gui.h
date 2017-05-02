@@ -15,14 +15,15 @@ class Gui {
 		ofxVec2Slider worldPos, direction; //slider vector
 		ofxIntSlider velocity; //slider int
 		ofxColorSlider color; //slider color
-		ofxToggle worldPosToMouse, directionPosToMouse; //check button 
 		ofxToggle drawParameters;
 		ofxToggle saveButton;
 		ofxPanel gui;
 		float buttonHide;
 		ofVec2f mousePositon, antPosition;
+		bool worldPosToMouse, directionPosToMouse; //check button 
 	public: 
-		MyButton m_saveButton, m_newButton, m_loadButton;
+		MyButton m_saveButton, m_resetButton, m_loadButton;
+		MyButton m_playButton;
 
 	public:
 		void Init();
@@ -43,4 +44,8 @@ class Gui {
 		void SetSprite(string sprite);
 		void SetSpawnTime(float timeSpawn);
 		void SetColor(ofColor color);
+
+		void MoveOriginParticle();
+		void MoveDirectionParticle();
+		bool ParameterHasChanged(const ParticleEmission &emissor);
 };
