@@ -90,11 +90,12 @@ void ParticleEmission::Update(float deltaTime)
 		// Percorre a lista de particulas atualizando a posicao das que estao vivas
 		if (m_particles.size() > 0) {
 
+			ofVec2f windowSize(ofGetWidth(), ofGetHeight());
 			// Verifica as particulas que ultrapassaram o tempo maximo de vida e exclui eles do vetor
 			for (int i = 0; i < m_particles.size(); i++) {
 
 				// Atualiza a particula a particula que estiver viva
-				if (m_particles[i].IsLife()) {
+				if (m_particles[i].IsLife() && m_particles[i].OnScreen(windowSize.x, windowSize.y)) {
 					*m_position[Position] = m_position.size() < 3 ? *m_position[PositionOrigin] : 
 																	*m_position[PositionOrigin] + *m_position[PositionFather];
 					
@@ -122,9 +123,11 @@ void ParticleEmission::Draw()
 {
 	if (m_enableParticles) {
 		if (m_particles.size() > 0) {
+			ofVec2f windowSize(ofGetWidth(), ofGetHeight());
 			// Percorre a lista de particular desenhando elas
 			std::vector<Particle>::iterator aux;	// Iterator para percorrer a lista de particles
 			for (aux = m_particles.begin(); aux != m_particles.end(); aux++) {
+				if(aux->OnScreen(windowSize.x, windowSize.y))
 				aux->Draw(m_sprite, m_color, *m_position[Position]);
 			}
 		}

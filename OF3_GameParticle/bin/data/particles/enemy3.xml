@@ -1,0 +1,12 @@
+<EMITTER>
+	<Father>Enemy3</Father>
+	<Sprite>/sprites/particula.png</Sprite>
+	<Size>92.65</Size>
+	<Position>9, 5</Position>
+	<Direction>121, 135</Direction>
+	<OpenAngle>360</OpenAngle>
+	<Lifetime>0.324</Lifetime>
+	<Velocity>1000</Velocity>
+	<TimeSpawn>0.03</TimeSpawn>
+	<Color>0, 255, 17, 255</Color>
+</EMITTER>

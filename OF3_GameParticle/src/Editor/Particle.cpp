@@ -58,3 +58,7 @@ void Particle::Draw(ofImage sprite, ofColor color, ofVec2f origin)
 }
 
 
+bool Particle::OnScreen(const int &w, const int&h) {
+	return	m_position.x >= 0 && m_position.x <= w &&
+			m_position.y >= 0 && m_position.y <= h;
+}
