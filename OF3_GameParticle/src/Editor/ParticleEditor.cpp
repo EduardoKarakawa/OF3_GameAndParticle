@@ -4,6 +4,7 @@
 ParticleEditor::ParticleEditor()
 {
 	m_guiEditor.Init();
+	tag = "";
 }
 
 void ParticleEditor::Setup() {
@@ -20,7 +21,7 @@ void ParticleEditor::Update(float &deltaTime) {
 	if (m_guiEditor.m_saveButton.IsPressed()) {
 		m_particlesList.SetParticleProcess(false);
 		Save();
-		m_guiEditor.m_saveButton.SetValue(false);
+		//m_guiEditor.m_saveButton.SetValue(false);
 	}
 	// Verifica se o botao Load foi clicado e chama a funcao
 	else if (m_guiEditor.m_loadButton.IsPressed()) {
@@ -39,14 +40,16 @@ void ParticleEditor::Update(float &deltaTime) {
 	m_guiEditor.Update(m_particlesList);
 	m_particlesList.Update(deltaTime);
 
-	
-
-
 }
 
 void ParticleEditor::Draw() {
 	m_guiEditor.Draw();
 	m_particlesList.Draw();
+	if (m_guiEditor.m_saveButton.IsPressed()) {
+		for (int i = 0; i < m_buttons.size(); i++) {
+			m_buttons[i].Draw();
+		}
+	}
 }
 
 void ParticleEditor::LoadParticles()
@@ -73,7 +76,12 @@ void ParticleEditor::Reset() {
 void ParticleEditor::Save() {
 
 	//chama metodo save da classe Storage, parâmetros: ParticleEmission e string
-	STORAGE.save(m_particlesList);
+	tag = STORAGE.GetFather(m_buttons);
+	if (tag != "") {
+		m_buttons.clear();
+		STORAGE.save(m_particlesList, tag);
+		m_guiEditor.m_saveButton.SetValue(false);
+	}
 }
 
 void ParticleEditor::Load() {

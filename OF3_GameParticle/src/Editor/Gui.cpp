@@ -107,7 +107,6 @@ void Gui::Draw() {
 	}
 
 
-
 }
 
 void Gui::Hide() {
