@@ -24,8 +24,7 @@ void GameControl::Update(float &deltatime, GameStats &status) {
 		m_player.SetDirectionY(0);
 	}
 
-	if (m_keyInput.MouseLeft)
-		m_player.Shooting();
+	m_player.Shooting(m_keyInput.MouseLeft);
 }
 
 void GameControl::Draw() {

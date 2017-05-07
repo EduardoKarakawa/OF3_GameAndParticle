@@ -30,7 +30,7 @@ void Enemy::Update(ofVec2f playerPos, const float &deltaTime)
 	// Calcula uma velocidade pegando o produto do speed e deltaTime para que o enemy ande igual em qualquer pc
 	m_position += m_direction.normalized() * m_speed * deltaTime;
 
-	m_particle.Update(deltaTime, m_position);
+	m_particle.Update(deltaTime, &m_position);
 }
 
 

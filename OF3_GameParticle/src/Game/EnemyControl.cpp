@@ -36,18 +36,17 @@ void EnemyControl::Update( float &deltaTime, Player &player, GameStats &gameS)
 
 		}
 
-		//Percorre a lista de tiros
-		for (int i = 0; i < player.GetVectorBulSize(); i++)
-		{
+
+		// Verifica colisao da chama do player com os inimigos
+		ParticleEmission flame = player.GetShotParticle();
+		if (flame.IsEnable()) {
 			//Verifica se o tiro "i" colidiu com algum enemy
 			for (int j = 0; j < enemy.size(); j++)
 			{
-				if (enemy.at(j).Collided(player.GetBulletPosition(i)))
+				if (flame.CollidedWith(enemy.at(j).GetPosition(), 13.5f))
 				{
 					//Se colidiu, elimina o inimigo e o tiro
 					enemy.erase(enemy.begin() + j);
-					player.EraseBullet(i);
-					i--;
 					j--;
 				}
 			}

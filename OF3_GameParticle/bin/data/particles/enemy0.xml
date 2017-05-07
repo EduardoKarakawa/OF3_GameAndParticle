@@ -3,10 +3,10 @@
 	<Sprite>/sprites/particula.png</Sprite>
 	<Size>10</Size>
 	<Position>5, 6</Position>
-	<Direction>319, 528</Direction>
+	<Direction>-193, 117</Direction>
 	<OpenAngle>360</OpenAngle>
-	<Lifetime>2.804</Lifetime>
-	<Velocity>275</Velocity>
+	<Lifetime>0.324</Lifetime>
+	<Velocity>1000</Velocity>
 	<TimeSpawn>0.09681</TimeSpawn>
 	<Color>0, 0, 255, 255</Color>
 </EMITTER>

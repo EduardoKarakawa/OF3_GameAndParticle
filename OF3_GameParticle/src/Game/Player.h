@@ -14,7 +14,7 @@
 		int m_radius;
 		float m_speed;
 		float m_cooldownShooting;
-		vector<Bullet> m_bullets;
+		//vector<Bullet> m_bullets;
 		ParticleEmission m_particle;
 		ofVec2f m_mousePosition;
 		ofVec2f m_direction;
@@ -29,13 +29,14 @@
 		void Draw();
 		void SetDirectionX(int x);
 		void SetDirectionY(int y);
-		void Shooting();
+		void Shooting(bool value);
 		void SetMousePosition(const int &x, const int &y);
 
 
 
 		// -- Controle dos Tiros --
-		void EraseBullet(int i);
-		int GetVectorBulSize() const;
-		ofVec2f GetBulletPosition(int i) const;
+		const ParticleEmission & GetShotParticle() const;
+		//void EraseBullet(int i);
+		//int GetVectorBulSize() const;
+		//ofVec2f GetBulletPosition(int i) const;
 };

@@ -21,7 +21,6 @@ class Storage {
 		void reset(Gui &guiParticle, ParticleEmission & particleList);
 		void save(const ParticleEmission &particle, std::string fatherTag);
 		void load(Gui &guiParticle);
-		void load(ParticleEmission &Particle, ofXml &file);
 		std::string GetFather(std::vector<MyButton> &buttons);
 
 };

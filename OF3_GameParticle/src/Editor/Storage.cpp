@@ -51,8 +51,10 @@ void Storage::save(const ParticleEmission &particle, std::string fatherTag) {
 		xml.addValue("Father", fatherTag);
 		xml.addValue("Sprite", particle.GetSprite());
 		xml.addValue("Size", particle.GetSizeParticle());
+
 		xml.addValue("Position", particle.GetOrigin());
 		xml.addValue("Direction", particle.GetDirection());
+
 		xml.addValue("OpenAngle", particle.GetOpenAngle());
 		xml.addValue("Lifetime", particle.GetLifeTime());
 		xml.addValue("Velocity", particle.GetSpeed());
@@ -83,7 +85,12 @@ void Storage::load(Gui &guiParticle) {
 				guiParticle.SetSizeParticle(xml.getValue<float>("Size"));
 			}
 			if (xml.exists("Position")) {
-				guiParticle.SetOrigin(xml.getValue<ofVec2f>("Position"));
+				ofVec2f tmp = xml.getValue<ofVec2f>("Position");
+				ofVec2f center(ofGetWidth() / 2.0f, ofGetHeight() / 2.0f);
+				if(tmp.x < center.x && tmp.y < center.y)
+					guiParticle.SetOrigin(tmp + center);
+				else
+					guiParticle.SetOrigin(tmp);
 			}
 			if (xml.exists("Direction")) {
 				guiParticle.SetDirection(xml.getValue<ofVec2f>("Direction"));
@@ -107,11 +114,6 @@ void Storage::load(Gui &guiParticle) {
 	}
 
 	
-}
-
-
-void Storage::load(ParticleEmission &Particle, ofXml &file) {
-
 }
 
 
@@ -142,13 +144,13 @@ std::string Storage::GetFather(std::vector<MyButton> &buttons) {
 		}
 		else{
 			while (tags.exists("tag" + ofToString(i))) {
-				MyButton tmp(tags.getValue<string>("tag" + ofToString(i)), false, ofGetWidth() / 2.0f, 100 + 75 * i, 150, 74);
+				MyButton tmp(tags.getValue<string>("tag" + ofToString(i)), false, ofGetWidth() / 2.0f - 75, 100 + 50 * i, 150, 49);
 				tmp.SetColor(ofColor(120, 120, 120), ofColor(80, 80, 80));
 				buttons.push_back(tmp);
 				i++;
 			}
 
-			MyButton tmp("Other", false, ofGetWidth() / 2.0f, 100 + 75 * i, 150, 74);
+			MyButton tmp("Other", false, ofGetWidth() / 2.0f - 75, 100 + 50 * i, 150, 49);
 			tmp.SetColor(ofColor(120, 120, 120), ofColor(80, 80, 80));
 			buttons.push_back(tmp);
 		}

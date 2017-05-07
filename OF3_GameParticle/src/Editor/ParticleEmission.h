@@ -7,17 +7,10 @@
 #include "ofXml.h"
 #include <vector>
 
-enum Positions {
-	Position,
-	PositionOrigin,
-	PositionFather,
-	PositionPrevious
-};
-
-
 class ParticleEmission
 {
 	private:
+		ofVec2f *m_fatherPosition;
 		ofVec2f m_position;
 		bool m_isLoad;
 		std::string m_spriteLocal;
@@ -44,13 +37,12 @@ class ParticleEmission
 		~ParticleEmission();
 
 		void Update(const float &deltaTime);
-		void Update(const float &deltaTime, const ofVec2f &fatherPosition);
+		void Update(const float &deltaTime, ofVec2f *fatherPosition);
 		void CreateParticle();
 		void CreateParticle(const ofVec2f &fatherPosition);
 		void Draw();
-		void Draw(const ofVec2f &fatherPosition);
 
-		std::string enable();
+		bool IsEnable();
 		void SetOrigin(ofVec2f origin);
 		void SetDirection(ofVec2f direction);
 		void SetOpenAngle(float openAngle);
@@ -62,6 +54,8 @@ class ParticleEmission
 		void SetColor(ofColor color);
 		void SetParticleProcess(bool process);
 		void SetFatherTag(std::string fatherTag);
+		void SetEnable(bool value);
+
 
 		void SearchParticleConfig(std::string tag);
 
@@ -75,6 +69,8 @@ class ParticleEmission
 		const ofColor GetColor() const;
 		const float GetSizeParticle() const;
 		const std::string GetFatherTag() const;
+
+		bool CollidedWith(const ofVec2f &other, float size);
 
 
 		void ListSweeping(bool speegin);

@@ -79,6 +79,11 @@ void ParticleEditor::Save() {
 	tag = STORAGE.GetFather(m_buttons);
 	if (tag != "") {
 		m_buttons.clear();
+		ofVec2f center(ofGetWidth() / 2.0f, ofGetHeight() / 2.0f);
+		if (m_guiEditor.localPosition) {
+			m_particlesList.SetOrigin(m_particlesList.GetOrigin() - center);
+			m_particlesList.SetDirection(m_particlesList.GetDirection() - center);
+		}
 		STORAGE.save(m_particlesList, tag);
 		m_guiEditor.m_saveButton.SetValue(false);
 	}

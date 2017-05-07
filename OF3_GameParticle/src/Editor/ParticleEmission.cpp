@@ -2,7 +2,7 @@
 #include "ParticleEmission.h"
 #include "Storage.h"
 
-ParticleEmission::~ParticleEmission(){}
+ParticleEmission::~ParticleEmission() {}
 void ParticleEmission::SetOrigin(ofVec2f origin)			{ m_position = origin; }
 void ParticleEmission::SetDirection(ofVec2f direction)		{ m_direction = direction; }
 void ParticleEmission::SetOpenAngle(float openAngle)		{ m_openAngle = openAngle; }
@@ -14,7 +14,7 @@ void ParticleEmission::SetColor(ofColor color)				{ m_color = color; }
 void ParticleEmission::SetSizeParticle(float radius)		{ m_radius = radius; }
 void ParticleEmission::SetParticleProcess(bool process)		{ m_enableParticles = process;}
 void ParticleEmission::SetFatherTag(std::string fatherTag)	{ m_fatherTag = fatherTag; }
-
+void ParticleEmission::SetEnable(bool value)				{ m_enableParticles = value; }
 
 
 //criei metodos getters pra poder pegar os valores e salvar
@@ -29,11 +29,12 @@ const float ParticleEmission::GetSpawnTime() const { return m_timeSpawnParticle;
 const ofColor ParticleEmission::GetColor() const { return m_color; }
 const float ParticleEmission::GetSizeParticle() const { return m_radius; }
 const std::string ParticleEmission::GetFatherTag() const { return m_fatherTag; }
-std::string ParticleEmission::enable() { return m_enableParticles ? "True" : "False"; }
+bool ParticleEmission::IsEnable() { return m_enableParticles; }
 
 
 ParticleEmission::ParticleEmission(){
 	// Inicia os parametros da sistema de particula novo
+	m_fatherPosition = nullptr;
 	m_fatherTag = "";
 	m_spriteLocal = "/sprites/particula.png";
 	m_sprite.loadImage(m_spriteLocal);
@@ -56,6 +57,7 @@ ParticleEmission::ParticleEmission(){
 ParticleEmission::ParticleEmission(ofVec2f origin, ofVec2f direction, float openAngle, float speed, float lifeTime, float timeSpawn, string sprite, float size)
 {
 	// Inicia os parametros da sistema de particula novo
+	m_fatherPosition = nullptr;
 	m_fatherTag = "";
 	m_spriteLocal = sprite;
 	m_sprite.loadImage(m_spriteLocal);
@@ -78,7 +80,7 @@ ParticleEmission::ParticleEmission(ofVec2f origin, ofVec2f direction, float open
 
 void ParticleEmission::Update(const float &deltaTime)
 {
-
+	std::cout << m_fatherPosition << std::endl;
 	if (m_enableParticles) {
 		m_sprite.resize(m_radius, m_radius);
 		// Atualiza a lista de particulas do sistema de particula, chama o DestroyParticle se a particula atingiu o tempo maximo de vida
@@ -95,7 +97,6 @@ void ParticleEmission::Update(const float &deltaTime)
 				// Atualiza a particula a particula que estiver viva
 				if (m_particles[i].IsLife() && m_particles[i].OnScreen(windowSize.x, windowSize.y)) {
 					m_particles[i].Update(m_position, deltaTime);
-
 				}		
 				else {
 					bool adicinar = true;
@@ -114,78 +115,62 @@ void ParticleEmission::Update(const float &deltaTime)
 
 }
 
-void ParticleEmission::Update(const float &deltaTime, const ofVec2f &fatherPosition) {
+void ParticleEmission::Update(const float &deltaTime, ofVec2f *fatherPosition) {
 
-	if (m_enableParticles) {
-		m_sprite.resize(m_radius, m_radius);
-		// Atualiza a lista de particulas do sistema de particula, chama o DestroyParticle se a particula atingiu o tempo maximo de vida
-		// cria uma nova particula caso o tempo ultrapasse o tempo de spawn
-		m_spawnTimeCont += deltaTime;
-		m_timeCountSweep += deltaTime;
+	m_sprite.resize(m_radius, m_radius);
+	// Atualiza a lista de particulas do sistema de particula, chama o DestroyParticle se a particula atingiu o tempo maximo de vida
+	// cria uma nova particula caso o tempo ultrapasse o tempo de spawn
+	m_spawnTimeCont += deltaTime;
+	m_timeCountSweep += deltaTime;
 
-		ofVec2f position = fatherPosition + m_position;
-		// Percorre a lista de particulas atualizando a posicao das que estao vivas
-		if (m_particles.size() > 0) {
-			ofVec2f windowSize(ofGetWidth(), ofGetHeight());
+	m_fatherPosition = fatherPosition;
+
+	ofVec2f position = *fatherPosition + m_position;
+	// Percorre a lista de particulas atualizando a posicao das que estao vivas
+	if (m_particles.size() > 0) {
+		ofVec2f windowSize(ofGetWidth(), ofGetHeight());
 
 
-			// Verifica as particulas que ultrapassaram o tempo maximo de vida e exclui eles do vetor
-			for (int i = 0; i < m_particles.size(); i++) {
+		// Verifica as particulas que ultrapassaram o tempo maximo de vida e exclui eles do vetor
+		for (int i = 0; i < m_particles.size(); i++) {
 
-				// Atualiza a particula a particula que estiver viva
-				if (m_particles[i].IsLife() && m_particles[i].OnScreen(windowSize.x, windowSize.y)) {
-					m_particles[i].Update(position, deltaTime);
+			// Atualiza a particula a particula que estiver viva
+			if (m_particles[i].IsLife() && m_particles[i].OnScreen(windowSize.x, windowSize.y)) {
+				m_particles[i].Update(position, deltaTime);
 
-				}
-				else {
-					bool adicinar = true;
-					for (int j : m_particlesDead) {
-						if (j == i) {
-							adicinar = false;
-						}
+			}
+			else {
+				bool adicinar = true;
+				for (int j : m_particlesDead) {
+					if (j == i) {
+						adicinar = false;
 					}
-					if (adicinar) m_particlesDead.push_back(i);
 				}
+				if (adicinar) m_particlesDead.push_back(i);
 			}
 		}
-		ListSweeping(false);
-		CreateParticle(fatherPosition);
+	}
+	ListSweeping(false);
+
+	if (m_enableParticles) {
+		CreateParticle(*fatherPosition);
 	}
 
 }
 
 void ParticleEmission::Draw()
 {
-	if (m_enableParticles) {
-		if (m_particles.size() > 0) {
-			ofVec2f windowSize(ofGetWidth(), ofGetHeight());
-			// Percorre a lista de particular desenhando elas
-			std::vector<Particle>::iterator aux;	// Iterator para percorrer a lista de particles
-			for (aux = m_particles.begin(); aux != m_particles.end(); aux++) {
-				if(aux->OnScreen(windowSize.x, windowSize.y))
+
+	if (m_particles.size() > 0) {
+		ofVec2f windowSize(ofGetWidth(), ofGetHeight());
+		// Percorre a lista de particular desenhando elas
+		std::vector<Particle>::iterator aux;	// Iterator para percorrer a lista de particles
+		for (aux = m_particles.begin(); aux != m_particles.end(); aux++) {
+			if (aux->OnScreen(windowSize.x, windowSize.y))
 				aux->Draw(m_sprite, m_color, m_position);
-			}
 		}
 	}
 
-}
-
-void ParticleEmission::Draw(const ofVec2f &fatherPosition)
-{
-	if (m_enableParticles) {
-		if (m_particles.size() > 0) {
-			ofVec2f windowSize(ofGetWidth(), ofGetHeight());
-			// Percorre a lista de particular desenhando elas
-			ofVec2f position = fatherPosition + m_position;
-			std::vector<Particle>::iterator aux;	// Iterator para percorrer a lista de particles
-			for (aux = m_particles.begin(); aux != m_particles.end(); aux++) {
-
-				if (aux->OnScreen(windowSize.x, windowSize.y))
-
-					aux->Draw(m_sprite, m_color, position);
-			}
-		}
-	}
 
 }
 
@@ -220,13 +205,13 @@ void ParticleEmission::CreateParticle()
 
 }
 
-void ParticleEmission::CreateParticle(const ofVec2f &fatherPosition) {
+void ParticleEmission::CreateParticle(ofVec2f const &fatherPosition) {
 
 	// Cria uma particula se ja tiver passado o tempo necessario para criar uma
 	if (m_spawnTimeCont > m_timeSpawnParticle) {
 		int tmp = m_spawnTimeCont / m_timeSpawnParticle;
 
-		ofVec2f direction = m_direction + (m_position - fatherPosition);
+		ofVec2f direction = m_direction + m_position + fatherPosition;
 		ofVec2f position = m_position + fatherPosition;
 
 		if (m_particlesDead.size() > 0) {
@@ -318,12 +303,46 @@ void ParticleEmission::SearchParticleConfig(std::string tag) {
 						SetColor(file.getValue<ofColor>("Color"));
 					}
 				}
-
-				m_enableParticles = true;
 				break;
 			}
-			m_enableParticles = false;
 		}
 	}
 
+}
+
+
+
+// Verifica colisao de um objeto com o a area do cone de emissao de particula
+bool ParticleEmission::CollidedWith(const ofVec2f &other, float size) {
+	bool collided = false;
+	float baseDistance = m_velocity * m_maxLifeTime / 2.0f;
+	float angleOther, angleDir, midopen;
+
+	// Calculo para emissor que depende de outro objeto
+	if (m_fatherPosition != nullptr) {
+		// Verifica a distancia
+		if (other.distance(*m_fatherPosition + m_position) <= baseDistance + size) {
+
+			angleOther = atan2f((m_fatherPosition->y + m_position.y) - other.y,
+								(m_fatherPosition->x + m_position.x) - other.x) * 180 / PI + 180;
+
+			angleDir = atan2f(	(m_fatherPosition->y + m_position.y) - (m_fatherPosition->y + m_direction.y),
+								(m_fatherPosition->x + m_position.x) - (m_fatherPosition->x + m_direction.x)) * 180 / PI + 180;
+
+			midopen = m_openAngle / 2.0f;
+			collided = angleOther >= (angleDir - midopen) && angleOther <= (angleDir + midopen);
+		}
+	}
+	// Calculo para emissor que nao depende de outro objeto 
+	else {
+		if (other.distance(m_position) <= baseDistance + size) {
+			angleOther = atan2f(m_position.y - other.y, m_position.x - other.x) * 180 / PI;
+			angleDir = atan2f(m_position.y - m_direction.y, m_position.x - m_direction.x) * 180 / PI;
+			midopen = m_openAngle / 2.0f;
+			collided = angleOther >= (angleDir - midopen) && angleOther <= (angleDir + midopen);
+		}
+	}
+
+
+	return collided;
 }

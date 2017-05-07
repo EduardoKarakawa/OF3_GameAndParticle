@@ -32,6 +32,7 @@ void ofApp::update() {
 		ofSetBackgroundColor(200, 200, 200);
 		if (_gameStatus.GetStatus() != _gameStatus.GetPreviusStatus()) {
 			_gameStatus.ChangeStats(1);
+			_game = GameControl();
 		}
 		else {
 			_game.Update(_deltaTime, _gameStatus);
@@ -123,12 +124,12 @@ void ofApp::keyReleased(int key) {
 		break;
 
 	case 2://EDITOR
-		if (key == 'm' || key == 'M') {
-			_particleEditor.m_guiEditor.MoveOriginParticle();
-		}
-		if (key == 'd' || key == 'D') {
-			_particleEditor.m_guiEditor.MoveDirectionParticle();
-		}
+		//if (key == 'm' || key == 'M') {
+		//	_particleEditor.m_guiEditor.MoveOriginParticle();
+		//}
+		//if (key == 'd' || key == 'D') {
+		//	_particleEditor.m_guiEditor.MoveDirectionParticle();
+		//}
 		break;
 
 	case 3://GAME OVER

@@ -20,8 +20,9 @@ class Gui {
 		ofxPanel gui;
 		float buttonHide;
 		ofVec2f mousePositon, antPosition;
-		bool worldPosToMouse, directionPosToMouse; //check button 
+		bool worldPosToMouse, directionPosToMouse;
 	public: 
+		ofxToggle localPosition;
 		MyButton m_saveButton, m_resetButton, m_loadButton;
 		MyButton m_playButton;
 
@@ -33,7 +34,7 @@ class Gui {
 		void SetMousePosition(int x, int y);
 		void ChangeDirectionAndPosition();
 		void DrawDirectionAndCone(ofVec2f posit, ofVec2f direct);
-
+		void DrawCenterAxis();
 
 		void SetOrigin(ofVec2f origin);
 		void SetDirection(ofVec2f direction);
@@ -48,4 +49,5 @@ class Gui {
 		void MoveOriginParticle();
 		void MoveDirectionParticle();
 		bool ParameterHasChanged(const ParticleEmission &emissor);
+		
 };
