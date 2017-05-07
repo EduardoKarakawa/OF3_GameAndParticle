@@ -5,7 +5,7 @@
 #include "ofGraphics.h"
 #include "ofAppRunner.h"
 
-class GameObject : public ofBaseApp
+class GameObject
 {
 protected:
 	ofVec2f m_position;
