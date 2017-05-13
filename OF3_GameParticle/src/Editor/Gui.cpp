@@ -65,6 +65,9 @@ void Gui::Init() {
 
 	m_playButton = MyButton("Play", false, ofGetWidth() / 2.0f, ofGetHeight() - 50, 100, 50);
 	m_playButton.SetColor(ofColor(120, 120, 120), ofColor(80, 80, 80));
+	
+	m_exit = MyButton("Sair", false, ofGetWidth() - 100, ofGetHeight() - 50, 100, 50);
+	m_exit.SetColor(ofColor(120, 120, 120), ofColor(80, 80, 80));
 
 	sprite = "/sprites/particula.png";
 
@@ -96,6 +99,7 @@ void Gui::Update(ParticleEmission &emissor) {
 		m_resetButton.Update();
 		m_playButton.Update();
 		m_playButton.IsPressed() ? m_playButton.SetText("Pause") : m_playButton.SetText("Play");
+		m_exit.Update();
 
 	}
 }
@@ -106,7 +110,7 @@ void Gui::Draw() {
 	m_resetButton.Draw();
 	m_loadButton.Draw();
 	m_playButton.Draw();
-
+	m_exit.Draw();
 	if (localPosition) {
 		DrawCenterAxis();
 	}

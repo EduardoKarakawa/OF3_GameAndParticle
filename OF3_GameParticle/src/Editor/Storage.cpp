@@ -23,20 +23,28 @@ void Storage::reset(Gui &guiParticle, ParticleEmission & particleList) {
 //método salvar recebe como parâmetro por referência uma partícula criada
 //string referente ao nome do documento de texto (xml)
 void Storage::save(const ParticleEmission &particle, std::string fatherTag) {
-
-	ofFileDialogResult file = ofSystemSaveDialog("default.xml", "Save");
-	if (file.bSuccess) {
-		string path = file.getPath();
-		bool hasXml = false;
-		
-		// Verifica se tem .xml no final do path, se nao tiver ele eh colocado
-		hasXml = path[path.length() - 4]== '.' &&
-				 path[path.length() - 3] == 'x' &&
-				 path[path.length() - 2] == 'm' &&
-				 path[path.length() - 1] == 'l' ;
-		if (!hasXml) {
-			path += ".xml";
+	std::string path = GetFilePath(fatherTag);
+	bool hasXml = false;
+	if (path == "") {
+		std::string name = ofSystemTextBoxDialog("Digite o nome do arquivo: ");
+		if (name != "") {
+			path = "../data/particles/" + name;
+			AddOnTags(fatherTag);
 		}
+		else {
+			ofSystemAlertDialog("Nao foi possivel salvar.");
+		}
+	}
+	
+	if (path != "") {
+	}
+	// Verifica se tem .xml no final do path, se nao tiver ele eh colocado
+	hasXml = path[path.length() - 4] == '.' &&
+		path[path.length() - 3] == 'x' &&
+		path[path.length() - 2] == 'm' &&
+		path[path.length() - 1] == 'l';
+	if (!hasXml) {
+		path += ".xml";
 
 		//cria um documento de texto(xml)
 		ofXml xml;
@@ -62,7 +70,9 @@ void Storage::save(const ParticleEmission &particle, std::string fatherTag) {
 		xml.addValue("Color", particle.GetColor());
 
 		xml.save(path);
+		ofSystemAlertDialog("Configuracoes Salvas com Sucesso.");
 	}
+
 }
 
 //método carregar recebe como parâmetro uma particula 
@@ -161,4 +171,36 @@ std::string Storage::GetFather(std::vector<MyButton> &buttons) {
 	}
 
 	return outTag;
+}
+
+
+std::string Storage::GetFilePath(std::string &tag) {
+	ofDirectory directory("../data/particles");
+	directory.allowExt("xml");
+	directory.listDir();
+
+	for (int i = 0; i < directory.size(); i++) {
+		ofXml tmp(directory.getPath(i));
+		if (tmp.exists("Father") && tmp.getValue<std::string>("Father") == tag) {
+			return directory.getPath(i);
+		}
+	}
+
+	return "";
+}
+
+
+void Storage::AddOnTags(std::string &tag) {
+	std::string path = ofFile("../data/particles/Tags.xml").getAbsolutePath();
+	ofXml file(path);
+	std::cout << file.getName() << std::endl;
+	file.setTo("TAGS");
+	int cont = 0;
+	while (file.exists("tag" + ofToString(cont))) {
+		cont++;
+		std::cout << "contando " << std::endl;
+	}
+	std::cout << "Salvando " << tag << std::endl;
+	file.addValue("tag" + ofToString(cont), tag);
+	file.save(path);
 }

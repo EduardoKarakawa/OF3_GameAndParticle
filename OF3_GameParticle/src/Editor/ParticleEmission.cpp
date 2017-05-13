@@ -80,7 +80,7 @@ ParticleEmission::ParticleEmission(ofVec2f origin, ofVec2f direction, float open
 
 void ParticleEmission::Update(const float &deltaTime)
 {
-	std::cout << m_fatherPosition << std::endl;
+
 	if (m_enableParticles) {
 		m_sprite.resize(m_radius, m_radius);
 		// Atualiza a lista de particulas do sistema de particula, chama o DestroyParticle se a particula atingiu o tempo maximo de vida

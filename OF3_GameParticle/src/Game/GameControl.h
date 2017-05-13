@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "EnemyControl.h"
 #include "GameStats.h"
+#include "../KenjiGUI/MyButton.h"
 
 struct Keys {
 	bool Right, Left, Up, Down;
@@ -14,7 +15,8 @@ class GameControl{
 		EnemyControl m_enemyControl;
 		Keys m_keyInput;
 
-
+	public:
+		MyButton m_exit;
 
 	public:
 		GameControl();

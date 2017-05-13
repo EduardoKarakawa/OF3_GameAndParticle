@@ -36,12 +36,20 @@ void ofApp::update() {
 		}
 		else {
 			_game.Update(_deltaTime, _gameStatus);
+			if (_game.m_exit.IsPressed()) {
+				_game.m_exit.SetValue(false);
+				_gameStatus.ChangeStats(0);
+			}
 		}
 		break;
 
 		// ------------------------------ EDITOR -----------------------------------------------
 	case 2:
 		_particleEditor.Update(_deltaTime);
+		if (_particleEditor.m_guiEditor.m_exit.IsPressed()) {
+			_particleEditor.m_guiEditor.m_exit.SetValue(false);
+			_gameStatus.ChangeStats(0);
+		}
 		break;
 
 

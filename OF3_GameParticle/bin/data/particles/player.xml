@@ -1,9 +1,9 @@
 <EMITTER>
 	<Father>Player</Father>
 	<Sprite>/sprites/particula.png</Sprite>
-	<Size>63.65</Size>
-	<Position>-1, 0</Position>
-	<Direction>338, 43</Direction>
+	<Size>37.55</Size>
+	<Position>-1, -57</Position>
+	<Direction>-174, -362.735</Direction>
 	<OpenAngle>30</OpenAngle>
 	<Lifetime>1.5</Lifetime>
 	<Velocity>500</Velocity>

@@ -24,7 +24,7 @@ class Gui {
 	public: 
 		ofxToggle localPosition;
 		MyButton m_saveButton, m_resetButton, m_loadButton;
-		MyButton m_playButton;
+		MyButton m_playButton, m_exit;
 
 	public:
 		void Init();

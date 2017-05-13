@@ -50,6 +50,8 @@ void ParticleEditor::Draw() {
 			m_buttons[i].Draw();
 		}
 	}
+	ofSetColor(255, 255, 255);
+	ofDrawBitmapString(" D - Muda a direcao\n M - Muda posicao", ofVec2f(ofGetWidth() / 2.0f, 25));
 }
 
 void ParticleEditor::LoadParticles()
@@ -85,6 +87,8 @@ void ParticleEditor::Save() {
 			m_particlesList.SetDirection(m_particlesList.GetDirection() - center);
 		}
 		STORAGE.save(m_particlesList, tag);
+		if (tag == "")
+			m_guiEditor.m_saveButton.SetValue(false);
 		m_guiEditor.m_saveButton.SetValue(false);
 	}
 }
