@@ -31,20 +31,18 @@ void Storage::save(const ParticleEmission &particle, std::string fatherTag) {
 			path = "../data/particles/" + name;
 			AddOnTags(fatherTag);
 		}
-		else {
-			ofSystemAlertDialog("Nao foi possivel salvar.");
+	}
+
+	else if (path != "") {
+
+		// Verifica se tem .xml no final do path, se nao tiver ele eh colocado
+		hasXml = path[path.length() - 4] == '.' &&
+			path[path.length() - 3] == 'x' &&
+			path[path.length() - 2] == 'm' &&
+			path[path.length() - 1] == 'l';
+		if (!hasXml) {
+			path += ".xml";
 		}
-	}
-	
-	if (path != "") {
-	}
-	// Verifica se tem .xml no final do path, se nao tiver ele eh colocado
-	hasXml = path[path.length() - 4] == '.' &&
-		path[path.length() - 3] == 'x' &&
-		path[path.length() - 2] == 'm' &&
-		path[path.length() - 1] == 'l';
-	if (!hasXml) {
-		path += ".xml";
 
 		//cria um documento de texto(xml)
 		ofXml xml;
@@ -72,7 +70,9 @@ void Storage::save(const ParticleEmission &particle, std::string fatherTag) {
 		xml.save(path);
 		ofSystemAlertDialog("Configuracoes Salvas com Sucesso.");
 	}
-
+	else {
+		ofSystemAlertDialog("Nao foi possivel salvar.");
+	}
 }
 
 //método carregar recebe como parâmetro uma particula 
@@ -140,7 +140,8 @@ std::string Storage::GetFather(std::vector<MyButton> &buttons) {
 		int i = 0;
 
 		if (buttons.size() > 0) {
-			for (int i = 0; i < buttons.size(); i++) {
+			// Parte que ira verificar se alguns dos botoes de tag foi precionado
+			for (i = 0; i < buttons.size(); i++) {
 				buttons[i].Update();
 				if (buttons[i].IsPressed()) {
 					outTag = buttons[i].GetText();
@@ -149,10 +150,20 @@ std::string Storage::GetFather(std::vector<MyButton> &buttons) {
 
 			}
 			if (outTag == "Other") {
-				outTag = ofSystemTextBoxDialog("Digite a Tag do objeto Pai:", "");
+				std::string tmpTag = ofSystemTextBoxDialog("Digite a Tag do objeto Pai:", "");
+				if (tmpTag == "") {
+					outTag = "NotSave";
+					buttons[i].SetValue(false);
+				}
+
+			}
+			else if (outTag == "Cancelar") {
+				outTag = "NotSave";
+				buttons[i].SetValue(false);
 			}
 		}
 		else{
+			// Carrega os botoes com as tags do arquivo
 			while (tags.exists("tag" + ofToString(i))) {
 				MyButton tmp(tags.getValue<string>("tag" + ofToString(i)), false, ofGetWidth() / 2.0f - 75, 100 + 50 * i, 150, 49);
 				tmp.SetColor(ofColor(120, 120, 120), ofColor(80, 80, 80));
@@ -161,6 +172,10 @@ std::string Storage::GetFather(std::vector<MyButton> &buttons) {
 			}
 
 			MyButton tmp("Other", false, ofGetWidth() / 2.0f - 75, 100 + 50 * i, 150, 49);
+			tmp.SetColor(ofColor(120, 120, 120), ofColor(80, 80, 80));
+			buttons.push_back(tmp);
+			i++;
+			tmp = MyButton("Cancelar", false, ofGetWidth() / 2.0f - 75, 100 + 50 * i, 150, 49);
 			tmp.SetColor(ofColor(120, 120, 120), ofColor(80, 80, 80));
 			buttons.push_back(tmp);
 		}

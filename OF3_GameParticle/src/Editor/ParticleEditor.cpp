@@ -19,9 +19,10 @@ void ParticleEditor::Setup() {
 void ParticleEditor::Update(float &deltaTime) {
 	// Verifica se o botao Save foi clicado e chama a funcao
 	if (m_guiEditor.m_saveButton.IsPressed()) {
+		m_guiEditor.m_playButton.SetValue(false);
 		m_particlesList.SetParticleProcess(false);
 		Save();
-		//m_guiEditor.m_saveButton.SetValue(false);
+
 	}
 	// Verifica se o botao Load foi clicado e chama a funcao
 	else if (m_guiEditor.m_loadButton.IsPressed()) {
@@ -79,7 +80,11 @@ void ParticleEditor::Save() {
 
 	//chama metodo save da classe Storage, parâmetros: ParticleEmission e string
 	tag = STORAGE.GetFather(m_buttons);
-	if (tag != "") {
+	if(tag == "NotSave"){
+		ofSystemAlertDialog("Save cancelado!");
+		m_guiEditor.m_saveButton.SetValue(false);
+	}
+	else if (tag != "") {
 		m_buttons.clear();
 		ofVec2f center(ofGetWidth() / 2.0f, ofGetHeight() / 2.0f);
 		if (m_guiEditor.localPosition) {
@@ -87,10 +92,9 @@ void ParticleEditor::Save() {
 			m_particlesList.SetDirection(m_particlesList.GetDirection() - center);
 		}
 		STORAGE.save(m_particlesList, tag);
-		if (tag == "")
-			m_guiEditor.m_saveButton.SetValue(false);
 		m_guiEditor.m_saveButton.SetValue(false);
 	}
+	
 }
 
 void ParticleEditor::Load() {
