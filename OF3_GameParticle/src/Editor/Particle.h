@@ -20,6 +20,7 @@ class Particle
 		void Update(ofVec2f origin, float deltaTime);
 		bool IsLife();
 		void Draw(ofImage sprite, ofColor color, ofVec2f origin);
+		bool OnScreen(const int &w, const int&h);
 
 		~Particle();
 };

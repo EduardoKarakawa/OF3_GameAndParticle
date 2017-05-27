@@ -1,29 +1,12 @@
 #include "Bullet.h"
 // Construtor do Bullet
-Bullet::Bullet(ofVec2f position, int tecla)
+Bullet::Bullet(const ofVec2f &position, const ofVec2f &direction)
 {
 	// Define uma direcao para o tiro de acordo com a tecla precionada
 	// Essas teclas sao definidas no ofApp.cpp em KeyPressed e KeyRelease, depois sao armazenadas no Player
-	switch (tecla)
-	{
-		case -1:
-			m_direction.set(0, 0);
-			break;
-		case 0:
-			m_direction.set(0,-1);
-			break;
-		case 1:
-			m_direction.set(0,1);
-			break;
-		case 2:
-			m_direction.set(-1,0);
-			break;
-		case 3:
-			m_direction.set(1,0);
-			break;
-	}
 	// Seta a posicao inicial
 	m_position = position;
+	m_direction = direction;
 
 	// Seta o tamanho do tiro
 	m_radius = 10;
@@ -37,7 +20,7 @@ Bullet::Bullet(ofVec2f position, int tecla)
 
 
 // Update para atualizar a posicao do tiro
-bool Bullet::Update(float &deltaTime)
+bool Bullet::Update(const float &deltaTime)
 {
 	// A posicao é somada com o produto da direcao vezes a velocidade vezes o deltaTime
 	// Isso permite a bala ter o mesmo mover na mesma velocidade para qualquer computador

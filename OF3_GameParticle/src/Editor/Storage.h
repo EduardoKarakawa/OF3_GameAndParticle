@@ -4,6 +4,7 @@
 #include <string>
 #include <ofXml.h>
 #include "ParticleEmission.h"
+#include "../KenjiGUI/MyButton.h" 
 #include "Gui.h"
 
 //define pra não ter que ficar digitando Storage::instance() toda vez que quiser chamar um método da classe Storage
@@ -18,8 +19,10 @@ class Storage {
 	public:
 		static Storage& instance();
 		void reset(Gui &guiParticle, ParticleEmission & particleList);
-		void save(const ParticleEmission &particle);
+		void save(const ParticleEmission &particle, std::string fatherTag);
 		void load(Gui &guiParticle);
-		void load(ParticleEmission &Particle, ofXml &file);
+		std::string GetFather(std::vector<MyButton> &buttons);
+		std::string GetFilePath(std::string &tag);
+		void AddOnTags(std::string &tag);
 
 };

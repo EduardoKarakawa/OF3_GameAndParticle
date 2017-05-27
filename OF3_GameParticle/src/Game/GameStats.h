@@ -1,23 +1,24 @@
 #pragma once
+#include <iostream>
 
-enum EstadoJogo
+enum Status
 {
-	MENU = 0,
+	MENU,
+	GAME,
 	EDITOR,
-	GAMEPLAY,
 	GAMEOVER
 };
 
 class GameStats
 {
 private:
-	int m_estadoJogo;
+	int m_status;
+	int m_previusStatus;
 
 public:
 	GameStats();
 
-	int GetEstado();
-
-	void changeStats(int a);
-
+	int GetStatus();
+	int GetPreviusStatus();
+	void ChangeStats(int a);
 };

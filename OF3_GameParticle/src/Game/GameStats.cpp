@@ -1,31 +1,17 @@
 #include "GameStats.h"
 
-GameStats::GameStats()
-{
-	m_estadoJogo = EstadoJogo::MENU;
+
+int GameStats::GetStatus() { return m_status; }
+int GameStats::GetPreviusStatus() { return m_previusStatus; }
+
+GameStats::GameStats() { 
+	m_status = Status::MENU; 
+	m_previusStatus = Status::MENU;
 }
 
-int GameStats::GetEstado()
-{
-	return m_estadoJogo;
-}
-
-void GameStats::changeStats(int a)
-{
-	switch (a)
-	{
-	case 0:
-		m_estadoJogo = EstadoJogo::MENU;
-		break;
-	case 1:
-		m_estadoJogo = EstadoJogo::EDITOR;
-		break;
-	case 2:
-		m_estadoJogo = EstadoJogo::GAMEPLAY;
-		break;
-	case 3:
-		m_estadoJogo = EstadoJogo::GAMEOVER;
-	default:
-		break;
+void GameStats::ChangeStats(int a) { 
+	if (a >= MENU && a <= GAMEOVER) {
+		m_previusStatus = m_status;
+		m_status = a;
 	}
 }

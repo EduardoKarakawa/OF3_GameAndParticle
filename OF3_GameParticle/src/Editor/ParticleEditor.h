@@ -5,12 +5,15 @@
 #include "Gui.h"
 #include "ParticleEmission.h"
 #include "ofFileUtils.h"
+#include "ofSystemUtils.h"
 
 
 
 class ParticleEditor{
 	private:
 		ParticleEmission m_particlesList;
+		std::vector<MyButton> m_buttons;
+		std::string tag;
 		
 	public:
 		Gui m_guiEditor;

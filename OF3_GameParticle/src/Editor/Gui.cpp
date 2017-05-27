@@ -34,6 +34,9 @@ void Gui::Init() {
 	gui.add(radius.setup				("Radius Particle: ", 30, 10, 300));
 
 
+	// Botao toggle para calcular o local da particula apartir do centro
+	gui.add(localPosition.setup		("Local Position", true));
+
 	//Slider para setar a Posicao de Origem
 	gui.add(worldPos.setup				("Position Emissor: ",	ofVec2f(ofGetWidth()*.5, ofGetHeight()*.5), 
 																ofVec2f(0, 0), ofVec2f(ofGetWidth(), ofGetHeight())));
@@ -62,6 +65,9 @@ void Gui::Init() {
 
 	m_playButton = MyButton("Play", false, ofGetWidth() / 2.0f, ofGetHeight() - 50, 100, 50);
 	m_playButton.SetColor(ofColor(120, 120, 120), ofColor(80, 80, 80));
+	
+	m_exit = MyButton("Sair", false, ofGetWidth() - 100, ofGetHeight() - 50, 100, 50);
+	m_exit.SetColor(ofColor(120, 120, 120), ofColor(80, 80, 80));
 
 	sprite = "/sprites/particula.png";
 
@@ -69,44 +75,52 @@ void Gui::Init() {
 }
 
 void Gui::Update(ParticleEmission &emissor) {
-	ChangeDirectionAndPosition();
-	if (ParameterHasChanged(emissor)) {
-		emissor.SetOrigin(worldPos);
-		emissor.SetDirection(direction);
-		emissor.SetOpenAngle(angle);
-		emissor.SetSpeed(velocity);
-		emissor.SetLifeTime(lifeTime);
-		emissor.SetSpawnTime(timeSpawn);
-		emissor.SetSprite(sprite);
-		emissor.SetSizeParticle(radius);
-		emissor.SetColor(color);
-		emissor.ListSweeping(true);
-	}
+	if (!m_saveButton.IsPressed()) {
+		ChangeDirectionAndPosition();
+		if (ParameterHasChanged(emissor)) {
+			emissor.SetOrigin(worldPos);
+			emissor.SetDirection(direction);
+			emissor.SetOpenAngle(angle);
+			emissor.SetSpeed(velocity);
+			emissor.SetLifeTime(lifeTime);
+			emissor.SetSpawnTime(timeSpawn);
+			emissor.SetSprite(sprite);
+			emissor.SetSizeParticle(radius);
+			emissor.SetColor(color);
+			emissor.ListSweeping(true);
+		}
 
-	m_saveButton.SetPosition(0, ofGetHeight() - 50);
-	m_loadButton.SetPosition(103, ofGetHeight() - 50);
-	m_resetButton.SetPosition(0, ofGetHeight() - 103);
-	m_playButton.SetPosition(ofGetWidth() / 2.0f, ofGetHeight() - 50);
-	m_saveButton.Update();
-	m_loadButton.Update();
-	m_resetButton.Update();
-	m_playButton.Update();
-	m_playButton.IsPressed() ? m_playButton.SetText("Pause") : m_playButton.SetText("Play");
+		m_saveButton.SetPosition(0, ofGetHeight() - 50);
+		m_loadButton.SetPosition(103, ofGetHeight() - 50);
+		m_resetButton.SetPosition(0, ofGetHeight() - 103);
+		m_playButton.SetPosition(ofGetWidth() / 2.0f, ofGetHeight() - 50);
+		m_saveButton.Update();
+		m_loadButton.Update();
+		m_resetButton.Update();
+		m_playButton.Update();
+		m_playButton.IsPressed() ? m_playButton.SetText("Pause") : m_playButton.SetText("Play");
+		m_exit.Update();
+
+	}
 }
 
 void Gui::Draw() {
+
 	m_saveButton.Draw();
 	m_resetButton.Draw();
 	m_loadButton.Draw();
 	m_playButton.Draw();
+	m_exit.Draw();
+	if (localPosition) {
+		DrawCenterAxis();
+	}
+
 	if (!buttonHide) {
 		gui.draw();
 	}
 	if (drawParameters) {
 		DrawDirectionAndCone(worldPos, direction);
 	}
-
-
 
 }
 
@@ -128,7 +142,7 @@ void Gui::ChangeDirectionAndPosition()
 	// Altera somente a Direcao
 	if (directionPosToMouse) {
 		direction = mousePositon;
-		if (ofGetMousePressed(OF_MOUSE_BUTTON_3)) {
+		if (ofGetMousePressed(OF_MOUSE_BUTTON_1)) {
 			directionPosToMouse = false;
 		}
 	}
@@ -139,7 +153,7 @@ void Gui::ChangeDirectionAndPosition()
 		worldPos = mousePositon;
 		direction = ofVec2f(direction) + (ofVec2f(worldPos) - antPosition);
 
-		if (ofGetMousePressed(OF_MOUSE_BUTTON_3)) {
+		if (ofGetMousePressed(OF_MOUSE_BUTTON_1)) {
 			worldPosToMouse = false;
 		}
 	}
@@ -167,6 +181,13 @@ void Gui::DrawDirectionAndCone(ofVec2f posit, ofVec2f direct)
 	openAngle.draw();
 }
 
+void Gui::DrawCenterAxis() {
+	ofVec2f center(ofGetWidth() / 2.0f, ofGetHeight() / 2.0f);
+	ofSetColor(100, 100, 100);
+	ofDrawLine(center.x - 150, center.y, center.x + 150, center.y);
+	ofDrawLine(center.x, center.y - 150, center.x, center.y + 150);
+
+}
 
 bool Gui::ParameterHasChanged(const ParticleEmission &emissor) {
 	// Verifica se os parametros do emissor e do gui estao diferentes

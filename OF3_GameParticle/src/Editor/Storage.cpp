@@ -22,23 +22,45 @@ void Storage::reset(Gui &guiParticle, ParticleEmission & particleList) {
 
 //método salvar recebe como parâmetro por referência uma partícula criada
 //string referente ao nome do documento de texto (xml)
-void Storage::save(const ParticleEmission &particle) {
-	std::string fatherTag = ofSystemTextBoxDialog("Digite a Tag do objeto Pai:", "");
-	ofFileDialogResult file = ofSystemSaveDialog("default.xml", "Save");
-	if (file.bSuccess) {
-		string path = file.getPath() + ".xml";
+void Storage::save(const ParticleEmission &particle, std::string fatherTag) {
+	std::string path = GetFilePath(fatherTag);
+	bool hasXml = false;
+	if (path == "") {
+		std::string name = ofSystemTextBoxDialog("Digite o nome do arquivo: ");
+		if (name != "") {
+			path = "../data/particles/" + name;
+			AddOnTags(fatherTag);
+		}
+	}
+
+	else if (path != "") {
+
+		// Verifica se tem .xml no final do path, se nao tiver ele eh colocado
+		hasXml = path[path.length() - 4] == '.' &&
+			path[path.length() - 3] == 'x' &&
+			path[path.length() - 2] == 'm' &&
+			path[path.length() - 1] == 'l';
+		if (!hasXml) {
+			path += ".xml";
+		}
+
 		//cria um documento de texto(xml)
 		ofXml xml;
+
 		//cria uma tag principal chamada EMITTER
 		xml.addChild("EMITTER");
+
 		//entra na tag EMITTER
 		xml.setTo("EMITTER");
+
 		//cria "subtags" dentro da tag EMITTER com todos os parâmetros necessários
 		xml.addValue("Father", fatherTag);
 		xml.addValue("Sprite", particle.GetSprite());
 		xml.addValue("Size", particle.GetSizeParticle());
+
 		xml.addValue("Position", particle.GetOrigin());
 		xml.addValue("Direction", particle.GetDirection());
+
 		xml.addValue("OpenAngle", particle.GetOpenAngle());
 		xml.addValue("Lifetime", particle.GetLifeTime());
 		xml.addValue("Velocity", particle.GetSpeed());
@@ -46,6 +68,10 @@ void Storage::save(const ParticleEmission &particle) {
 		xml.addValue("Color", particle.GetColor());
 
 		xml.save(path);
+		ofSystemAlertDialog("Configuracoes Salvas com Sucesso.");
+	}
+	else {
+		ofSystemAlertDialog("Nao foi possivel salvar.");
 	}
 }
 
@@ -60,58 +86,38 @@ void Storage::load(Gui &guiParticle) {
 		ofXml xml;
 		//carrega xml com o nome enviado por parâmetro
 		xml.load(path);
-		//se ele encontrar a tag <EMITTER>
+		//se ele encontrar a tag <EMITTER> eh carregado os parametros
 		if (xml.getName() == "EMITTER") {
-			//se dentro de <EMITTER> existir a tag <Sprite>
 			if (xml.exists("Sprite")) {
-				//seta caminho da sprite pra um valor do tipo string 
-				// que está dentro da tag <Sprite> do documento de texto(xml)
 				guiParticle.SetSprite(xml.getValue<string>("Sprite"));
 			}
-			//se dentro de <EMITTER> existir a tag <Size>
 			if (xml.exists("Size")) {
-				//seta tamanho da particula pra um valor do tipo float 
-				// que está dentro da tag <Size> do documento de texto(xml)
 				guiParticle.SetSizeParticle(xml.getValue<float>("Size"));
 			}
-			//se dentro de <EMITTER> existir a tag <Position>
 			if (xml.exists("Position")) {
-				//seta posição da particula pra um valor do tipo ofVex2f 
-				// que está dentro da tag <Position> do documento de texto(xml)
-				guiParticle.SetOrigin(xml.getValue<ofVec2f>("Position"));
+				ofVec2f tmp = xml.getValue<ofVec2f>("Position");
+				ofVec2f center(ofGetWidth() / 2.0f, ofGetHeight() / 2.0f);
+				if(tmp.x < center.x && tmp.y < center.y)
+					guiParticle.SetOrigin(tmp + center);
+				else
+					guiParticle.SetOrigin(tmp);
 			}
-			//se dentro de <EMITTER> existir a tag <Direction>
 			if (xml.exists("Direction")) {
-				//seta direção da particula pra um valor do tipo ofVex2f 
-				// que está dentro da tag <Direction> do documento de texto(xml)
 				guiParticle.SetDirection(xml.getValue<ofVec2f>("Direction"));
 			}
-			//se dentro de <EMITTER> existir a tag <OpenAngle>
 			if (xml.exists("OpenAngle")) {
 				guiParticle.SetOpenAngle(xml.getValue<float>("OpenAngle"));
 			}
-			//se dentro de <EMITTER> existir a tag <Lifetime>
 			if (xml.exists("Lifetime")) {
-				//seta tempo de vida da particula pra um valor do tipo float 
-				// que está dentro da tag <Lifetime> do documento de texto(xml)
 				guiParticle.SetLifeTime(xml.getValue<float>("Lifetime"));
 			}
-			//se dentro de <EMITTER> existir a tag <Velocity>
 			if (xml.exists("Velocity")) {
-				//seta speed da particula pra um valor do tipo float 
-				// que está dentro da tag <Velocity> do documento de texto(xml)
 				guiParticle.SetSpeed(xml.getValue<float>("Velocity"));
 			}
-			//se dentro de <EMITTER> existir a tag <TimeSpawn>
 			if (xml.exists("TimeSpawn")) {
-				//seta spawn da particula pra um valor do tipo float 
-				// que está dentro da tag <TimeSpawn> do documento de texto(xml)
 				guiParticle.SetSpawnTime(xml.getValue<float>("TimeSpawn"));
 			}
-			//se dentro de <EMITTER> existir a tag <Color>
 			if (xml.exists("Color")) {
-				//seta cor da particula pra um valor do tipo ofColor 
-				// que está dentro da tag <Color> do documento de texto(xml)
 				guiParticle.SetColor(xml.getValue<ofColor>("Color"));
 			}
 		}
@@ -121,6 +127,95 @@ void Storage::load(Gui &guiParticle) {
 }
 
 
-void Storage::load(ParticleEmission &Particle, ofXml &file) {
+// Cria botoes de acordo com as tags Colocadas no arquivos Tags.xml, 
+// verifica qual delas foi preciona e armazena essa tag ou tambem eh possivel digitar outras 
+std::string Storage::GetFather(std::vector<MyButton> &buttons) {
+	ofFile file("/particles/Tags.xml");
+	std::string outTag = "";
 
+	if (file.is_open()) {
+		ofXml tags(file.path());
+
+
+		int i = 0;
+
+		if (buttons.size() > 0) {
+			// Parte que ira verificar se alguns dos botoes de tag foi precionado
+			for (i = 0; i < buttons.size(); i++) {
+				buttons[i].Update();
+				if (buttons[i].IsPressed()) {
+					outTag = buttons[i].GetText();
+					break;
+				}
+
+			}
+			if (outTag == "Other") {
+				std::string tmpTag = ofSystemTextBoxDialog("Digite a Tag do objeto Pai:", "");
+				if (tmpTag == "") {
+					outTag = "NotSave";
+					buttons[i].SetValue(false);
+				}
+
+			}
+			else if (outTag == "Cancelar") {
+				outTag = "NotSave";
+				buttons[i].SetValue(false);
+			}
+		}
+		else{
+			// Carrega os botoes com as tags do arquivo
+			while (tags.exists("tag" + ofToString(i))) {
+				MyButton tmp(tags.getValue<string>("tag" + ofToString(i)), false, ofGetWidth() / 2.0f - 75, 100 + 50 * i, 150, 49);
+				tmp.SetColor(ofColor(120, 120, 120), ofColor(80, 80, 80));
+				buttons.push_back(tmp);
+				i++;
+			}
+
+			MyButton tmp("Other", false, ofGetWidth() / 2.0f - 75, 100 + 50 * i, 150, 49);
+			tmp.SetColor(ofColor(120, 120, 120), ofColor(80, 80, 80));
+			buttons.push_back(tmp);
+			i++;
+			tmp = MyButton("Cancelar", false, ofGetWidth() / 2.0f - 75, 100 + 50 * i, 150, 49);
+			tmp.SetColor(ofColor(120, 120, 120), ofColor(80, 80, 80));
+			buttons.push_back(tmp);
+		}
+
+	}
+	else {
+		outTag = ofSystemTextBoxDialog("Digite a Tag do objeto Pai:", "");
+	}
+
+	return outTag;
+}
+
+
+std::string Storage::GetFilePath(std::string &tag) {
+	ofDirectory directory("../data/particles");
+	directory.allowExt("xml");
+	directory.listDir();
+
+	for (int i = 0; i < directory.size(); i++) {
+		ofXml tmp(directory.getPath(i));
+		if (tmp.exists("Father") && tmp.getValue<std::string>("Father") == tag) {
+			return directory.getPath(i);
+		}
+	}
+
+	return "";
+}
+
+
+void Storage::AddOnTags(std::string &tag) {
+	std::string path = ofFile("../data/particles/Tags.xml").getAbsolutePath();
+	ofXml file(path);
+	std::cout << file.getName() << std::endl;
+	file.setTo("TAGS");
+	int cont = 0;
+	while (file.exists("tag" + ofToString(cont))) {
+		cont++;
+		std::cout << "contando " << std::endl;
+	}
+	std::cout << "Salvando " << tag << std::endl;
+	file.addValue("tag" + ofToString(cont), tag);
+	file.save(path);
 }

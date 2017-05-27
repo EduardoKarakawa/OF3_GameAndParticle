@@ -12,7 +12,6 @@ GameObject::GameObject()
 void GameObject::LoadNewImage(string folder, string image)
 {
 	m_image.load(folder + "/" + image);
-	std::cout << "Load image: " << image << std::endl;
 }
 
 
@@ -29,8 +28,6 @@ void GameObject::LoadNewAnimation(string folder)
 			m_images.push_back(ofImage());
 			m_images.back().load(filePath);
 		}
-
-		std::cout << "Load folder: " << folder << std::endl;
 
 	}
 	// Se nImage

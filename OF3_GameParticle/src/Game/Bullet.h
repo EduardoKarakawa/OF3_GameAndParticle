@@ -12,12 +12,12 @@ private:
 	int m_radius;
 	ofColor color;
 	float m_speed;
-	ofVec2f  m_direction;
+	ofVec2f m_direction;
 
 public:
-	Bullet(ofVec2f position, int direcao);
+	Bullet(const ofVec2f &position, const ofVec2f &direction);
 
-	bool Update(float &deltaTime);
+	bool Update(const float &deltaTime);
 	void Draw();
 
 };

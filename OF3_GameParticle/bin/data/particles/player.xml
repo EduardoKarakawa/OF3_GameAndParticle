@@ -1,0 +1,12 @@
+<EMITTER>
+	<Father>Player</Father>
+	<Sprite>/sprites/particula.png</Sprite>
+	<Size>37.55</Size>
+	<Position>3, 3</Position>
+	<Direction>-682, -686.735</Direction>
+	<OpenAngle>30</OpenAngle>
+	<Lifetime>1.5</Lifetime>
+	<Velocity>500</Velocity>
+	<TimeSpawn>0.03</TimeSpawn>
+	<Color>255, 144, 0, 113</Color>
+</EMITTER>

@@ -18,13 +18,13 @@
     <ClCompile Include="src\Game\EnemyControl.cpp" />
     <ClCompile Include="src\Game\GameObject.cpp" />
     <ClCompile Include="src\Game\GameStats.cpp" />
-    <ClCompile Include="src\Game\GameTime.cpp" />
     <ClCompile Include="src\Game\Menu.cpp" />
     <ClCompile Include="src\Game\Player.cpp" />
     <ClCompile Include="src\KenjiGUI\MyButton.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\ofApp.cpp" />
     <ClCompile Include="src\Editor\Storage.cpp" />
+    <ClCompile Include="src\Game\GameControl.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\..\..\..\Temp\of_v0.9.8_vs_release\addons\ofxGui\src\ofxBaseGui.h" />
@@ -45,12 +45,12 @@
     <ClInclude Include="src\Game\EnemyControl.h" />
     <ClInclude Include="src\Game\GameObject.h" />
     <ClInclude Include="src\Game\GameStats.h" />
-    <ClInclude Include="src\Game\GameTime.h" />
     <ClInclude Include="src\Game\Menu.h" />
     <ClInclude Include="src\Game\Player.h" />
     <ClInclude Include="src\KenjiGUI\MyButton.h" />
     <ClInclude Include="src\ofApp.h" />
     <ClInclude Include="src\Editor\Storage.h" />
+    <ClInclude Include="src\Game\GameControl.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="icon.rc" />

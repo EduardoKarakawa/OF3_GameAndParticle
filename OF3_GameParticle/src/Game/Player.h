@@ -6,33 +6,37 @@
 #include "Bullet.h"
 #include "../Editor/ParticleEmission.h"
 #define MAX_TIME_SHOOTING 0.2f
+#define FRICTION_PORCENT 0.3f
+#define SPEED 
 
-class Player : public GameObject
-{
-private:
-	bool m_keyRight, m_keyLeft, m_keyUp, m_keyDown, m_keyZ, m_keySpace;
-	bool m_keyW, m_keyS, m_keyA, m_keyD;
-	int m_radius, m_keyArrow;
-	float m_speed;
-	float m_cooldownShooting;
-	vector<Bullet*> bullets;
-	ParticleEmission m_particle;
+	class Player : public GameObject{
+	private:
+		int m_radius;
+		float m_speed;
+		float m_cooldownShooting;
+		//vector<Bullet> m_bullets;
+		ParticleEmission m_particle;
+		ofVec2f m_mousePosition;
+		ofVec2f m_direction;
+		bool m_moving;
 
-public:
-	Player(std::string tag, int width, int height, float speed);
-	~Player();
-	void AddCounter();
+	public:
+		Player();
+		Player(std::string tag, int width, int height, float speed);
+		~Player();
 
-	void Update(float &deltaTime);
-	void Draw();
-	void Press(int a);
-	void Release(int a);
+		void Update(const float &deltaTime);
+		void Draw();
+		void SetDirectionX(int x);
+		void SetDirectionY(int y);
+		void Shooting(bool value);
+		void SetMousePosition(const int &x, const int &y);
 
-	int GetArrowKey() const;
-	bool GetShooting();
 
-	// -- Controle dos Tiros --
-	void EraseBullet(int i);
-	int GetVectorBulSize() const;
-	ofVec2f GetBulletPosition(int i) const;
+
+		// -- Controle dos Tiros --
+		const ParticleEmission & GetShotParticle() const;
+		//void EraseBullet(int i);
+		//int GetVectorBulSize() const;
+		//ofVec2f GetBulletPosition(int i) const;
 };
