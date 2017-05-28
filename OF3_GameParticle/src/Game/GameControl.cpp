@@ -30,7 +30,6 @@ void GameControl::Update(float &deltatime, GameStats &status) {
 }
 
 void GameControl::Draw() {
-
 	m_player.Draw();
 	m_enemyControl.Draw();
 	m_exit.Draw();

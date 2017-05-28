@@ -8,10 +8,8 @@ void ParticleEmission::SetDirection(ofVec2f direction)		{ m_direction = directio
 void ParticleEmission::SetOpenAngle(float openAngle)		{ m_openAngle = openAngle; }
 void ParticleEmission::SetSpeed(float speed)				{ m_velocity = speed; }
 void ParticleEmission::SetLifeTime(float lifeTime)			{ m_maxLifeTime = lifeTime; }
-void ParticleEmission::SetSprite(string sprite)				{ m_sprite.loadImage(sprite); }
 void ParticleEmission::SetSpawnTime(float timeSpawn)		{ m_timeSpawnParticle = timeSpawn; }
 void ParticleEmission::SetColor(ofColor color)				{ m_color = color; }
-void ParticleEmission::SetSizeParticle(float radius)		{ m_radius = radius; }
 void ParticleEmission::SetParticleProcess(bool process)		{ m_enableParticles = process;}
 void ParticleEmission::SetFatherTag(std::string fatherTag)	{ m_fatherTag = fatherTag; }
 void ParticleEmission::SetEnable(bool value)				{ m_enableParticles = value; }
@@ -30,6 +28,17 @@ const ofColor ParticleEmission::GetColor() const { return m_color; }
 const float ParticleEmission::GetSizeParticle() const { return m_radius; }
 const std::string ParticleEmission::GetFatherTag() const { return m_fatherTag; }
 bool ParticleEmission::IsEnable() { return m_enableParticles; }
+
+void ParticleEmission::SetSprite(string sprite) {
+	m_spriteLocal = sprite;
+	m_sprite.loadImage(m_spriteLocal);
+}
+
+void ParticleEmission::SetSizeParticle(float radius) {
+	m_radius = radius;
+	m_sprite.load(m_spriteLocal);
+	m_sprite.resize(m_radius, m_radius);
+}
 
 
 ParticleEmission::ParticleEmission(){
@@ -82,7 +91,6 @@ void ParticleEmission::Update(const float &deltaTime)
 {
 
 	if (m_enableParticles) {
-		m_sprite.resize(m_radius, m_radius);
 		// Atualiza a lista de particulas do sistema de particula, chama o DestroyParticle se a particula atingiu o tempo maximo de vida
 		// cria uma nova particula caso o tempo ultrapasse o tempo de spawn
 		m_spawnTimeCont += deltaTime;

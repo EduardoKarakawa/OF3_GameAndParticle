@@ -1,12 +1,12 @@
 <EMITTER>
 	<Father>Player</Father>
-	<Sprite>/sprites/particula.png</Sprite>
-	<Size>37.55</Size>
+	<Sprite>C:\Users\B155 FIRE V3\Source\Repos\OF3_GameParticle\OF3_GameParticle\bin\data\sprites\enemy.png</Sprite>
+	<Size>-4.31602e+08</Size>
 	<Position>3, 3</Position>
-	<Direction>-682, -686.735</Direction>
-	<OpenAngle>30</OpenAngle>
-	<Lifetime>1.5</Lifetime>
-	<Velocity>500</Velocity>
-	<TimeSpawn>0.03</TimeSpawn>
-	<Color>255, 144, 0, 113</Color>
+	<Direction>-2048, -3321</Direction>
+	<OpenAngle>63.825</OpenAngle>
+	<Lifetime>10.244</Lifetime>
+	<Velocity>55</Velocity>
+	<TimeSpawn>0.48603</TimeSpawn>
+	<Color>255, 255, 255, 255</Color>
 </EMITTER>

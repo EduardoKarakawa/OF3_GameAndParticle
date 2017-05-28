@@ -12,8 +12,8 @@
 class ParticleEditor{
 	private:
 		ParticleEmission m_particlesList;
-		std::vector<MyButton> m_buttons;
-		std::string tag;
+
+		//std::string tag;
 		
 	public:
 		Gui m_guiEditor;
@@ -25,8 +25,6 @@ class ParticleEditor{
 		void Setup();
 		void Update(float &deltaTime);
 		void Draw();
-		void Reset();
-		void Save();
-		void Load();
 		void SetMousePosition(int &x, int &y);
+		
 };
