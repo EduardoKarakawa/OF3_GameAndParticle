@@ -19,8 +19,6 @@
 		ofVec2f m_mousePosition;
 		ofVec2f m_direction;
 		bool m_moving;
-		int m_life;
-		ofImage m_imageLife;
 
 	public:
 		Player();
@@ -34,9 +32,6 @@
 		void Shooting(bool value);
 		void SetMousePosition(const int &x, const int &y);
 
-		//Para o controle da vida do Player que é feito no EnemyControl
-		void LessLife(); //Diminui a vida do Player
-		int GetLife() const;
 
 
 		// -- Controle dos Tiros --

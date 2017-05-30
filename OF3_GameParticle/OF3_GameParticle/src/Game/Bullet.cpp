@@ -8,7 +8,8 @@ Bullet::Bullet(const ofVec2f &position, const ofVec2f &direction)
 	m_position = position;
 	m_direction = direction;
 
-	LoadNewAnimation("Bullet");
+	// Seta o tamanho do tiro
+	m_radius = 10;
 
 	// Seta o speed
 	m_speed = BULLET_SPEED;
@@ -27,7 +28,7 @@ bool Bullet::Update(const float &deltaTime)
 	m_position += m_direction * m_speed * deltaTime;
 
 	//Se a bala sair da tela, ela será apagada no ofApp
-	if(OnScreen())
+	if (m_position.x > ofGetWidth() || m_position.x < 0 || m_position.y > ofGetHeight() || m_position.y < 0)
 		return false;
 
 	return true;
@@ -38,6 +39,7 @@ void Bullet::Draw()
 {
 	// Verifica se o tiro esta dentro da tela usando OnScreen() que eh uma funcao que esta na classe GameObject
 	// e desenha ela
-	this->DrawAnimation();
+	ofSetColor(color);
+	ofDrawCircle(m_position.x, m_position.y, m_radius);
 
 }

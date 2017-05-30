@@ -39,7 +39,7 @@ void GameObject::LoadNewAnimation(string folder)
 // Desenha na posicao atual
 void GameObject::DrawImage()
 {
-	m_image.draw(m_position.x, m_position.y);
+	m_image.draw(m_position.x, m_position.y, m_width, m_height);
 }
 
 
@@ -47,7 +47,7 @@ void GameObject::DrawImage()
 void GameObject::DrawImage(int x, int y)
 {
 	m_position.set(x, y);
-	m_image.draw(m_position.x, m_position.y);
+	m_image.draw(m_position.x, m_position.y, m_width, m_height);
 }
 
 
@@ -64,7 +64,8 @@ void GameObject::DrawAnimation()
 	m_images[m_iFrame].draw(m_position.x, m_position.y, m_width, m_height);
 }
 
-// Desenha um sprite em uma posicao e com um tamanho passada por parametro
+
+// Desenha um sprite em uma posicao passada por parametro
 // baseando no tempo decorrido 
 void GameObject::DrawAnimation(int x, int y)
 {
@@ -74,7 +75,20 @@ void GameObject::DrawAnimation(int x, int y)
 	}
 
 	m_iFrame = (int)(ofGetElapsedTimef() * m_sequenceFPS) % m_images.size();
-	m_images[m_iFrame].draw(x, y);
+	m_images[m_iFrame].draw(x, y, m_width, m_height);
+}
+
+// Desenha um sprite em uma posicao e com um tamanho passada por parametro
+// baseando no tempo decorrido 
+void GameObject::DrawAnimation(int x, int y, int w, int h)
+{
+	if ((int)m_images.size() <= 0) {
+		ofSetColor(255);
+		ofDrawBitmapString("No Images...", 150, ofGetHeight() / 2);
+	}
+
+	m_iFrame = (int)(ofGetElapsedTimef() * m_sequenceFPS) % m_images.size();
+	m_images[m_iFrame].draw(x, y, w, h);
 }
 
 // Desenha um sprite passando o index por parametro

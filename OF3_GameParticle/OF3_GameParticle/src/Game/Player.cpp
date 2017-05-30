@@ -20,13 +20,6 @@ Player::Player(std::string tag, int width, int height, float speed)
 
 	m_moving = false;
 	m_particle.SearchParticleConfig(tag);
-
-	//Vida do Player
-	m_life = 3;
-	m_imageLife.loadImage("GameSprites/Heart.png");
-
-	//Carrega a sprite do Player
-	LoadNewImage("GameSprites","Player.png");
 }
 
 // Construtor do player
@@ -81,24 +74,15 @@ void Player::Update(const float &deltaTime)
 // Desenha o Player
 void Player::Draw()
 {
+	m_particle.Draw();
 	
 	// Verifica se o player esta dentro da tela e desenha ele
 	if (OnScreen()) 
 	{
 		// Desenha o Player
-		DrawImage();
+		ofSetColor(0,0,0);
+		ofDrawCircle(m_position.x, m_position.y, m_radius);
 	}
-
-	//Desenha a quantidade de vida do player
-	for (int i = 0; i < m_life; i++)
-	{
-		int x = 36 + 36*i;
-		int y = 36;
-		m_imageLife.draw(x, y);
-	}
-
-
-	m_particle.Draw();
 
 	//// Desenha os tiros
 
@@ -109,17 +93,6 @@ void Player::Draw()
 	//		m_bullets.at(i).Draw();
 	//	}
 	//}
-}
-
-// Diminui a vida do Player
-void Player::LessLife()
-{
-	m_life--;
-}
-
-int Player::GetLife() const
-{
-	return m_life;
 }
 
 void Player::SetDirectionX(int x) { m_direction.x = x; }
