@@ -15,8 +15,7 @@ Particle::Particle(ofVec2f origin, ofVec2f direction, float openAngle, float spe
 {
 	// Inicia os parametros da particula, criar uma direcao aleatoria para a particula de acordo com a direcao e angulo de abertura passada.
 	m_position = origin;
-	float tmp = (-openAngle / 2.0f + rand() % (int)openAngle) * PI / 180.0f;
-	float angle = atan2f(direction.y - origin.y, direction.x - origin.x) + tmp;
+	float angle = atan2f(direction.y - origin.y, direction.x - origin.x) + openAngle;
 	m_direction = ofVec2f(cosf(angle), sinf(angle)).normalized();
 	m_velocity = speed;
 	m_lifeTime = lifeTime;

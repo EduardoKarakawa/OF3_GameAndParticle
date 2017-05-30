@@ -12,12 +12,12 @@ class ParticleEmission
 	private:
 		ofVec2f *m_fatherPosition;
 		ofVec2f m_position;
-		bool m_isLoad;
 		std::string m_spriteLocal;
 		std::string m_fatherTag;
 		ofImage m_sprite;
 		ofVec2f m_direction;
 		ofColor m_color;
+		int m_totalByTime; 
 		float m_openAngle;
 		float m_maxLifeTime;
 		float m_velocity;
@@ -26,6 +26,8 @@ class ParticleEmission
 		float m_radius;
 		bool m_enableParticles;
 		float m_timeCountSweep;
+		bool m_chageSize;
+		bool m_randomDirection;
 		
 	public:
 		std::vector<Particle> m_particles; 
@@ -42,7 +44,6 @@ class ParticleEmission
 		void CreateParticle(const ofVec2f &fatherPosition);
 		void Draw();
 
-		bool IsEnable();
 		void SetOrigin(ofVec2f origin);
 		void SetDirection(ofVec2f direction);
 		void SetOpenAngle(float openAngle);
@@ -55,24 +56,28 @@ class ParticleEmission
 		void SetParticleProcess(bool process);
 		void SetFatherTag(std::string fatherTag);
 		void SetEnable(bool value);
+		void SetTotalOfSpawnParticle(int total);
+		void SetRandomDirection(bool value);
 
 
 		void SearchParticleConfig(std::string tag);
 
-		const ofVec2f GetOrigin() const;
-		const ofVec2f GetDirection() const;
-		const float GetOpenAngle() const;
-		const float GetSpeed() const;
-		const float GetLifeTime() const;
-		const string GetSprite() const;
-		const float GetSpawnTime() const;
-		const ofColor GetColor() const;
-		const float GetSizeParticle() const;
-		const std::string GetFatherTag() const;
+		const bool& IsEnable() const;
+		const ofVec2f& GetOrigin() const;
+		const ofVec2f& GetDirection() const;
+		const float& GetOpenAngle() const;
+		const float& GetSpeed() const;
+		const float& GetLifeTime() const;
+		const string& GetSprite() const;
+		const float& GetSpawnTime() const;
+		const ofColor& GetColor() const;
+		const float& GetSizeParticle() const;
+		const std::string& GetFatherTag() const;
+		const int& GetTotalOfSpawnParticle() const;
+		const bool& CollidedWith(const ofVec2f &other, float size) const;
 
-		bool CollidedWith(const ofVec2f &other, float size);
 
-
+		
 		void ListSweeping(bool speegin);
 };
 

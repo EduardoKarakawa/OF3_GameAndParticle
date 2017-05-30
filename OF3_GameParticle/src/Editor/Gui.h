@@ -12,12 +12,11 @@
 class Gui {
 	private:
 		std::string sprite;
-		ofxFloatSlider size, lifeTime, angle, radius, timeSpawn; //slider float
+		ofxFloatSlider size, lifeTime, angle, radius, timeSpawn, velocity; //slider float
 		ofxVec2Slider worldPos, direction; //slider vector
-		ofxIntSlider velocity; //slider int
+		ofxIntSlider totalSpawnByTime; //slider int
 		ofxColorSlider color; //slider color
-		ofxToggle drawParameters;
-		ofxToggle saveButton;
+		ofxToggle drawParameters, randomSpawn;
 		ofxPanel gui;
 		ofVec2f mousePositon, antPosition;
 		bool worldPosToMouse, directionPosToMouse;
@@ -42,6 +41,7 @@ class Gui {
 		void DrawDirectionAndCone(ofVec2f posit, ofVec2f direct);
 		void DrawCenterAxis();
 
+		void SetTotalParticleSpawn(int value);
 		void SetOrigin(ofVec2f origin);
 		void SetDirection(ofVec2f direction);
 		void SetOpenAngle(float openAngle);

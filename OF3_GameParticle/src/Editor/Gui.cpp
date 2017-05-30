@@ -1,6 +1,11 @@
 #include "Gui.h"
 #include "Storage.h"
 
+
+void Gui::SetTotalParticleSpawn(int value) {
+	this->totalSpawnByTime = value;
+	changeValues = true;
+}
 void Gui::SetOrigin(ofVec2f origin) { 
 	this->worldPos = origin; 
 	changeValues = true;
@@ -37,6 +42,7 @@ void Gui::SetSprite(string sprite) {
 	this->sprite = sprite; 
 	changeValues = true;
 }
+
 void Gui::MoveOriginParticle() { worldPosToMouse = !worldPosToMouse; }
 void Gui::MoveDirectionParticle() { directionPosToMouse = !directionPosToMouse; }
 
@@ -45,6 +51,10 @@ void Gui::Init() {
 	gui.setup();
 	// Desenha a direcao e cone de spawn
 	gui.add(drawParameters.setup		("Show Direction/Cone", true));
+
+	gui.add(totalSpawnByTime.setup		("Total to Spawn: ", 1, 1, 50));
+
+	gui.add(randomSpawn.setup			("Random Direction: ", false));	
 
 	// Define o tempo de vida da particula
 	gui.add(lifeTime.setup				("Life Time: ", 1.5f, 0.2f, 25));
@@ -63,7 +73,7 @@ void Gui::Init() {
 
 
 	// Botao toggle para calcular o local da particula apartir do centro
-	gui.add(localPosition.setup		("Local Position", true));
+	gui.add(localPosition.setup			("Local Position", true));
 
 	//Slider para setar a Posicao de Origem
 	gui.add(worldPos.setup				("Position Emissor: ",	ofVec2f(ofGetWidth()*.5, ofGetHeight()*.5), 
@@ -109,6 +119,7 @@ void Gui::Update(ParticleEmission &emissor) {
 
 	if (!m_saveButton.IsPressed()) {
 		emissor.SetParticleProcess(m_playButton.IsPressed());
+		emissor.SetRandomDirection(randomSpawn);
 		ChangeDirectionAndPosition();
 
 		if (changeValues || ParameterHasChanged(emissor)) {
@@ -121,6 +132,7 @@ void Gui::Update(ParticleEmission &emissor) {
 			emissor.SetSizeParticle(radius);
 			emissor.SetColor(color);
 			emissor.SetSprite(sprite);
+			emissor.SetTotalOfSpawnParticle(totalSpawnByTime);
 			emissor.ListSweeping(true);
 			changeValues = false;
 		}
@@ -144,7 +156,8 @@ void Gui::Update(ParticleEmission &emissor) {
 	}
 	if (m_loadImageButton.IsPressed()) {
 		ofFileDialogResult file = ofSystemLoadDialog("Load File", false, "sprites");
-		sprite = file.getPath();
+
+		sprite = file.getName() != "" ? file.getPath() : sprite;
 		emissor.SetSprite(sprite);
 		m_loadImageButton.SetValue(false);
 	}
@@ -285,15 +298,16 @@ void Gui::DrawCenterAxis() {
 bool Gui::ParameterHasChanged(const ParticleEmission &emissor) {
 	// Verifica se os parametros do emissor e do gui estao diferentes
 	changeValues = (
-					emissor.GetOrigin()			!= worldPos		||
-					emissor.GetDirection()		!= direction	||
-					emissor.GetOpenAngle()		!= angle		||
-					emissor.GetSpeed()			!= velocity		||
-					emissor.GetLifeTime()		!= lifeTime		||
-					emissor.GetSpawnTime()		!= timeSpawn	||
-					emissor.GetSizeParticle()	!= radius		||
-					emissor.GetColor()			!= color		||
-					emissor.GetSprite()			!= sprite
+					emissor.GetOrigin()					!= worldPos			||
+					emissor.GetDirection()				!= direction		||
+					emissor.GetOpenAngle()				!= angle			||
+					emissor.GetSpeed()					!= velocity			||
+					emissor.GetLifeTime()				!= lifeTime			||
+					emissor.GetSpawnTime()				!= timeSpawn		||
+					emissor.GetSizeParticle()			!= radius			||
+					emissor.GetColor()					!= color			||
+					emissor.GetSprite()					!= sprite			||
+					emissor.GetTotalOfSpawnParticle()	!= totalSpawnByTime
 					);
 
 	return changeValues;

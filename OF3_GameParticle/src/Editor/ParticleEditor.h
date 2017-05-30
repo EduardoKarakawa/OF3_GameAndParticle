@@ -12,8 +12,6 @@
 class ParticleEditor{
 	private:
 		ParticleEmission m_particlesList;
-
-		//std::string tag;
 		
 	public:
 		Gui m_guiEditor;
