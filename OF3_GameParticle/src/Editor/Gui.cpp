@@ -6,40 +6,40 @@ void Gui::SetTotalParticleSpawn(int value) {
 	this->totalSpawnByTime = value;
 	changeValues = true;
 }
-void Gui::SetOrigin(ofVec2f origin) { 
-	this->worldPos = origin; 
+void Gui::SetOrigin(ofVec2f origin) {
+	this->worldPos = origin;
 	changeValues = true;
 }
-void Gui::SetDirection(ofVec2f direction) { 
-	this->direction = direction; 
+void Gui::SetDirection(ofVec2f direction) {
+	this->direction = direction;
 	changeValues = true;
 }
-void Gui::SetOpenAngle(float openAngle) { 
-	this->angle = openAngle; 
+void Gui::SetOpenAngle(float openAngle) {
+	this->angle = openAngle;
 	changeValues = true;
 }
-void Gui::SetSpeed(float speed) { 
-	this->velocity = speed; 
+void Gui::SetSpeed(float speed) {
+	this->velocity = speed;
 	changeValues = true;
 }
-void Gui::SetSizeParticle(float radius) { 
-	this->radius = radius; 
+void Gui::SetSizeParticle(float radius) {
+	this->radius = radius;
 	changeValues = true;
 }
-void Gui::SetLifeTime(float lifeTime) { 
-	this->lifeTime = lifeTime; 
+void Gui::SetLifeTime(float lifeTime) {
+	this->lifeTime = lifeTime;
 	changeValues = true;
 }
-void Gui::SetSpawnTime(float timeSpawn) { 
-	this->timeSpawn = timeSpawn; 
+void Gui::SetSpawnTime(float timeSpawn) {
+	this->timeSpawn = timeSpawn;
 	changeValues = true;
 }
-void Gui::SetColor(ofColor color) { 
-	this->color = color; 
+void Gui::SetColor(ofColor color) {
+	this->color = color;
 	changeValues = true;
 }
-void Gui::SetSprite(string sprite) { 
-	this->sprite = sprite; 
+void Gui::SetSprite(string sprite) {
+	this->sprite = sprite;
 	changeValues = true;
 }
 
