@@ -4,6 +4,7 @@
 #include "ofxGui.h"
 #include "ofxLabel.h"
 #include "ParticleEmission.h"
+#include "ofSystemUtils.h"
 #include "of3dUtils.h"
 #include "../KenjiGUI/MyButton.h"
 
@@ -18,19 +19,24 @@ class Gui {
 		ofxToggle drawParameters;
 		ofxToggle saveButton;
 		ofxPanel gui;
-		float buttonHide;
 		ofVec2f mousePositon, antPosition;
 		bool worldPosToMouse, directionPosToMouse;
-	public: 
+		bool changeValues;
+		std::vector<MyButton> m_tagButtons;
 		ofxToggle localPosition;
 		MyButton m_saveButton, m_resetButton, m_loadButton;
-		MyButton m_playButton, m_exit;
+		MyButton m_playButton, m_loadImageButton;
+	
+	public:
+		MyButton m_exit;
 
+	private:
+		void DisableProcessParticle(ParticleEmission &emissor);
+		void CopyConfig(Gui &config);
 	public:
 		void Init();
 		void Update(ParticleEmission &emissor);
 		void Draw();
-		void Hide();
 		void SetMousePosition(int x, int y);
 		void ChangeDirectionAndPosition();
 		void DrawDirectionAndCone(ofVec2f posit, ofVec2f direct);

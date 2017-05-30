@@ -33,7 +33,9 @@ void Storage::save(const ParticleEmission &particle, std::string fatherTag) {
 		}
 	}
 
-	else if (path != "") {
+
+
+	if (path != "") {
 
 		// Verifica se tem .xml no final do path, se nao tiver ele eh colocado
 		hasXml = path[path.length() - 4] == '.' &&
@@ -80,7 +82,8 @@ void Storage::save(const ParticleEmission &particle, std::string fatherTag) {
 //string referente ao nome do documento de texto(xml)
 void Storage::load(Gui &guiParticle) {
 	//cria documento de texto(xml)
-	ofFileDialogResult file = ofSystemLoadDialog("Load File");
+	ofFileDialogResult file = ofSystemLoadDialog("Load File", false, "particles");
+
 	if (file.bSuccess) {
 		string path = file.getPath();
 		ofXml xml;
@@ -121,6 +124,10 @@ void Storage::load(Gui &guiParticle) {
 				guiParticle.SetColor(xml.getValue<ofColor>("Color"));
 			}
 		}
+		else {
+			ofSystemAlertDialog("Nao foi possivel carregar o arquivo");
+		}
+
 	}
 
 	
@@ -154,6 +161,9 @@ std::string Storage::GetFather(std::vector<MyButton> &buttons) {
 				if (tmpTag == "") {
 					outTag = "NotSave";
 					buttons[i].SetValue(false);
+				}
+				else {
+					outTag = tmpTag;
 				}
 
 			}
@@ -197,10 +207,11 @@ std::string Storage::GetFilePath(std::string &tag) {
 	for (int i = 0; i < directory.size(); i++) {
 		ofXml tmp(directory.getPath(i));
 		if (tmp.exists("Father") && tmp.getValue<std::string>("Father") == tag) {
-			return directory.getPath(i);
+			return "/particles/" + directory.getFile(i).getFileName();
 		}
 	}
 
+	std::cout << "Erro aki" << std::endl;
 	return "";
 }
 

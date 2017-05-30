@@ -1,14 +1,42 @@
 #include "Gui.h"
+#include "Storage.h"
 
-void Gui::SetSprite(string sprite) { this->sprite = sprite; }
-void Gui::SetOrigin(ofVec2f origin) { this->worldPos = origin; }
-void Gui::SetDirection(ofVec2f direction) { this->direction = direction;}
-void Gui::SetOpenAngle(float openAngle) { this->angle = openAngle; }
-void Gui::SetSpeed(float speed) { this->velocity = speed; }
-void Gui::SetSizeParticle(float radius) { this->radius = radius; }
-void Gui::SetLifeTime(float lifeTime) { this->lifeTime = lifeTime; }
-void Gui::SetSpawnTime(float timeSpawn) { this->timeSpawn = timeSpawn; }
-void Gui::SetColor(ofColor color) { this->color = color; }
+void Gui::SetOrigin(ofVec2f origin) { 
+	this->worldPos = origin; 
+	changeValues = true;
+}
+void Gui::SetDirection(ofVec2f direction) { 
+	this->direction = direction; 
+	changeValues = true;
+}
+void Gui::SetOpenAngle(float openAngle) { 
+	this->angle = openAngle; 
+	changeValues = true;
+}
+void Gui::SetSpeed(float speed) { 
+	this->velocity = speed; 
+	changeValues = true;
+}
+void Gui::SetSizeParticle(float radius) { 
+	this->radius = radius; 
+	changeValues = true;
+}
+void Gui::SetLifeTime(float lifeTime) { 
+	this->lifeTime = lifeTime; 
+	changeValues = true;
+}
+void Gui::SetSpawnTime(float timeSpawn) { 
+	this->timeSpawn = timeSpawn; 
+	changeValues = true;
+}
+void Gui::SetColor(ofColor color) { 
+	this->color = color; 
+	changeValues = true;
+}
+void Gui::SetSprite(string sprite) { 
+	this->sprite = sprite; 
+	changeValues = true;
+}
 void Gui::MoveOriginParticle() { worldPosToMouse = !worldPosToMouse; }
 void Gui::MoveDirectionParticle() { directionPosToMouse = !directionPosToMouse; }
 
@@ -47,21 +75,24 @@ void Gui::Init() {
 	// Muda a cor das particulas
 	gui.add(color.setup					("Color: ", ofColor(255, 159, 17), ofColor(0, 0), ofColor(255, 255)));
 
-
 	// Define se esta movimentando a origem ou a direcao para falso
 	worldPosToMouse = false;
 	directionPosToMouse = false;
+	changeValues = true;
 
 
-	// Botao de save
+	// Botoes 
+	m_loadImageButton = MyButton("Image Load", false, 0, ofGetHeight() - 156, 203, 50);
+	m_loadImageButton.SetColor(ofColor(120, 120, 120), ofColor(80, 80, 80));
+
+	m_resetButton = MyButton("Reset", false, 0, ofGetHeight() - 103, 203, 50);
+	m_resetButton.SetColor(ofColor(120, 120, 120), ofColor(80, 80, 80));
+
 	m_saveButton = MyButton("Save", false, 0, ofGetHeight() - 50, 100, 50);
 	m_saveButton.SetColor(ofColor(120, 120, 120), ofColor(80, 80, 80));
 
 	m_loadButton = MyButton("Load", false, 103, ofGetHeight() - 50, 100, 50);
 	m_loadButton.SetColor(ofColor(120, 120, 120), ofColor(80, 80, 80));
-
-	m_resetButton = MyButton("Reset", false, 0, ofGetHeight() - 103, 203, 50);
-	m_resetButton.SetColor(ofColor(120, 120, 120), ofColor(80, 80, 80));
 
 	m_playButton = MyButton("Play", false, ofGetWidth() / 2.0f, ofGetHeight() - 50, 100, 50);
 	m_playButton.SetColor(ofColor(120, 120, 120), ofColor(80, 80, 80));
@@ -75,25 +106,34 @@ void Gui::Init() {
 }
 
 void Gui::Update(ParticleEmission &emissor) {
+
 	if (!m_saveButton.IsPressed()) {
+		emissor.SetParticleProcess(m_playButton.IsPressed());
 		ChangeDirectionAndPosition();
-		if (ParameterHasChanged(emissor)) {
+
+		if (changeValues || ParameterHasChanged(emissor)) {
 			emissor.SetOrigin(worldPos);
 			emissor.SetDirection(direction);
 			emissor.SetOpenAngle(angle);
 			emissor.SetSpeed(velocity);
 			emissor.SetLifeTime(lifeTime);
 			emissor.SetSpawnTime(timeSpawn);
-			emissor.SetSprite(sprite);
 			emissor.SetSizeParticle(radius);
 			emissor.SetColor(color);
+			emissor.SetSprite(sprite);
 			emissor.ListSweeping(true);
+			changeValues = false;
 		}
 
+		// Reajusta a posicao dos botoes de acordo com o tamanho da tela
+		m_loadImageButton.SetPosition(0, ofGetHeight() - 156);
+		m_resetButton.SetPosition(0, ofGetHeight() - 103);
 		m_saveButton.SetPosition(0, ofGetHeight() - 50);
 		m_loadButton.SetPosition(103, ofGetHeight() - 50);
-		m_resetButton.SetPosition(0, ofGetHeight() - 103);
 		m_playButton.SetPosition(ofGetWidth() / 2.0f, ofGetHeight() - 50);
+
+		// Updates dos botoes para verificar se eles foram precionados
+		m_loadImageButton.Update();
 		m_saveButton.Update();
 		m_loadButton.Update();
 		m_resetButton.Update();
@@ -102,30 +142,83 @@ void Gui::Update(ParticleEmission &emissor) {
 		m_exit.Update();
 
 	}
+	if (m_loadImageButton.IsPressed()) {
+		ofFileDialogResult file = ofSystemLoadDialog("Load File", false, "sprites");
+		sprite = file.getPath();
+		emissor.SetSprite(sprite);
+		m_loadImageButton.SetValue(false);
+	}
+
+	if (m_saveButton.IsPressed()) {
+		DisableProcessParticle(emissor);
+		//chama metodo save da classe Storage, parâmetros: ParticleEmission e string
+		std::string tag = STORAGE.GetFather(m_tagButtons);
+		if (tag == "NotSave") {
+			ofSystemAlertDialog("Save cancelado!");
+			m_saveButton.SetValue(false);
+		}
+		else if (tag != "") {
+			m_tagButtons.clear();
+			ofVec2f center(ofGetWidth() / 2.0f, ofGetHeight() / 2.0f);
+			if (localPosition) {
+				emissor.SetOrigin(emissor.GetOrigin() - center);
+				emissor.SetDirection(emissor.GetDirection() - center);
+			}
+			STORAGE.save(emissor, tag);
+			m_saveButton.SetValue(false);
+		}
+
+	}
+	// Verifica se o botao Load foi clicado e chama a funcao
+	else if (m_loadButton.IsPressed()) {
+		DisableProcessParticle(emissor);
+
+		//chama metodo load da classe Storage, parâmetros: ParticleEmission e string
+		Gui tmpGui;
+		tmpGui.Init();
+		STORAGE.load(tmpGui);
+		CopyConfig(tmpGui);
+
+		m_loadButton.SetValue(false);
+	}
+	else if (m_resetButton.IsPressed()) {
+		DisableProcessParticle(emissor);
+
+		Gui tmpGui = Gui();
+		tmpGui.Init();
+		STORAGE.reset(tmpGui, emissor);
+		CopyConfig(tmpGui);
+
+		emissor.m_particles.clear();
+		m_resetButton.SetValue(false);
+	}
 }
 
 void Gui::Draw() {
 
+	gui.draw();
 	m_saveButton.Draw();
 	m_resetButton.Draw();
 	m_loadButton.Draw();
 	m_playButton.Draw();
 	m_exit.Draw();
+	m_loadImageButton.Draw();
 	if (localPosition) {
 		DrawCenterAxis();
 	}
 
-	if (!buttonHide) {
-		gui.draw();
-	}
+
 	if (drawParameters) {
 		DrawDirectionAndCone(worldPos, direction);
 	}
 
-}
 
-void Gui::Hide() {
-	buttonHide = !buttonHide;
+	if (m_saveButton.IsPressed()) {
+		for (int i = 0; i < m_tagButtons.size(); i++) {
+			m_tagButtons[i].Draw();
+		}
+	}
+
 }
 
 void Gui::SetMousePosition(int x, int y) {
@@ -191,15 +284,34 @@ void Gui::DrawCenterAxis() {
 
 bool Gui::ParameterHasChanged(const ParticleEmission &emissor) {
 	// Verifica se os parametros do emissor e do gui estao diferentes
-	return (
-		emissor.GetOrigin()			!= worldPos		||
-		emissor.GetDirection()		!= direction	||
-		emissor.GetOpenAngle()		!= angle		||
-		emissor.GetSpeed()			!= velocity		||
-		emissor.GetLifeTime()		!= lifeTime		||
-		emissor.GetSpawnTime()		!= timeSpawn	||
-		emissor.GetSprite()			!= sprite		||
-		emissor.GetSizeParticle()	!= radius		||
-		emissor.GetColor()			!= color
-		);
+	changeValues = (
+					emissor.GetOrigin()			!= worldPos		||
+					emissor.GetDirection()		!= direction	||
+					emissor.GetOpenAngle()		!= angle		||
+					emissor.GetSpeed()			!= velocity		||
+					emissor.GetLifeTime()		!= lifeTime		||
+					emissor.GetSpawnTime()		!= timeSpawn	||
+					emissor.GetSizeParticle()	!= radius		||
+					emissor.GetColor()			!= color		||
+					emissor.GetSprite()			!= sprite
+					);
+
+	return changeValues;
+}
+
+void Gui::DisableProcessParticle(ParticleEmission &emissor) {
+	m_playButton.SetValue(false);
+	emissor.SetParticleProcess(false);
+}
+
+void Gui::CopyConfig(Gui &config) {
+	SetSprite(config.sprite);
+	SetSizeParticle(config.size);
+	SetOrigin(config.worldPos);
+	SetDirection(config.direction);
+	SetOpenAngle(config.angle);
+	SetLifeTime(config.lifeTime);
+	SetSpeed(config.velocity);
+	SetSpawnTime(config.timeSpawn);
+	SetColor(config.color);
 }
