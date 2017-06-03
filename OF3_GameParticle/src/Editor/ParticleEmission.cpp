@@ -10,15 +10,16 @@ void ParticleEmission::SetSpeed(float speed)				{ m_velocity = speed; }
 void ParticleEmission::SetLifeTime(float lifeTime)			{ m_maxLifeTime = lifeTime; }
 void ParticleEmission::SetSpawnTime(float timeSpawn)		{ m_timeSpawnParticle = timeSpawn; }
 void ParticleEmission::SetColor(ofColor color)				{ m_color = color; }
-void ParticleEmission::SetParticleProcess(bool process)		{ m_enableParticles = process;}
+void ParticleEmission::SetParticleProcess(bool process)		{ m_enableParticles = process; }
 void ParticleEmission::SetFatherTag(std::string fatherTag)	{ m_fatherTag = fatherTag; }
 void ParticleEmission::SetEnable(bool value)				{ m_enableParticles = value; }
-void ParticleEmission::SetTotalOfSpawnParticle(int total)	{ m_totalByTime = total;}
-void ParticleEmission::SetRandomDirection(bool value)		{ m_randomDirection = value;}
+void ParticleEmission::SetTotalOfSpawnParticle(int total)	{ m_totalByTime = total; }
+void ParticleEmission::SetRandomDirection(bool value)		{ m_randomDirection = value; }
 
 //criei metodos getters pra poder pegar os valores e salvar
 
 const ofVec2f& ParticleEmission::GetOrigin() const { return m_position; }
+const bool& ParticleEmission::IsRamdomSpawn() const { return m_randomDirection; }
 const ofVec2f& ParticleEmission::GetDirection() const { return m_direction; }
 const float& ParticleEmission::GetOpenAngle() const { return m_openAngle; }
 const float& ParticleEmission::GetSpeed() const { return m_velocity; }
@@ -113,7 +114,7 @@ void ParticleEmission::Update(const float &deltaTime)
 
 			// Atualiza a particula a particula que estiver viva
 			if (m_particles[i].IsLife() && m_particles[i].OnScreen(windowSize.x, windowSize.y)) {
-				m_particles[i].Update(m_position, deltaTime);
+				m_particles[i].Update(deltaTime);
 			}
 			else {
 				bool adicinar = true;
@@ -159,7 +160,7 @@ void ParticleEmission::Update(const float &deltaTime, ofVec2f *fatherPosition) {
 
 			// Atualiza a particula a particula que estiver viva
 			if (m_particles[i].IsLife() && m_particles[i].OnScreen(windowSize.x, windowSize.y)) {
-				m_particles[i].Update(position, deltaTime);
+				m_particles[i].Update(deltaTime);
 
 			}
 			else {
@@ -201,22 +202,25 @@ void ParticleEmission::CreateParticle()
 {
 	// Cria uma particula se ja tiver passado o tempo necessario para criar uma
 	if (m_spawnTimeCont > m_timeSpawnParticle) {
-		int tmp = (m_spawnTimeCont / m_timeSpawnParticle) * m_totalByTime;
+		int tmp = m_randomDirection ? (m_spawnTimeCont / m_timeSpawnParticle) * m_totalByTime : m_totalByTime;
 
-		float auxAngle = 0;
-		if (m_randomDirection) {
-			auxAngle = (-m_openAngle / 2.0f + rand() % (int)m_openAngle) * PI / 180.0f;
-		}
-		else {
-			auxAngle = (m_openAngle / m_totalByTime) * PI / 180.0f;
-		}
-
+		
+		float auxAngle = tmp > 1 ? (m_openAngle / tmp) * PI / 180.0f : 0;
+		float auxCont = -auxAngle * (tmp - 1) / 2.0f;
+		
 		if (m_particlesDead.size() > 0) {
 			for (int i = 0; i < m_particlesDead.size(); i++) {
 				// Inicializa a particula que esta morta
 				if (tmp > 0) {
-					m_particles[m_particlesDead[i]] = Particle(m_position, m_direction, auxAngle * tmp, m_velocity, m_maxLifeTime, m_color.a);
-					m_particlesDead.erase(m_particlesDead.begin() + i);
+					if (m_randomDirection) {
+						auxAngle = (-m_openAngle / 2.0f + rand() % (int)m_openAngle) * PI / 180.0f;
+						m_particles[m_particlesDead[i]] = Particle(m_position, m_direction, auxAngle, m_velocity, m_maxLifeTime, m_color.a);
+					}
+					else {
+						m_particles[m_particlesDead[i]] = Particle(m_position, m_direction, auxCont, m_velocity, m_maxLifeTime, m_color.a);
+					}
+					m_particlesDead.erase(m_particlesDead.begin() + i); 
+					auxCont += auxAngle;
 					tmp--;
 				}
 				else {
@@ -224,14 +228,22 @@ void ParticleEmission::CreateParticle()
 					break;
 				}
 			}
-		}
-		if(tmp > 0){
+		}	
 			 //Se nao particulas mortas, entao tem que ser criada uma
-			for (int i = 0; i < tmp; i++) {
+		while (tmp > 0) {
+			if (m_randomDirection) {
+
+				auxAngle = (-m_openAngle / 2.0f + rand() % (int)m_openAngle) * PI / 180.0f;
 				m_particles.push_back(Particle(m_position, m_direction, auxAngle * tmp, m_velocity, m_maxLifeTime, m_color.a));
 			}
-			m_spawnTimeCont = 0;
+			else {
+				m_particles.push_back(Particle(m_position, m_direction, auxCont, m_velocity, m_maxLifeTime, m_color.a));
+			}
+			auxCont += auxAngle;
+			auxCont *= -1;
+			tmp--;
 		}
+		m_spawnTimeCont = 0;
 	}
 
 }
@@ -239,34 +251,52 @@ void ParticleEmission::CreateParticle()
 void ParticleEmission::CreateParticle(ofVec2f const &fatherPosition) {
 
 	// Cria uma particula se ja tiver passado o tempo necessario para criar uma
-	if (m_spawnTimeCont > m_timeSpawnParticle) {
-		int tmp = m_spawnTimeCont / m_timeSpawnParticle;
+		if (m_spawnTimeCont > m_timeSpawnParticle) {
+			int tmp = m_randomDirection ? (m_spawnTimeCont / m_timeSpawnParticle) * m_totalByTime : m_totalByTime;
 
-		ofVec2f direction = m_direction + m_position + fatherPosition;
-		ofVec2f position = m_position + fatherPosition;
+			float auxAngle = tmp > 1 ? (m_openAngle / tmp) * PI / 180.0f : 0;
+			float auxCont = -auxAngle * (tmp - 1) / 2.0f;
 
-		if (m_particlesDead.size() > 0) {
-			for (int i = 0; i < m_particlesDead.size(); i++) {
-				// Inicializa a particula que esta morta
-				if (tmp > 0) {
-					m_particles[m_particlesDead[i]] = Particle(position, direction, m_openAngle, m_velocity, m_maxLifeTime, m_color.a);
-					m_particlesDead.erase(m_particlesDead.begin() + i);
-					tmp--;
-					m_spawnTimeCont -= m_timeSpawnParticle;
+			ofVec2f direction = m_direction + m_position + fatherPosition;
+			ofVec2f position = m_position + fatherPosition;
+
+			if (m_particlesDead.size() > 0) {
+				for (int i = 0; i < m_particlesDead.size(); i++) {
+					// Inicializa a particula que esta morta
+					if (tmp > 0) {
+						if (m_randomDirection) {
+							auxAngle = (-m_openAngle / 2.0f + rand() % (int)m_openAngle) * PI / 180.0f;
+							m_particles[m_particlesDead[i]] = Particle(position, direction, auxAngle, m_velocity, m_maxLifeTime, m_color.a);
+						}
+						else {
+							m_particles[m_particlesDead[i]] = Particle(position, direction, auxCont, m_velocity, m_maxLifeTime, m_color.a);
+						}
+						m_particlesDead.erase(m_particlesDead.begin() + i);
+						auxCont += auxAngle;
+						tmp--;
+					}
+					else {
+						m_spawnTimeCont = 0;
+						break;
+					}
+				}
+			}
+			//Se nao particulas mortas, entao tem que ser criada uma
+			while (tmp > 0) {
+				if (m_randomDirection) {
+
+					auxAngle = (-m_openAngle / 2.0f + rand() % (int)m_openAngle) * PI / 180.0f;
+					m_particles.push_back(Particle(position, direction, auxAngle * tmp, m_velocity, m_maxLifeTime, m_color.a));
 				}
 				else {
-					break;
+					m_particles.push_back(Particle(position, direction, auxCont, m_velocity, m_maxLifeTime, m_color.a));
 				}
+				auxCont += auxAngle;
+				auxCont *= -1;
+				tmp--;
 			}
+			m_spawnTimeCont = 0;
 		}
-		else {
-			//Se nao particulas mortas, entao tem que ser criada uma
-			for (int i = 0; i < tmp; i++) {
-				m_particles.push_back(Particle(position, direction, m_openAngle, m_velocity, m_maxLifeTime, m_color.a));
-				m_spawnTimeCont -= m_timeSpawnParticle;
-			}
-		}
-	}
 
 }
 
@@ -311,6 +341,12 @@ void ParticleEmission::SearchParticleConfig(std::string tag) {
 					}
 					if (file.exists("Size")) {
 						SetSizeParticle(file.getValue<float>("Size"));
+					}
+					if (file.exists("TotalSpawn")) {
+						SetTotalOfSpawnParticle(file.getValue<int>("TotalSpawn"));
+					}
+					if (file.exists("RandomSpawn")) {
+						SetRandomDirection(file.getValue<bool>("RandomSpawn"));
 					}
 					if (file.exists("Position")) {
 						SetOrigin(file.getValue<ofVec2f>("Position"));

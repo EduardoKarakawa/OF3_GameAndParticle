@@ -28,6 +28,7 @@ public:
 	void DrawImage(int x, int y);
 	void DrawAnimation();
 	void DrawAnimation(int x, int y);
+	void DrawAnimation(int x, int y, int w, int h);
 	void DrawAnimationFrame(int frame);
 
 	ofVec2f GetPosition() const;

@@ -51,6 +51,7 @@ class Gui {
 		void SetSprite(string sprite);
 		void SetSpawnTime(float timeSpawn);
 		void SetColor(ofColor color);
+		void SetRandomSpawn(bool value);
 
 		void MoveOriginParticle();
 		void MoveDirectionParticle();

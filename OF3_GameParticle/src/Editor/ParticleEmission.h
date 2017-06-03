@@ -63,6 +63,7 @@ class ParticleEmission
 		void SearchParticleConfig(std::string tag);
 
 		const bool& IsEnable() const;
+		const bool& IsRamdomSpawn() const;
 		const ofVec2f& GetOrigin() const;
 		const ofVec2f& GetDirection() const;
 		const float& GetOpenAngle() const;

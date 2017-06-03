@@ -18,9 +18,6 @@ Enemy::Enemy(ofVec2f playerPos)
 
 	int i = rand() % 4; 
 	m_particle.SearchParticleConfig("Enemy" + ofToString(i));
-
-	//Carrega a sprite
-	LoadNewImage("GameSprites", "Enemy.png");
 }
 
 
@@ -43,7 +40,8 @@ void Enemy::Draw()
 	m_particle.Draw();
 
 	if (m_position.x <= ofGetWidth() - 10 && m_position.x >= -10 && m_position.y <= ofGetHeight() - 10 && m_position.y >= -10) {
-		DrawImage();
+		ofSetColor(m_r, m_g, m_b);
+		ofDrawCircle(m_position.x, m_position.y, m_radius);
 	}
 }
 

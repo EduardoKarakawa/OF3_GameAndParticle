@@ -24,19 +24,19 @@ Particle::Particle(ofVec2f origin, ofVec2f direction, float openAngle, float spe
 	m_isDead = false;
 }
 
-void Particle::Update(ofVec2f origin, float deltaTime)
+void Particle::Update(const float & deltaTime)
 {
-	// Atualizar a posicao da particula
-	m_position += m_direction * m_velocity * deltaTime;
-	
-	// Atualiza o tempo de vida da particula
-	m_lifeTime -= deltaTime;
+	if (!m_isDead) {
+		// Atualizar a posicao da particula
+		m_position += m_direction * m_velocity * deltaTime;
 
-	// Decrementa a opacidade de acordo com o tempo de vida da particula
-	m_opacity -= m_opacity < 0 ? 0 : m_startOpacity / m_lifeTime * deltaTime;
+		// Atualiza o tempo de vida da particula
+		m_lifeTime -= deltaTime;
 
-	if (m_lifeTime) {
-		m_isDead = true;
+		// Decrementa a opacidade de acordo com o tempo de vida da particula
+		m_opacity -= m_opacity < 0 ? 0 : m_startOpacity / m_lifeTime * deltaTime;
+
+		m_isDead = !OnScreen(ofGetWidth(), ofGetHeight()) || m_lifeTime <= 0;
 	}
 }
 
@@ -48,12 +48,14 @@ bool Particle::IsLife()
 
 void Particle::Draw(ofImage sprite, ofColor color, ofVec2f origin)
 {
-	// Seta uma cor e define a opcidade de acordo com o tempo de vida calculado na funcao Update
-	ofSetColor(color, m_opacity);
-	
-	// Desenha a particula apartir da posicao de origem, no caso onde a orgem da particula estiver + a posicao da particula atual
-	//sprite.draw(m_position.x - sprite.getWidth() / 2.0f, m_position.y - sprite.getHeight() / 2.0f);
-	sprite.draw(m_position.x - sprite.getWidth() / 2.0f, m_position.y - sprite.getHeight() / 2.0f);
+	if (!m_isDead) {
+		// Seta uma cor e define a opcidade de acordo com o tempo de vida calculado na funcao Update
+		ofSetColor(color, m_opacity);
+
+		// Desenha a particula apartir da posicao de origem, no caso onde a orgem da particula estiver + a posicao da particula atual
+		//sprite.draw(m_position.x - sprite.getWidth() / 2.0f, m_position.y - sprite.getHeight() / 2.0f);
+		sprite.draw(m_position.x - sprite.getWidth() / 2.0f, m_position.y - sprite.getHeight() / 2.0f);
+	}
 }
 
 

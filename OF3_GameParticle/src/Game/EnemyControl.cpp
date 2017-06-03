@@ -29,14 +29,10 @@ void EnemyControl::Update( float &deltaTime, Player &player, GameStats &gameS)
 			ofVec2f enePos = enemy.at(i).GetPosition();
 			if (enePos.distance(player.GetPosition()) < 30)
 			{
-				player.LessLife();
-				enemy.erase(enemy.begin() + i);
-				i--;
-				
-			}
 
-			if (player.GetLife() <= 0)
 				gameS.ChangeStats(0);
+
+			}
 
 		}
 

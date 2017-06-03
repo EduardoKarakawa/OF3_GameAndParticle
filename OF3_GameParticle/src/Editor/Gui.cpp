@@ -42,6 +42,7 @@ void Gui::SetSprite(string sprite) {
 	this->sprite = sprite;
 	changeValues = true;
 }
+void Gui::SetRandomSpawn(bool value) { randomSpawn = value; }
 
 void Gui::MoveOriginParticle() { worldPosToMouse = !worldPosToMouse; }
 void Gui::MoveDirectionParticle() { directionPosToMouse = !directionPosToMouse; }
@@ -328,4 +329,6 @@ void Gui::CopyConfig(Gui &config) {
 	SetSpeed(config.velocity);
 	SetSpawnTime(config.timeSpawn);
 	SetColor(config.color);
+	SetTotalParticleSpawn(config.totalSpawnByTime);
+	SetRandomSpawn(config.randomSpawn);
 }

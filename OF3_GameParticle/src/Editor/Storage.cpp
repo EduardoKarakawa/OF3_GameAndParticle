@@ -57,6 +57,8 @@ void Storage::save(const ParticleEmission &particle, std::string fatherTag) {
 
 		//cria "subtags" dentro da tag EMITTER com todos os parâmetros necessários
 		xml.addValue("Father", fatherTag);
+		xml.addValue("TotalSpawn", particle.GetTotalOfSpawnParticle());
+		xml.addValue("RandomSpawn", particle.IsRamdomSpawn());
 		xml.addValue("Sprite", particle.GetSprite());
 		xml.addValue("Size", particle.GetSizeParticle());
 
@@ -96,6 +98,12 @@ void Storage::load(Gui &guiParticle) {
 			}
 			if (xml.exists("Size")) {
 				guiParticle.SetSizeParticle(xml.getValue<float>("Size"));
+			}
+			if (xml.exists("TotalSpawn")) {
+				guiParticle.SetTotalParticleSpawn(xml.getValue<int>("TotalSpawn"));
+			}
+			if (xml.exists("RandomSpawn")) {
+				guiParticle.SetRandomSpawn(xml.getValue<bool>("RandomSpawn"));
 			}
 			if (xml.exists("Position")) {
 				ofVec2f tmp = xml.getValue<ofVec2f>("Position");
