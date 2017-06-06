@@ -168,7 +168,7 @@ std::string Storage::GetFather(std::vector<MyButton> &buttons) {
 				std::string tmpTag = ofSystemTextBoxDialog("Digite a Tag do objeto Pai:", "");
 				if (tmpTag == "") {
 					outTag = "NotSave";
-					buttons[i].SetValue(false);
+					buttons[i].SetToggleValue(false);
 				}
 				else {
 					outTag = tmpTag;
@@ -177,23 +177,23 @@ std::string Storage::GetFather(std::vector<MyButton> &buttons) {
 			}
 			else if (outTag == "Cancelar") {
 				outTag = "NotSave";
-				buttons[i].SetValue(false);
+				buttons[i].SetToggleValue(false);
 			}
 		}
 		else{
 			// Carrega os botoes com as tags do arquivo
 			while (tags.exists("tag" + ofToString(i))) {
-				MyButton tmp(tags.getValue<string>("tag" + ofToString(i)), false, ofGetWidth() / 2.0f - 75, 100 + 50 * i, 150, 49);
+				MyButton tmp(tags.getValue<string>("tag" + ofToString(i)), MyButton::FONT_CENTER, 0, false, ofGetWidth() / 2.0f - 75, 100 + 50 * i, 150, 49);
 				tmp.SetColor(ofColor(120, 120, 120), ofColor(80, 80, 80));
 				buttons.push_back(tmp);
 				i++;
 			}
 
-			MyButton tmp("Other", false, ofGetWidth() / 2.0f - 75, 100 + 50 * i, 150, 49);
+			MyButton tmp("Other", MyButton::FONT_CENTER, 0, false, ofGetWidth() / 2.0f - 75, 100 + 50 * i, 150, 49);
 			tmp.SetColor(ofColor(120, 120, 120), ofColor(80, 80, 80));
 			buttons.push_back(tmp);
 			i++;
-			tmp = MyButton("Cancelar", false, ofGetWidth() / 2.0f - 75, 100 + 50 * i, 150, 49);
+			tmp = MyButton("Cancelar", MyButton::FONT_CENTER, 0, false, ofGetWidth() / 2.0f - 75, 100 + 50 * i, 150, 49);
 			tmp.SetColor(ofColor(120, 120, 120), ofColor(80, 80, 80));
 			buttons.push_back(tmp);
 		}

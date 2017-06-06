@@ -19,7 +19,6 @@ class ParticleEditor{
 
 	public:
 		ParticleEditor();
-		void LoadParticles();
 		void Setup();
 		void Update(float &deltaTime);
 		void Draw();

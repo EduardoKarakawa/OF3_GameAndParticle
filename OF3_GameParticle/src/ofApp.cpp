@@ -37,7 +37,7 @@ void ofApp::update() {
 		else {
 			_game.Update(_deltaTime, _gameStatus);
 			if (_game.m_exit.IsPressed()) {
-				_game.m_exit.SetValue(false);
+				_game.m_exit.SetToggleValue(false);
 				_gameStatus.ChangeStats(0);
 			}
 		}
@@ -47,7 +47,7 @@ void ofApp::update() {
 	case 2:
 		_particleEditor.Update(_deltaTime);
 		if (_particleEditor.m_guiEditor.m_exit.IsPressed()) {
-			_particleEditor.m_guiEditor.m_exit.SetValue(false);
+			_particleEditor.m_guiEditor.m_exit.SetToggleValue(false);
 			_gameStatus.ChangeStats(0);
 		}
 		break;
@@ -91,10 +91,6 @@ void ofApp::draw() {
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key) {
-	if (key == OF_KEY_BACKSPACE) {
-		_gameStatus.ChangeStats(0);
-	}
-
 
 	switch (_gameStatus.GetStatus())
 	{

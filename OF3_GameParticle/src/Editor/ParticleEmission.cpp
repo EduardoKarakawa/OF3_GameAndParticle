@@ -2,6 +2,7 @@
 #include "ParticleEmission.h"
 #include "Storage.h"
 
+
 ParticleEmission::~ParticleEmission() {}
 void ParticleEmission::SetOrigin(ofVec2f origin)			{ m_position = origin; }
 void ParticleEmission::SetDirection(ofVec2f direction)		{ m_direction = direction; }
@@ -24,7 +25,7 @@ const ofVec2f& ParticleEmission::GetDirection() const { return m_direction; }
 const float& ParticleEmission::GetOpenAngle() const { return m_openAngle; }
 const float& ParticleEmission::GetSpeed() const { return m_velocity; }
 const float& ParticleEmission::GetLifeTime() const { return m_maxLifeTime; }
-const string& ParticleEmission::GetSprite() const { return m_spriteLocal; }
+const std::string& ParticleEmission::GetSprite() const { return m_spriteLocal; }
 const float& ParticleEmission::GetSpawnTime() const { return m_timeSpawnParticle; }
 const ofColor& ParticleEmission::GetColor() const { return m_color; }
 const float& ParticleEmission::GetSizeParticle() const { return m_radius; }
@@ -32,7 +33,7 @@ const std::string& ParticleEmission::GetFatherTag() const { return m_fatherTag; 
 const bool& ParticleEmission::IsEnable() const { return m_enableParticles; }
 const int& ParticleEmission::GetTotalOfSpawnParticle() const { return m_totalByTime; }
 
-void ParticleEmission::SetSprite(string sprite) {
+void ParticleEmission::SetSprite(std::string sprite) {
 	m_spriteLocal = sprite;
 	m_chageSize = true;
 }
@@ -67,7 +68,7 @@ ParticleEmission::ParticleEmission(){
 	m_chageSize = false;
 }
 
-ParticleEmission::ParticleEmission(ofVec2f origin, ofVec2f direction, float openAngle, float speed, float lifeTime, float timeSpawn, string sprite, float size)
+ParticleEmission::ParticleEmission(ofVec2f origin, ofVec2f direction, float openAngle, float speed, float lifeTime, float timeSpawn, std::string sprite, float size)
 {
 	// Inicia os parametros da sistema de particula novo
 	m_fatherPosition = nullptr;

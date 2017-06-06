@@ -3,14 +3,21 @@
 
 // Geters para pegar informacoes do botao
 const bool & MyButton::IsPressed()		const { return m_pressed; }
-const std::string & MyButton::GetText() const { return m_text; }
+const std::string & MyButton::GetText() const { return m_name; }
 const ofVec2f & MyButton::GetPosition() const { return m_position; }
+const ofVec2f & MyButton::GetStringSize(std::string text) const { return ofVec2f(m_font.stringWidth(text), m_font.stringHeight(text)); }
+
 
 // Seters para alterar algum parametro do botao
 void MyButton::SetPosition(ofVec2f &position)		{ m_position.set(position); }
 void MyButton::SetPosition(int x, int y)			{ m_position.set(x, y); }
-void MyButton::SetValue(bool newValue)				{ m_pressed = newValue; }
-void MyButton::SetText(std::string text)			{ m_text = text; }
+void MyButton::SetToggleValue(bool newValue)		{ m_pressed = newValue; }
+void MyButton::SetText(std::string name)			{ m_name = name; }
+void MyButton::SetSize(int w, int h)				{ 
+	m_width = w; 
+	m_height = h;
+	SetFontPosition(m_textPosition, m_textMargin);
+}
 
 void MyButton::SetColorDefault(ofColor &color)				{ m_colorDefault.set(color); }
 void MyButton::SetColorDefault(int r, int g, int b, int a)	{ m_colorDefault.set(r, g, b, a); }
@@ -55,6 +62,24 @@ void MyButton::SetFontColor(ofColor &color) { m_fontColor.set(color); }
 
 void MyButton::SetFontColor(int r, int g, int b, int a) { m_fontColor.set(r, g, b, a); }
 
+void MyButton::SetFontPosition(int position, float margin) {
+	switch (position)
+	{
+	case FONT_LEFT:
+		m_fontPosition.set(	m_position.x - margin - m_font.stringWidth(m_name),
+							m_position.y + m_height / 2.0f + m_font.stringHeight(m_name) / 2.0f);
+		break;
+	case FONT_RIGHT:
+		m_fontPosition.set(	m_position.x + m_width + margin,
+							m_position.y + m_height / 2.0f + m_font.stringHeight(m_name) / 2.0f);
+		break;
+	default:
+		m_fontPosition.set(m_position.x + m_width / 2.0f - m_font.stringWidth(m_name) / 2.0f,
+			m_position.y + m_height / 2.0f + m_font.stringHeight(m_name) / 2.0f);
+		break;
+	}
+}
+
 
 void MyButton::LoadFont(ofTrueTypeFont &font, ofColor &color) {
 	m_font = font;
@@ -84,31 +109,38 @@ MyButton::MyButton()
 	m_colorPressed.set(255, 255, 255);
 	m_fontColor.set(255, 255, 255);
 	m_mousePressed = false;
-	m_font.load("C:/Windows/Fonts/tahoma.ttf", 20);
+	m_font.load("C:/Windows/Fonts/arial.ttf", 12);
 }
 
 
 // Construtor para o botao
-MyButton::MyButton(std::string text, bool value, ofVec2f &position, int width, int heigth) {
+MyButton::MyButton(std::string name, int textPosition, float margin, bool value, ofVec2f &position, int width, int heigth) {
 	m_pressed = value;
 	m_position.set(position);
 	m_width = width;
 	m_height = heigth;
-	m_text = text;
-	m_font.load("C:/Windows/Fonts/tahoma.ttf", 20);
-	m_mousePressed = false;
+	m_name = name;
+	m_font.load("C:/Windows/Fonts/arial.ttf", 12);
+	m_mousePressed = false;	
+	m_textMargin = margin;
+	m_textPosition = textPosition;
+	SetFontPosition(textPosition, margin);
+
 }
 
 
 // Construtor para o botao
-MyButton::MyButton(std::string text, bool value, int x, int y, int width, int heigth) {
+MyButton::MyButton(std::string name, int textPosition, float margin, bool value, int x, int y, int width, int heigth) {
 	m_pressed = value;
 	m_position.set(x, y);
 	m_width = width;
 	m_height = heigth;
-	m_text = text;
-	m_font.load("C:/Windows/Fonts/tahoma.ttf", 20);
+	m_name = name;
+	m_font.load("C:/Windows/Fonts/arial.ttf", 12);
 	m_mousePressed = false;
+	m_textMargin = margin;
+	m_textPosition = textPosition;
+	SetFontPosition(textPosition, margin);
 }
 
 
@@ -155,9 +187,7 @@ void MyButton::DrawSprite() {
 	}
 
 	ofSetColor(m_fontColor);
-	m_font.drawString(	m_text,
-						m_position.x + m_width / 2.0f - m_font.stringWidth(m_text) / 2.0f,
-						m_position.y + m_height / 2.0f + m_font.stringHeight(m_text) / 2.0f);
+	m_font.drawString(m_name, m_fontPosition.x, m_fontPosition.y);
 }
 
 
@@ -168,9 +198,7 @@ void MyButton::DrawSquare() {
 	ofDrawRectangle(m_position, m_width, m_height);
 
 	ofSetColor(m_fontColor);
-	m_font.drawString(	m_text, 
-						m_position.x + m_width / 2.0f - m_font.stringWidth(m_text) / 2.0f, 
-						m_position.y + m_height / 2.0f + m_font.stringHeight(m_text) / 2.0f);
+	m_font.drawString(m_name, m_fontPosition.x, m_fontPosition.y);
 
 }
 

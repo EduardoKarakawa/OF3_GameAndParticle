@@ -7,14 +7,16 @@
 #include "ofSystemUtils.h"
 #include "of3dUtils.h"
 #include "../KenjiGUI/MyButton.h"
+#include "../KenjiGUI/IntTextBox.h"
 
+#define BORDER_LEFT 10.0f
 
 class Gui {
 	private:
 		std::string sprite;
 		ofxFloatSlider size, lifeTime, angle, radius, timeSpawn, velocity; //slider float
-		ofxVec2Slider worldPos, direction; //slider vector
-		ofxIntSlider totalSpawnByTime; //slider int
+		//ofxVec2Slider worldPos, direction; //slider vector
+		//ofxIntSlider totalSpawnByTime; //slider int
 		ofxColorSlider color; //slider color
 		ofxToggle drawParameters, randomSpawn;
 		ofxPanel gui;
@@ -25,6 +27,9 @@ class Gui {
 		ofxToggle localPosition;
 		MyButton m_saveButton, m_resetButton, m_loadButton;
 		MyButton m_playButton, m_loadImageButton;
+		IntTextBox _textPositionX, _textPositionY;
+		IntTextBox _textDirectionX, _textDirectionY;
+		IntTextBox _textTotalSpawnByTime;
 	
 	public:
 		MyButton m_exit;
@@ -32,6 +37,11 @@ class Gui {
 	private:
 		void DisableProcessParticle(ParticleEmission &emissor);
 		void CopyConfig(Gui &config);
+		const ofVec2f &Position() const;
+		void Position(ofVec2f& position);
+		const ofVec2f &Direction() const;
+		void Direction(ofVec2f& position);
+
 	public:
 		void Init();
 		void Update(ParticleEmission &emissor);
@@ -48,7 +58,7 @@ class Gui {
 		void SetSpeed(float speed);
 		void SetSizeParticle(float radius);
 		void SetLifeTime(float lifeTime);
-		void SetSprite(string sprite);
+		void SetSprite(std::string local);
 		void SetSpawnTime(float timeSpawn);
 		void SetColor(ofColor color);
 		void SetRandomSpawn(bool value);

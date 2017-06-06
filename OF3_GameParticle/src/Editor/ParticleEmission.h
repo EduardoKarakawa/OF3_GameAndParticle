@@ -35,7 +35,7 @@ class ParticleEmission
 
 	public:
 		ParticleEmission();
-		ParticleEmission(ofVec2f origin, ofVec2f direction, float openAngle, float speed, float lifeTime, float timeSpawn, string sprite, float size);
+		ParticleEmission(ofVec2f origin, ofVec2f direction, float openAngle, float speed, float lifeTime, float timeSpawn, std::string sprite, float size);
 		~ParticleEmission();
 
 		void Update(const float &deltaTime);
@@ -50,7 +50,7 @@ class ParticleEmission
 		void SetSpeed(float speed);
 		void SetSizeParticle(float radius);
 		void SetLifeTime(float lifeTime);
-		void SetSprite(string sprite);
+		void SetSprite(std::string sprite);
 		void SetSpawnTime(float timeSpawn);
 		void SetColor(ofColor color);
 		void SetParticleProcess(bool process);
@@ -69,7 +69,7 @@ class ParticleEmission
 		const float& GetOpenAngle() const;
 		const float& GetSpeed() const;
 		const float& GetLifeTime() const;
-		const string& GetSprite() const;
+		const std::string& GetSprite() const;
 		const float& GetSpawnTime() const;
 		const ofColor& GetColor() const;
 		const float& GetSizeParticle() const;

@@ -12,7 +12,7 @@ GameControl::GameControl() {
 	m_keyInput.Right = false;
 	m_keyInput.MouseLeft = false;
 
-	m_exit = MyButton("Sair", false, ofGetWidth() - 100, ofGetHeight() - 50, 100, 50);
+	m_exit = MyButton("Sair", MyButton::FONT_CENTER, 0, false, ofGetWidth() - 100, ofGetHeight() - 50, 100, 50);
 	m_exit.SetColor(ofColor(120, 120, 120), ofColor(80, 80, 80));
 }
 

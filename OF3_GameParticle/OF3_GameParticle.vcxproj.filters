@@ -25,6 +25,7 @@
     <ClCompile Include="src\ofApp.cpp" />
     <ClCompile Include="src\Editor\Storage.cpp" />
     <ClCompile Include="src\Game\GameControl.cpp" />
+    <ClCompile Include="src\KenjiGUI\IntTextBox.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\..\..\..\Temp\of_v0.9.8_vs_release\addons\ofxGui\src\ofxBaseGui.h" />
@@ -51,6 +52,7 @@
     <ClInclude Include="src\ofApp.h" />
     <ClInclude Include="src\Editor\Storage.h" />
     <ClInclude Include="src\Game\GameControl.h" />
+    <ClInclude Include="src\KenjiGUI\IntTextBox.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="icon.rc" />
