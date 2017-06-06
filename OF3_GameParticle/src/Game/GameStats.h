@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include "ofSoundPlayer.h"
 
 enum Status
 {
@@ -14,6 +15,7 @@ class GameStats
 private:
 	int m_status;
 	int m_previusStatus;
+	ofSoundPlayer m_soundtrack;
 
 public:
 	GameStats();

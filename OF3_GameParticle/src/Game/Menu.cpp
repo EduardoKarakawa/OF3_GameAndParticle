@@ -2,8 +2,8 @@
 void Menu::Setup()
 {
 	logo.loadImage("particle_editor.png");
-	m_buttonList.push_back(MyButton("Start Game", MyButton::FONT_CENTER, 0, false, ofVec2f(ofGetWidth() / 2 - 100, (ofGetHeight() / 2)), 200, 70));
-	m_buttonList.push_back(MyButton("Particle Editor", MyButton::FONT_CENTER, 0, false, ofVec2f(ofGetWidth() / 2 - 100, (ofGetHeight() / 2) + 100), 200, 70));
+	m_buttonList.push_back(MyButton("Start Game", false, ofVec2f(ofGetWidth() / 2 - 100, (ofGetHeight() / 2)), 200, 70));
+	m_buttonList.push_back(MyButton("Particle Editor", false, ofVec2f(ofGetWidth() / 2 - 100, (ofGetHeight() / 2) + 100), 200, 70));
 	//m_buttonList.push_back(MyButton("Exit", false, ofVec2f(ofGetWidth() / 2 - 100, (ofGetHeight() / 2) + 200), 200, 70));
 	for (int i = 0; i < m_buttonList.size(); i++) {
 		m_buttonList[i].SetFontColor(0,0,0,255);
@@ -18,7 +18,7 @@ int Menu::Update() {
 		for (int i = 0; i < m_buttonList.size(); i++) {
 			m_buttonList[i].Update();
 			if (m_buttonList[i].IsPressed()) {
-				m_buttonList[i].SetToggleValue(false);
+				m_buttonList[i].SetValue(false);
 				return i + 1;
 			}
 		}

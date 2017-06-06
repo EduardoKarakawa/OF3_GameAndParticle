@@ -18,6 +18,12 @@ Enemy::Enemy(ofVec2f playerPos)
 
 	int i = rand() % 4; 
 	m_particle.SearchParticleConfig("Enemy" + ofToString(i));
+
+	//Carrega a sprite
+	LoadNewImage("GameSprites", "Enemy.png");
+
+	//Carrega o som
+	bullet.load("SFX/Bullet_Enemy.mp3");
 }
 
 
@@ -38,20 +44,20 @@ void Enemy::Update(ofVec2f playerPos, const float &deltaTime)
 void Enemy::Draw()
 {
 	m_particle.Draw();
-
+	ofSetColor(255, 255, 255, 255);
 	if (m_position.x <= ofGetWidth() - 10 && m_position.x >= -10 && m_position.y <= ofGetHeight() - 10 && m_position.y >= -10) {
-		ofSetColor(m_r, m_g, m_b);
-		ofDrawCircle(m_position.x, m_position.y, m_radius);
+		DrawImage();
 	}
 }
 
 //Verifica se o enemy sobrevive ao ataque do player
-bool Enemy::Collided(ofVec2f bul)
+bool Enemy::Collided(ofVec2f bul, Score &gameScore)
 {
 	if (bul.distance(m_position) <= 37)
 	{
 		return true;
 	}
+	gameScore.addNormalEnemy();
 	return false;
 }
 

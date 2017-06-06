@@ -5,6 +5,12 @@
 void Player::SetMousePosition(const int &x, const int &y)	{ m_mousePosition.set(x, y); }
 const ParticleEmission & Player::GetShotParticle() const	{ return m_particle; }
 
+// Diminui a vida do Player
+void Player::LessLife() { m_life--; }
+int Player::GetLife() const { return m_life; }
+void Player::SoundDie() { m_explosionSound.play(); }
+void Player::SetDirectionX(int x) { m_direction.x = x; }
+void Player::SetDirectionY(int y) { m_direction.y = y; }
 
 // Construtor do player
 Player::Player(std::string tag, int width, int height, float speed)
@@ -20,13 +26,34 @@ Player::Player(std::string tag, int width, int height, float speed)
 
 	m_moving = false;
 	m_particle.SearchParticleConfig(tag);
+
+	//Vida do Player
+	m_life = 3;
+	m_imageLife.loadImage("GameSprites/Heart.png");
+
+	//Carrega a sprite do Player
+	LoadNewImage("sprites","player.png");
+
+	//Carrega os sons
+	m_bulletSound.load("SFX/Bullet_Player.mp3");
+	m_explosionSound.load("SFX/Explosion.mp3");
 }
 
 // Construtor do player
 Player::Player(){
 	m_radius = 25;
-	m_position.set(0, 0);
+	m_position.set(0, 0);	
 
+	//Vida do Player
+	m_life = 3;
+	m_imageLife.loadImage("GameSprites/Heart.png");
+
+	//Carrega a sprite do Player
+	LoadNewImage("sprites", "player.png");
+
+	//Carrega os sons
+	m_bulletSound.load("SFX/Bullet_Player.mp3");
+	m_explosionSound.load("SFX/Explosion.mp3");
 
 	// Velocidade do personagem
 	m_speed = 0;
@@ -74,15 +101,24 @@ void Player::Update(const float &deltaTime)
 // Desenha o Player
 void Player::Draw()
 {
-	m_particle.Draw();
 	
 	// Verifica se o player esta dentro da tela e desenha ele
 	if (OnScreen()) 
 	{
 		// Desenha o Player
-		ofSetColor(0,0,0);
-		ofDrawCircle(m_position.x, m_position.y, m_radius);
+		DrawImage();
 	}
+
+	//Desenha a quantidade de vida do player
+	for (int i = 0; i < m_life; i++)
+	{
+		int x = 36 + 36*i;
+		int y = 36;
+		m_imageLife.draw(x, y);
+	}
+
+
+	m_particle.Draw();
 
 	//// Desenha os tiros
 
@@ -94,9 +130,6 @@ void Player::Draw()
 	//	}
 	//}
 }
-
-void Player::SetDirectionX(int x) { m_direction.x = x; }
-void Player::SetDirectionY(int y) { m_direction.y = y; }
 
 // Retorna verdadeiro se o player ja poder atirar
 void Player::Shooting(bool value)

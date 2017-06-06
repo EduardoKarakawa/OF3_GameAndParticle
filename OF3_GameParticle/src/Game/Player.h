@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include "GameObject.h"
+#include "ofSoundPlayer.h"
 #include "ofGraphics.h"
 #include "ofMain.h"
 #include "Bullet.h"
@@ -14,11 +15,14 @@
 		int m_radius;
 		float m_speed;
 		float m_cooldownShooting;
-		//vector<Bullet> m_bullets;
 		ParticleEmission m_particle;
 		ofVec2f m_mousePosition;
 		ofVec2f m_direction;
 		bool m_moving;
+		int m_life;
+		ofImage m_imageLife;
+		ofSoundPlayer m_bulletSound;
+		ofSoundPlayer m_explosionSound;
 
 	public:
 		Player();
@@ -32,6 +36,12 @@
 		void Shooting(bool value);
 		void SetMousePosition(const int &x, const int &y);
 
+		//Para o controle da vida do Player que é feito no EnemyControl
+		void LessLife(); //Diminui a vida do Player
+		int GetLife() const;
+
+		//Reproduz o som de morte
+		void SoundDie();
 
 
 		// -- Controle dos Tiros --
