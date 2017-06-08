@@ -33,7 +33,9 @@ void Storage::save(const ParticleEmission &particle, std::string fatherTag) {
 		}
 	}
 
-	else if (path != "") {
+
+
+	if (path != "") {
 
 		// Verifica se tem .xml no final do path, se nao tiver ele eh colocado
 		hasXml = path[path.length() - 4] == '.' &&
@@ -55,6 +57,8 @@ void Storage::save(const ParticleEmission &particle, std::string fatherTag) {
 
 		//cria "subtags" dentro da tag EMITTER com todos os parâmetros necessários
 		xml.addValue("Father", fatherTag);
+		xml.addValue("TotalSpawn", particle.GetTotalOfSpawnParticle());
+		xml.addValue("RandomSpawn", particle.IsRamdomSpawn());
 		xml.addValue("Sprite", particle.GetSprite());
 		xml.addValue("Size", particle.GetSizeParticle());
 
@@ -79,7 +83,11 @@ void Storage::save(const ParticleEmission &particle, std::string fatherTag) {
 //aqui ParticleEmission não é const porque os parâmetros dela são alterados
 //string referente ao nome do documento de texto(xml)
 void Storage::load(Gui &guiParticle) {
-	ofFileDialogResult file = ofSystemLoadDialog("Load File");
+
+//	ofFileDialogResult file = ofSystemLoadDialog("Load File");
+	//cria documento de texto(xml)
+	ofFileDialogResult file = ofSystemLoadDialog("Load File", false, "particles");
+
 	if (file.bSuccess) {
 		string path = file.getPath();
 		//cria documento de texto(xml)
@@ -93,6 +101,12 @@ void Storage::load(Gui &guiParticle) {
 			}
 			if (xml.exists("Size")) {
 				guiParticle.SetSizeParticle(xml.getValue<float>("Size"));
+			}
+			if (xml.exists("TotalSpawn")) {
+				guiParticle.SetTotalParticleSpawn(xml.getValue<int>("TotalSpawn"));
+			}
+			if (xml.exists("RandomSpawn")) {
+				guiParticle.SetRandomSpawn(xml.getValue<bool>("RandomSpawn"));
 			}
 			if (xml.exists("Position")) {
 				ofVec2f tmp = xml.getValue<ofVec2f>("Position");
@@ -121,6 +135,10 @@ void Storage::load(Gui &guiParticle) {
 				guiParticle.SetColor(xml.getValue<ofColor>("Color"));
 			}
 		}
+		else {
+			ofSystemAlertDialog("Nao foi possivel carregar o arquivo");
+		}
+
 	}
 
 	
@@ -153,29 +171,32 @@ std::string Storage::GetFather(std::vector<MyButton> &buttons) {
 				std::string tmpTag = ofSystemTextBoxDialog("Digite a Tag do objeto Pai:", "");
 				if (tmpTag == "") {
 					outTag = "NotSave";
-					buttons[i].SetValue(false);
+					buttons[i].SetToggleValue(false);
+				}
+				else {
+					outTag = tmpTag;
 				}
 
 			}
 			else if (outTag == "Cancelar") {
 				outTag = "NotSave";
-				buttons[i].SetValue(false);
+				buttons[i].SetToggleValue(false);
 			}
 		}
 		else{
 			// Carrega os botoes com as tags do arquivo
 			while (tags.exists("tag" + ofToString(i))) {
-				MyButton tmp(tags.getValue<string>("tag" + ofToString(i)), false, ofGetWidth() / 2.0f - 75, 100 + 50 * i, 150, 49);
+				MyButton tmp(tags.getValue<string>("tag" + ofToString(i)), MyButton::FONT_CENTER, 0, false, ofGetWidth() / 2.0f - 75, 100 + 50 * i, 150, 49);
 				tmp.SetColor(ofColor(120, 120, 120), ofColor(80, 80, 80));
 				buttons.push_back(tmp);
 				i++;
 			}
 
-			MyButton tmp("Other", false, ofGetWidth() / 2.0f - 75, 100 + 50 * i, 150, 49);
+			MyButton tmp("Other", MyButton::FONT_CENTER, 0, false, ofGetWidth() / 2.0f - 75, 100 + 50 * i, 150, 49);
 			tmp.SetColor(ofColor(120, 120, 120), ofColor(80, 80, 80));
 			buttons.push_back(tmp);
 			i++;
-			tmp = MyButton("Cancelar", false, ofGetWidth() / 2.0f - 75, 100 + 50 * i, 150, 49);
+			tmp = MyButton("Cancelar", MyButton::FONT_CENTER, 0, false, ofGetWidth() / 2.0f - 75, 100 + 50 * i, 150, 49);
 			tmp.SetColor(ofColor(120, 120, 120), ofColor(80, 80, 80));
 			buttons.push_back(tmp);
 		}
@@ -197,10 +218,11 @@ std::string Storage::GetFilePath(std::string &tag) {
 	for (int i = 0; i < directory.size(); i++) {
 		ofXml tmp(directory.getPath(i));
 		if (tmp.exists("Father") && tmp.getValue<std::string>("Father") == tag) {
-			return directory.getPath(i);
+			return "/particles/" + directory.getFile(i).getFileName();
 		}
 	}
 
+	std::cout << "Erro aki" << std::endl;
 	return "";
 }
 

@@ -6,27 +6,38 @@
 #include "ofGraphics.h"
 #include "ofTrueTypeFont.h"
 
+
+
 class MyButton
 {
-	private:
-		std::string m_text;
+	protected:
+		std::string m_name;
 		std::vector<ofImage> m_sprite;
 		ofColor m_colorDefault, m_colorPressed;
 		ofVec2f m_position;
-		bool m_pressed;
 		int m_width, m_height;
 		ofTrueTypeFont m_font;
+		ofVec2f m_fontPosition;
 		ofColor m_fontColor;
 		bool m_mousePressed;
+		bool m_pressed;
+		int m_textPosition;
+		float m_textMargin;
 	
 	public:
+		enum FontPosition {
+			FONT_RIGHT,
+			FONT_CENTER,
+			FONT_LEFT
+		};
+
 		MyButton();
-		MyButton(std::string text, bool value, ofVec2f &position, int width, int heigth);
-		MyButton(std::string text, bool value, int x, int y, int width, int heigth);
+		MyButton(std::string name, int textPosition, float margin, bool value, ofVec2f &position, int width, int heigth);
+		MyButton(std::string name, int textPosition, float margin, bool value, int x, int y, int width, int heigth);
 
 
 		~MyButton();
-		void SetText(std::string text);
+		void SetText(std::string name);
 		void SetPosition(ofVec2f &position);
 		void SetPosition(int x, int y);
 		void SetColor(ofColor &colorDefault, ofColor &colorPressed);
@@ -39,11 +50,13 @@ class MyButton
 		void SetSprite(std::string localSprite);
 		void SetSprite(ofImage &spriteDefault, ofImage &spritePressed);
 		void SetSprite(std::string localSpriteDefault, std::string localSpritePressed);
-		void SetValue(bool newValue);
+		void SetToggleValue(bool newValue);
 		void SetFontColor(ofColor &color);
 		void SetFontColor(int r, int g, int b, int a);
-
-
+		void SetFontPosition(int position, float margin);
+		void SetSize(int w, int h);
+		
+		const ofVec2f & GetStringSize(std::string text) const;
 		const ofVec2f & GetPosition() const;
 		const bool & IsPressed()	  const;
 		const std::string & GetText() const;
@@ -51,10 +64,10 @@ class MyButton
 		void LoadFont(std::string &font, int size, ofColor &color);
 		void LoadFont(std::string &font, int size, int r, int g, int b, int a);
 
-		void Draw();
-		void Update();
+		virtual void Draw();
+		virtual void Update();
 
-	private: 
+	protected: 
 		void DrawSprite();
 		void DrawSquare();
 		bool MouseClickedButton();

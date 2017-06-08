@@ -5,7 +5,7 @@ EnemyControl::EnemyControl()
 	m_timeCount = 0;
 }
 
-void EnemyControl::Update( float &deltaTime, Player &player, GameStats &gameS)
+void EnemyControl::Update(float &deltaTime, Player &player, GameStats &gameS, Score &gameScore)
 {
 	m_timeCount += m_timeCount < TIME_SPAWN ? deltaTime : 0;
 
@@ -29,9 +29,16 @@ void EnemyControl::Update( float &deltaTime, Player &player, GameStats &gameS)
 			ofVec2f enePos = enemy.at(i).GetPosition();
 			if (enePos.distance(player.GetPosition()) < 30)
 			{
+				player.LessLife();
+				enemy.erase(enemy.begin() + i);
+				i--;
+				
+			}
 
+			if (player.GetLife() <= 0)
+			{
+				gameScore.scoreUpdate();
 				gameS.ChangeStats(0);
-
 			}
 
 		}
@@ -45,6 +52,7 @@ void EnemyControl::Update( float &deltaTime, Player &player, GameStats &gameS)
 			{
 				if (flame.CollidedWith(enemy.at(j).GetPosition(), 13.5f))
 				{
+					gameScore.addNormalEnemy();
 					//Se colidiu, elimina o inimigo e o tiro
 					enemy.erase(enemy.begin() + j);
 					j--;

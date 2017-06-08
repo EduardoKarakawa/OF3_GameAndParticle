@@ -2,6 +2,7 @@
 #include "ofGraphics.h"
 #include "ofVec2f.h"
 #include "ofImage.h"
+#include "ofAppRunner.h"
 
 class Particle
 {
@@ -17,7 +18,7 @@ class Particle
 	public:
 		Particle();
 		Particle(ofVec2f origin, ofVec2f direction, float openAngle, float speed, float lifeTime, float startOpacity);
-		void Update(ofVec2f origin, float deltaTime);
+		void Update(const float & deltaTime);
 		bool IsLife();
 		void Draw(ofImage sprite, ofColor color, ofVec2f origin);
 		bool OnScreen(const int &w, const int&h);

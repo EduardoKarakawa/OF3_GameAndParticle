@@ -1,12 +1,14 @@
 <EMITTER>
 	<Father>Enemy1</Father>
+	<TotalSpawn>8</TotalSpawn>
+	<RandomSpawn>0</RandomSpawn>
 	<Sprite>/sprites/particula.png</Sprite>
-	<Size>17.25</Size>
+	<Size>-4.31602e+08</Size>
 	<Position>1, 2</Position>
-	<Direction>-1105, -859</Direction>
+	<Direction>-1617, -1243</Direction>
 	<OpenAngle>360</OpenAngle>
-	<Lifetime>0.448</Lifetime>
-	<Velocity>1000</Velocity>
-	<TimeSpawn>0.08184</TimeSpawn>
+	<Lifetime>6.276</Lifetime>
+	<Velocity>55</Velocity>
+	<TimeSpawn>0.57585</TimeSpawn>
 	<Color>255, 0, 0, 154</Color>
 </EMITTER>

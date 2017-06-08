@@ -11,14 +11,15 @@ GameControl::GameControl() {
 	m_keyInput.Left = false;
 	m_keyInput.Right = false;
 	m_keyInput.MouseLeft = false;
+	_score = Score();
 
-	m_exit = MyButton("Sair", false, ofGetWidth() - 100, ofGetHeight() - 50, 100, 50);
+	m_exit = MyButton("Sair", MyButton::FONT_CENTER, 0, false, ofGetWidth() - 100, ofGetHeight() - 50, 100, 50);
 	m_exit.SetColor(ofColor(120, 120, 120), ofColor(80, 80, 80));
 }
 
 void GameControl::Update(float &deltatime, GameStats &status) {
 	m_player.Update(deltatime);
-	m_enemyControl.Update(deltatime, m_player, status);
+	m_enemyControl.Update(deltatime, m_player, status, _score);//deltatime, m_player, status);
 
 	if (!m_keyInput.Up && !m_keyInput.Down && !m_keyInput.Left && !m_keyInput.Right) {
 		m_player.SetDirectionX(0);
@@ -30,7 +31,6 @@ void GameControl::Update(float &deltatime, GameStats &status) {
 }
 
 void GameControl::Draw() {
-
 	m_player.Draw();
 	m_enemyControl.Draw();
 	m_exit.Draw();

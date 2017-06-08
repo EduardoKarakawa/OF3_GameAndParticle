@@ -1,9 +1,11 @@
 <EMITTER>
 	<Father>Enemy2</Father>
-	<Sprite>/sprites/particula.png</Sprite>
-	<Size>14.35</Size>
+	<TotalSpawn>4</TotalSpawn>
+	<RandomSpawn>0</RandomSpawn>
+	<Sprite>C:\Users\B155 FIRE V3\Source\Repos\OF3_GameParticle\OF3_GameParticle\bin\data\sprites\player.png</Sprite>
+	<Size>-4.31602e+08</Size>
 	<Position>3, 0</Position>
-	<Direction>-591, -477</Direction>
+	<Direction>-2127, -1629</Direction>
 	<OpenAngle>360</OpenAngle>
 	<Lifetime>3.672</Lifetime>
 	<Velocity>80</Velocity>

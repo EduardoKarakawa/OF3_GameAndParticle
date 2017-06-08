@@ -15,7 +15,7 @@ class EnemyControl
 	public:
 		EnemyControl();
 
-		void Update(float &deltaTime, Player &player, GameStats &gameS);
+		void Update(float &deltaTime, Player &player, GameStats &gameS, Score &gameScore);
 		void Draw();
 
 		int GetVectorSize() const;

@@ -1,7 +1,9 @@
 #pragma once
 #include "Player.h"
 #include "EnemyControl.h"
+#include "GameScore.h"
 #include "GameStats.h"
+#include "ofSoundPlayer.h"
 #include "../KenjiGUI/MyButton.h"
 
 struct Keys {
@@ -11,6 +13,7 @@ struct Keys {
 
 class GameControl{
 	private:
+		Score _score;
 		Player m_player;
 		EnemyControl m_enemyControl;
 		Keys m_keyInput;

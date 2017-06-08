@@ -18,11 +18,11 @@ class Storage {
 		Storage();
 	public:
 		static Storage& instance();
-		void reset(Gui &guiParticle, ParticleEmission & particleList);
-		void save(const ParticleEmission &particle, std::string fatherTag);
-		void load(Gui &guiParticle);
-		std::string GetFather(std::vector<MyButton> &buttons);
-		std::string GetFilePath(std::string &tag);
-		void AddOnTags(std::string &tag);
+		void reset(Gui& guiParticle, ParticleEmission& particleList);
+		void save(const ParticleEmission &particle, string fatherTag);
+		void load(Gui& guiParticle);
+		string GetFather(vector<MyButton>& buttons);
+		string GetFilePath(string& tag);
+		void AddOnTags(string& tag);
 
 };

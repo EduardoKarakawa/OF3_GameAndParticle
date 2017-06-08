@@ -6,27 +6,23 @@
 #include "ParticleEmission.h"
 #include "ofFileUtils.h"
 #include "ofSystemUtils.h"
-
+#include "Camera.h"
 
 
 class ParticleEditor{
 	private:
 		ParticleEmission m_particlesList;
-		std::vector<MyButton> m_buttons;
-		std::string tag;
 		
 	public:
 		Gui m_guiEditor;
-
+		Camera camera;
+		ofImage image;
 
 	public:
 		ParticleEditor();
-		void LoadParticles();
 		void Setup();
 		void Update(float &deltaTime);
 		void Draw();
-		void Reset();
-		void Save();
-		void Load();
 		void SetMousePosition(int &x, int &y);
+		
 };

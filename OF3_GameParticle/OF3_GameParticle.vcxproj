@@ -197,9 +197,11 @@ C:\Temp\of_v0.9.8_vs_release\addons\ofxGui\src;%(AdditionalIncludeDirectories)</
     <ClCompile Include="src\Game\EnemyControl.cpp" />
     <ClCompile Include="src\Game\GameControl.cpp" />
     <ClCompile Include="src\Game\GameObject.cpp" />
+    <ClCompile Include="src\Game\GameScore.cpp" />
     <ClCompile Include="src\Game\GameStats.cpp" />
     <ClCompile Include="src\Game\Menu.cpp" />
     <ClCompile Include="src\Game\Player.cpp" />
+    <ClCompile Include="src\KenjiGUI\IntTextBox.cpp" />
     <ClCompile Include="src\KenjiGUI\MyButton.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\ofApp.cpp" />
@@ -224,9 +226,11 @@ C:\Temp\of_v0.9.8_vs_release\addons\ofxGui\src;%(AdditionalIncludeDirectories)</
     <ClInclude Include="src\Game\EnemyControl.h" />
     <ClInclude Include="src\Game\GameControl.h" />
     <ClInclude Include="src\Game\GameObject.h" />
+    <ClInclude Include="src\Game\GameScore.h" />
     <ClInclude Include="src\Game\GameStats.h" />
     <ClInclude Include="src\Game\Menu.h" />
     <ClInclude Include="src\Game\Player.h" />
+    <ClInclude Include="src\KenjiGUI\IntTextBox.h" />
     <ClInclude Include="src\KenjiGUI\MyButton.h" />
     <ClInclude Include="src\ofApp.h" />
   </ItemGroup>
