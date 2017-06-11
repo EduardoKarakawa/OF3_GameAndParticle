@@ -309,7 +309,7 @@ void Gui::ChangeDirectionAndPosition()
 
 }
 
-void Gui::DrawDirectionAndCone(ofVec2f posit, ofVec2f direct)
+void Gui::DrawDirectionAndCone(const ofVec2f& posit, const ofVec2f& direct)
 {	
 	// Desenha a direcao para onde sera gerado as particulas
 	ofSetColor(255, 255, 255);

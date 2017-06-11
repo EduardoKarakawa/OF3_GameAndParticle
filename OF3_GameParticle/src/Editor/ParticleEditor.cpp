@@ -1,7 +1,6 @@
 #include "ParticleEditor.h"
 #include "Storage.h"
 
-
 ParticleEditor::ParticleEditor()
 {
 	m_guiEditor.Init();
@@ -26,7 +25,7 @@ void ParticleEditor::Update(float &deltaTime) {
 }
 
 void ParticleEditor::Draw() {
-	image.draw(-camera.getPosition());
+	image.draw(camera.getPosition());
 	m_particlesList.Draw();
 	m_guiEditor.Draw();
 }

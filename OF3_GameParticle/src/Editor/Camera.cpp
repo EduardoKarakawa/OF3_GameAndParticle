@@ -8,16 +8,17 @@ void Camera::init(ofImage& background) {
 }
 
 void Camera::update(float secs) {
-	position.set(0,0);
+	position.set(screen_center);
 
 	float temp = 0;
 	ofVec2f mouse = ofVec2f(ofGetMouseX(), ofGetMouseY());
 	if (mouse.x < edge) {
-		temp = position.x + (edge - mouse.x) * velocity * secs;
+		temp = position.x - (edge - mouse.x) * velocity * secs;
 		temp < 0 ? position.x = temp : 0;
 	}
+	//dando mais ou menos certo
 	else if (mouse.x > ofGetWidth() - edge) {
-		temp = position.x + (ofGetWidth() - edge - mouse.x) * velocity * secs;
+		temp = position.x - (ofGetWidth() - edge - mouse.x) * velocity * secs;
 		float temp2 = (maxX + position.x);
 		temp2 > 0 ? position.x = temp : 0;
 	}
@@ -26,6 +27,7 @@ void Camera::update(float secs) {
 		temp = position.y + (edge - mouse.y) * velocity * secs;
 		temp < 0 ? position.y = temp : 0;
 	}
+	//dando mais ou menos certo
 	else if (mouse.y > ofGetHeight() - edge) {
 		temp = position.y + (ofGetHeight() - edge - mouse.y) * velocity * secs;
 		float temp2 = (maxY + position.y);
@@ -36,4 +38,8 @@ void Camera::update(float secs) {
 
 ofVec2f Camera::getPosition() const {
 	return position;
+}
+
+ofVec2f Camera::getCenterPos() const {
+	return screen_center;
 }

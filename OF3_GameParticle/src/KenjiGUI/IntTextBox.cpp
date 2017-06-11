@@ -87,7 +87,7 @@ void IntTextBox::Draw() {
 		DrawSquare();
 	}
 	//_valuePosition.set(m_position.x + 5, m_position.y + m_height / 2.0f + m_font.stringHeight(ofToString(_value)) / 2.0f);
-	_valuePosition.set(	m_position.x + 5,
+	_valuePosition.set(m_position.x + 5,
 						m_position.y + m_height / 2.0f + m_font.stringHeight(m_name) / 2.0f);
 
 	m_font.drawString(ofToString(_value), _valuePosition.x, _valuePosition.y);

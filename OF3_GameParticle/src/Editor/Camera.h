@@ -15,4 +15,5 @@ class Camera {
 		void init(ofImage& background);
 		void update(float secs);
 		ofVec2f getPosition() const;
+		ofVec2f getCenterPos() const;
 };

@@ -48,7 +48,7 @@ class Gui {
 		void Draw();
 		void SetMousePosition(int x, int y);
 		void ChangeDirectionAndPosition();
-		void DrawDirectionAndCone(ofVec2f posit, ofVec2f direct);
+		void DrawDirectionAndCone(const ofVec2f& posit, const ofVec2f& direct);
 		void DrawCenterAxis();
 
 		void SetTotalParticleSpawn(int value);
