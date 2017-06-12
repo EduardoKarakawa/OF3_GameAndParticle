@@ -8,12 +8,10 @@ enum Cam {
 
 class Camera {
 	private:
-		ofVec2f screen_center;
 		ofVec2f position;
-		float maxX, maxY;
+		float maxX, maxY, minX, minY;
 	public:
 		void init(ofImage& background);
 		void update(float secs);
 		ofVec2f getPosition() const;
-		ofVec2f getCenterPos() const;
 };

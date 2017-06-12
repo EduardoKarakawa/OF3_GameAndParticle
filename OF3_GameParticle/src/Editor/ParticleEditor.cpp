@@ -8,7 +8,7 @@ ParticleEditor::ParticleEditor()
 
 void ParticleEditor::Setup() {
 	m_guiEditor.Init();
-	image.load("bgtest.jpg");
+	image.load("bgtest.png");
 	camera.init(image);
 	m_particlesList = ParticleEmission(	ofVec2f(ofGetWidth() / 2.0f, ofGetHeight() / 2.0f), 
 							ofVec2f(ofGetWidth() / 2.0f, ofGetHeight() / 2.0f - 50),
@@ -25,7 +25,8 @@ void ParticleEditor::Update(float &deltaTime) {
 }
 
 void ParticleEditor::Draw() {
-	image.draw(camera.getPosition());
+	image.setAnchorPoint(image.getWidth() / 2, image.getHeight() / 2);
+	image.draw((ofGetWidth() / 2, ofGetHeight() / 2) - camera.getPosition());
 	m_particlesList.Draw();
 	m_guiEditor.Draw();
 }
