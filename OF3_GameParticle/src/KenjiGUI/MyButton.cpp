@@ -75,27 +75,29 @@ void MyButton::SetFontPosition(int position, float margin) {
 		break;
 	default:
 		m_fontPosition.set(m_position.x + m_width / 2.0f - m_font.stringWidth(m_name) / 2.0f,
-			m_position.y + m_height / 2.0f + m_font.stringHeight(m_name) / 2.0f);
+			m_position.y + m_height / 2.0f - 7.0f + m_font.stringHeight(m_name) / 2.0f);
 		break;
 	}
 }
+
+
 
 void MyButton::SetFontPosition() {
 	m_fontPosition.set(m_position.x + m_width / 2.0f - m_font.stringWidth(m_name) / 2.0f,
 		m_position.y + m_height / 2.0f + m_font.stringHeight(m_name) / 2.0f);
 }
 
-void MyButton::LoadFont(ofTrueTypeFont &font, ofColor &color) {
+void MyButton::LoadFont(ofTrueTypeFont font, ofColor &color) {
 	m_font = font;
 	m_fontColor.set(color);
 }
 
-void MyButton::LoadFont(std::string &font, int size, ofColor &color) {
+void MyButton::LoadFont(std::string font, int size, ofColor &color) {
 	m_font.load(font, size);
 	m_fontColor.set(color);
 }
 
-void MyButton::LoadFont(std::string &font, int size, int r, int g, int b, int a) {
+void MyButton::LoadFont(std::string font, int size, int r, int g, int b, int a) {
 	m_font.load(font, size);
 	m_fontColor.set(r, g, b, a);
 }
@@ -113,7 +115,7 @@ MyButton::MyButton()
 	m_colorPressed.set(255, 255, 255);
 	m_fontColor.set(255, 255, 255);
 	m_mousePressed = false;
-	m_font.load("C:/Windows/Fonts/verdana.ttf", 12);
+	m_font.load("Ancherr-Personal-Use.ttf", 42);
 }
 
 
@@ -125,7 +127,7 @@ MyButton::MyButton(std::string name, int textPosition, float margin, bool value,
 	m_width = width;
 	m_height = heigth;
 	m_name = name;
-	m_font.load("C:/Windows/Fonts/verdana.ttf", 12);
+	m_font.load("Ancherr-Personal-Use.ttf", 42);
 	m_mousePressed = false;	
 	m_textMargin = margin;
 	m_textPosition = textPosition;
@@ -142,7 +144,7 @@ MyButton::MyButton(std::string name, int textPosition, float margin, bool value,
 	m_width = width;
 	m_height = heigth;
 	m_name = name;
-	m_font.load("C:/Windows/Fonts/verdana.ttf", 12);
+	m_font.load("Ancherr-Personal-Use.ttf", 42);
 	m_mousePressed = false;
 	m_textMargin = margin;
 	m_textPosition = textPosition;

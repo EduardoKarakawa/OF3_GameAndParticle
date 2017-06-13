@@ -3,6 +3,10 @@
 int IntTextBox::GetValue() const { return _value; }
 void IntTextBox::SetValue(int value) { _value = value; }
 
+void IntTextBox::SetFontPosition(ofVec2f& position) {
+	m_fontPosition = position;
+}
+
 
 IntTextBox::IntTextBox()
 {
@@ -23,9 +27,22 @@ IntTextBox::IntTextBox(std::string name, int textPosition, float margin, ofVec2f
 	SetText(name);
 	SetColor(defaultColor, pressedColor);
 	SetFontColor(fontColor);
-	SetFontPosition(textPosition, margin);
+	MyButton::SetFontPosition(textPosition, margin);
 	m_textMargin = margin;
 	m_textPosition = textPosition;
+	_value = defaultValue;
+	_timeCont = 0;
+	_drawLineEdit = false;
+}
+
+IntTextBox::IntTextBox(std::string name, ofVec2f& fontPosition, float margin, ofVec2f &position, int defaultValue, ofColor &defaultColor, ofColor &pressedColor, ofColor &fontColor) {
+	SetPosition(position);
+	SetText(name);
+	SetColor(defaultColor, pressedColor);
+	SetFontColor(fontColor);
+	SetFontPosition(fontPosition);
+	m_textMargin = margin;
+	//m_textPosition = textPosition;
 	_value = defaultValue;
 	_timeCont = 0;
 	_drawLineEdit = false;

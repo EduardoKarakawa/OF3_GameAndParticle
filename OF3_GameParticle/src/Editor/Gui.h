@@ -32,6 +32,7 @@ class Gui {
 		IntTextBox _textPositionX, _textPositionY;
 		IntTextBox _textDirectionX, _textDirectionY;
 		IntTextBox _textTotalSpawnByTime;
+		ofTrueTypeFont font;
 	
 	public:
 		MyButton m_exit;

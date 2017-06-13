@@ -4,11 +4,14 @@
 #include "ofVec2f.h"
 #include "ofAppRunner.h"
 #include "../KenjiGUI/MyButton.h"
+#include "../Editor/ParticleEmission.h"
 
 class Menu {
 	private:
 		int m_option;
 		ofImage logo;
+		ofTrueTypeFont particle, editor;
+		vector<ParticleEmission> particles;
 		std::vector<MyButton> m_buttonList;
 
 	public:

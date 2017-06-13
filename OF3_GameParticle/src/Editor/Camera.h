@@ -8,7 +8,7 @@ enum Cam {
 
 class Camera {
 	private:
-		ofVec2f position;
+		ofVec2f position, bgSize;
 		float maxX, maxY, minX, minY;
 	public:
 		void init(ofImage& background);
