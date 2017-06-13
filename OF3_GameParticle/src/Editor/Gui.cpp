@@ -100,6 +100,7 @@ void Gui::Init() {
 	_textTotalSpawnByTime.SetSize(80, 27);
 	_textTotalSpawnByTime.SetSprite("teal.png", "teal2.png");
 
+	
 	_textPositionX = IntTextBox("Position X:", MyButton::FONT_LEFT, 10, ofVec2f(_textPositionX.GetStringSize("Position X:").x + BORDER_LEFT, ofGetScreenHeight() / 2 - 70),
 		ofGetWidth() / 2,
 		ofColor(150, 150, 150),
@@ -134,36 +135,37 @@ void Gui::Init() {
 	_textDirectionY.SetSprite("teal.png", "teal2.png");
 
 
-	m_loadImageButton = MyButton("Image Load", MyButton::FONT_CENTER, 1.5f, false, 0, (ofGetHeight() - 200.0f), 120, 30);
-	//m_loadImageButton.SetPosition(0, (ofGetHeight() - 100.0f));
+	m_loadImageButton = MyButton("Image Load", MyButton::FONT_CENTER, 0, false, 0, ofGetScreenHeight()/2, 120, 30);
+	//m_loadImageButton.SetPosition(0, 500);
 	m_loadImageButton.SetColor(ofColor(120, 120, 120), ofColor(80, 80, 80));
 	m_loadImageButton.SetSprite("teal.png", "teal2.png");
 
-	m_resetButton = MyButton("Reset", MyButton::FONT_CENTER, 0, false, 0, ofGetHeight() - 150, 203, 50);
+	m_loadBackground = MyButton("Background", MyButton::FONT_CENTER, 0, false, 0, ofGetScreenHeight()/2 + 40, 120, 30);
+	m_loadBackground.SetColor(ofColor(120, 120, 120), ofColor(80, 80, 80));
+	m_loadBackground.SetSprite("teal.png", "teal2.png");
+
+	m_resetButton = MyButton("Reset", MyButton::FONT_CENTER, 0, false, 0, ofGetScreenHeight()/2 + 80, 120, 30);
 	m_resetButton.SetColor(ofColor(120, 120, 120), ofColor(80, 80, 80));
 	m_resetButton.SetSprite("teal.png", "teal2.png");
 
-	m_saveButton = MyButton("Save", MyButton::FONT_CENTER, 0, false, 0, ofGetHeight() - 50, 100, 50);
+	m_saveButton = MyButton("Save", MyButton::FONT_CENTER, 0, false, 0, ofGetHeight() - 40, 100, 40);
 	m_saveButton.SetColor(ofColor(120, 120, 120), ofColor(80, 80, 80));
+	m_saveButton.SetSprite("teal.png", "teal2.png");
 
-	m_loadButton = MyButton("Load", MyButton::FONT_CENTER, 0, false, 103, ofGetHeight() - 50, 100, 50);
+	m_loadButton = MyButton("Load", MyButton::FONT_CENTER, 0, false, 103, ofGetHeight() - 40, 100, 40);
 	m_loadButton.SetColor(ofColor(120, 120, 120), ofColor(80, 80, 80));
+	m_loadButton.SetSprite("teal.png", "teal2.png");
 
-	m_playButton = MyButton("Play", MyButton::FONT_CENTER, 0, false, ofGetWidth() / 2.0f, ofGetHeight() - 50, 100, 50);
+	m_playButton = MyButton("Play", MyButton::FONT_CENTER, 0, false, ofGetWidth() / 2.0f, ofGetHeight() - 40, 100, 40);
 	m_playButton.SetColor(ofColor(120, 120, 120), ofColor(80, 80, 80));
+	m_playButton.SetSprite("teal.png", "teal2.png");
 
-	m_exit = MyButton("Sair", MyButton::FONT_CENTER, 0, false, ofGetWidth() - 100, ofGetHeight() - 50, 100, 50);
+	m_exit = MyButton("Sair", MyButton::FONT_CENTER, 0, false, ofGetWidth() - 100, ofGetHeight() - 40, 100, 40);
 	m_exit.SetColor(ofColor(120, 120, 120), ofColor(80, 80, 80));
-
-	m_loadBackground = MyButton("Background", MyButton::FONT_CENTER, 0, false, 103, ofGetHeight() - 100, 100, 50);
-	m_loadBackground.SetColor(ofColor(120, 120, 120), ofColor(80, 80, 80));
-
-
+	m_exit.SetSprite("teal.png", "teal2.png");
 
 	sprite = "/sprites/particula.png";
 	background = "bgtest.png";
-
-
 }
 
 void Gui::Update(ParticleEmission &emissor) {
@@ -175,12 +177,12 @@ void Gui::Update(ParticleEmission &emissor) {
 
 
 		// Reajusta a posicao dos botoes de acordo com o tamanho da tela
-		m_loadImageButton.SetPosition(0, ofGetHeight() - 160);
-		m_loadBackground.SetPosition(0, ofGetHeight() - 120);
+	//	m_loadImageButton.SetPosition(0, ofGetScreenHeight() - 210);
+		/*m_loadBackground.SetPosition(0, ofGetHeight() - 120);
 		m_resetButton.SetPosition(0, ofGetHeight() - 90);
 		m_saveButton.SetPosition(0, ofGetHeight() - 50);
 		m_loadButton.SetPosition(103, ofGetHeight() - 50);
-		m_playButton.SetPosition(ofGetWidth() / 2.0f, ofGetHeight() - 50);
+		m_playButton.SetPosition(ofGetWidth() / 2.0f, ofGetHeight() - 50);*/
 
 		// Updates dos botoes para verificar se eles foram precionados
 		_textPositionX.Update();

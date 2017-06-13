@@ -53,6 +53,7 @@ class MyButton
 		void SetToggleValue(bool newValue);
 		void SetFontColor(ofColor &color);
 		void SetFontColor(int r, int g, int b, int a);
+		void SetFontPosition();
 		void SetFontPosition(int position, float margin);
 		void SetSize(int w, int h);
 		
