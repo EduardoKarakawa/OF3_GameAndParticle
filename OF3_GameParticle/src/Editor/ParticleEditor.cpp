@@ -8,7 +8,7 @@ ParticleEditor::ParticleEditor()
 
 void ParticleEditor::Setup() {
 	m_guiEditor.Init();
-	image.load("bgtest.png");
+	image.load("bgtest.jpg");
 	camera.init(image);
 	m_particlesList = ParticleEmission(	ofVec2f(ofGetWidth() / 2.0f, ofGetHeight() / 2.0f), 
 							ofVec2f(ofGetWidth() / 2.0f, ofGetHeight() / 2.0f - 50),
@@ -20,7 +20,9 @@ void ParticleEditor::Update(float &deltaTime) {
 	// Verifica se o botao Save foi clicado e chama a funcao
 	m_guiEditor.Update(m_particlesList);
 	m_particlesList.Update(deltaTime);
-	camera.update(ofGetLastFrameTime());
+	if (clicked) {
+		camera.update(ofGetLastFrameTime());
+	}
 
 }
 

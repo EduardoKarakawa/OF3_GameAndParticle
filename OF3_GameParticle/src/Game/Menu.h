@@ -9,7 +9,6 @@
 class Menu {
 	private:
 		int m_option;
-		ofImage logo;
 		ofTrueTypeFont particle, editor;
 		vector<ParticleEmission> particles;
 		std::vector<MyButton> m_buttonList;

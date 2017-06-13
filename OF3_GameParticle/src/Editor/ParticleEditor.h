@@ -18,6 +18,7 @@ class ParticleEditor{
 		Camera camera;
 		ofImage image;
 		string background;
+		bool clicked;
 
 	public:
 		ParticleEditor();
