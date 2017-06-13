@@ -17,6 +17,7 @@ class ParticleEditor{
 		Gui m_guiEditor;
 		Camera camera;
 		ofImage image;
+		string background;
 
 	public:
 		ParticleEditor();
@@ -24,5 +25,6 @@ class ParticleEditor{
 		void Update(float &deltaTime);
 		void Draw();
 		void SetMousePosition(int &x, int &y);
+		void SetBackground(string& bg);
 		
 };

@@ -1,10 +1,10 @@
 #include "Camera.h"
 
 void Camera::init(ofImage& background) {
-	maxX = background.getWidth() / 2 - ofGetWidth();
-	maxY = background.getHeight() / 2 - ofGetHeight();
-	minX = -background.getWidth() / 2;
-	minY = -background.getHeight() / 2;
+	maxX = background.getWidth() / 2 - ofGetWidth() / 2;
+	maxY = background.getHeight() / 2 - ofGetHeight() / 2;
+	minX = -background.getWidth() / 2 + ofGetWidth() / 2;
+	minY = -background.getHeight() / 2 + ofGetHeight() / 2;
 	position.set(0,0);
 }
 

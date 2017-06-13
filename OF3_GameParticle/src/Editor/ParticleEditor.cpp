@@ -26,7 +26,7 @@ void ParticleEditor::Update(float &deltaTime) {
 
 void ParticleEditor::Draw() {
 	image.setAnchorPoint(image.getWidth() / 2, image.getHeight() / 2);
-	image.draw((ofGetWidth() / 2, ofGetHeight() / 2) - camera.getPosition());
+	image.draw(ofVec2f(ofGetWidth() / 2, ofGetHeight() / 2) - camera.getPosition());
 	m_particlesList.Draw();
 	m_guiEditor.Draw();
 }
@@ -34,4 +34,8 @@ void ParticleEditor::Draw() {
 
 void ParticleEditor::SetMousePosition(int &x, int &y) {
 	m_guiEditor.SetMousePosition(x, y);
+}
+
+void ParticleEditor::SetBackground(string& bg) {
+	background = bg;
 }

@@ -1,10 +1,11 @@
 #include "Gui.h"
 #include "Storage.h"
 
-const ofVec2f& Gui::Position()	const	{ return ofVec2f(_textPositionX.GetValue(),  _textPositionY.GetValue());		}
-const ofVec2f& Gui::Direction() const	{ return ofVec2f(_textDirectionX.GetValue(), _textDirectionY.GetValue());		}
-void Gui::Position(ofVec2f& position)	{ _textPositionX.SetValue(position.x);	_textPositionY.SetValue(position.y);	}
-void Gui::Direction(ofVec2f& position)	{ _textDirectionX.SetValue(position.x); _textDirectionY.SetValue(position.y);	}
+
+const ofVec2f& Gui::Position()	const { return ofVec2f(_textPositionX.GetValue(), _textPositionY.GetValue()); }
+const ofVec2f& Gui::Direction() const { return ofVec2f(_textDirectionX.GetValue(), _textDirectionY.GetValue()); }
+void Gui::Position(ofVec2f& position) { _textPositionX.SetValue(position.x);	_textPositionY.SetValue(position.y); }
+void Gui::Direction(ofVec2f& position) { _textDirectionX.SetValue(position.x); _textDirectionY.SetValue(position.y); }
 
 void Gui::SetTotalParticleSpawn(int value) {
 	_textTotalSpawnByTime.SetValue(value);
@@ -46,6 +47,10 @@ void Gui::SetSprite(std::string local) {
 	sprite = local;
 	changeValues = true;
 }
+void Gui::SetBackground(string bg) {
+	background = bg;
+	changeValues = true;
+}
 void Gui::SetRandomSpawn(bool value) { randomSpawn = value; }
 
 void Gui::MoveOriginParticle() { worldPosToMouse = !worldPosToMouse; }
@@ -55,31 +60,31 @@ void Gui::MoveDirectionParticle() { directionPosToMouse = !directionPosToMouse; 
 void Gui::Init() {
 	gui.setup();
 	// Desenha a direcao e cone de spawn
-	gui.add(drawParameters.setup		("Show Direction/Cone", true));
+	gui.add(drawParameters.setup("Show Direction/Cone", true));
 
-	gui.add(randomSpawn.setup			("Random Direction: ", false));	
+	gui.add(randomSpawn.setup("Random Direction: ", false));
 
 	// Define o tempo de vida da particula
-	gui.add(lifeTime.setup				("Life Time: ", 1.5f, 0.2f, 25));
-	
+	gui.add(lifeTime.setup("Life Time: ", 1.5f, 0.2f, 25));
+
 	// Ajusta o tempo de spawn de uma particula
-	gui.add(timeSpawn.setup				("Time Spawn: ", 0.03f, 1.0f / 500.0f, 1.0f));
-	
+	gui.add(timeSpawn.setup("Time Spawn: ", 0.03f, 1.0f / 500.0f, 1.0f));
+
 	// Angulo de abertura para o emissor
-	gui.add(angle.setup					("Open Angle: ", 30, 1, 360)); 
-	
+	gui.add(angle.setup("Open Angle: ", 30, 1, 360));
+
 	// Define a velocidade com que a particula movimenta
-	gui.add(velocity.setup				("Velocity: ", 500, 0, 1000));
+	gui.add(velocity.setup("Velocity: ", 500, 0, 1000));
 
 	// Raio para definir o tamanho da particula
-	gui.add(radius.setup				("Radius Particle: ", 30, 10, 300));
+	gui.add(radius.setup("Radius Particle: ", 30, 10, 300));
 
 
 	// Botao toggle para calcular o local da particula apartir do centro
-	gui.add(localPosition.setup			("Local Position", true));
+	gui.add(localPosition.setup("Local Position", true));
 
 	// Muda a cor das particulas
-	gui.add(color.setup					("Color: ", ofColor(255, 159, 17), ofColor(0, 0), ofColor(255, 255)));
+	gui.add(color.setup("Color: ", ofColor(255, 159, 17), ofColor(0, 0), ofColor(255, 255)));
 
 	// Define se esta movimentando a origem ou a direcao para falso
 	worldPosToMouse = false;
@@ -88,49 +93,55 @@ void Gui::Init() {
 
 
 	// Botoes 
-	
+	_textTotalSpawnByTime = IntTextBox("Total to Spawn:", MyButton::FONT_LEFT, 10, ofVec2f(_textTotalSpawnByTime.GetStringSize("Total to Spawn:").x + BORDER_LEFT, ofGetScreenHeight()/2 - 100), 1,
+		ofColor(150, 150, 150),
+		ofColor(170, 170, 170),
+		ofColor(255, 255, 255));
+	_textTotalSpawnByTime.SetSize(80, 27);
+	_textTotalSpawnByTime.SetSprite("teal.png", "teal2.png");
 
-	_textTotalSpawnByTime = IntTextBox("Total to Spawn:", MyButton::FONT_LEFT, 10, ofVec2f(_textTotalSpawnByTime.GetStringSize("Total to Spawn:").x + BORDER_LEFT, 453), 1,
-								ofColor(120, 120, 120),
-								ofColor(80, 80, 80),
-								ofColor(255, 255, 255));
-	_textTotalSpawnByTime.SetSize(100, 50);
+	_textPositionX = IntTextBox("Position X:", MyButton::FONT_LEFT, 10, ofVec2f(_textPositionX.GetStringSize("Position X:").x + BORDER_LEFT, ofGetScreenHeight() / 2 - 70),
+		ofGetWidth() / 2,
+		ofColor(150, 150, 150),
+		ofColor(170, 170, 170),
+		ofColor(255, 255, 255));
+	_textPositionX.SetSize(80, 27);
+	_textPositionX.SetSprite("teal.png", "teal2.png");
 
-	_textPositionX = IntTextBox("Position X:", MyButton::FONT_LEFT, 10, ofVec2f(_textPositionX.GetStringSize("Position X:").x + BORDER_LEFT, 506), 
-								ofGetWidth() / 2,
-								ofColor(120, 120, 120), 
-								ofColor(80, 80, 80),
-								ofColor(255, 255, 255));
-	_textPositionX.SetSize(100, 50);
+	_textPositionY = IntTextBox("Y:", MyButton::FONT_LEFT, 10, ofVec2f(_textPositionX.GetStringSize("Position X:").x + 120 + _textDirectionY.GetStringSize("Y:").x + BORDER_LEFT, ofGetScreenHeight() / 2 - 70),
+		ofGetHeight() / 2,
+		ofColor(150, 150, 150),
+		ofColor(170, 170, 170),
+		ofColor(255, 255, 255));
+	_textPositionY.SetSize(80, 27);
+	_textPositionY.SetSprite("teal.png", "teal2.png");
 
-	_textPositionY = IntTextBox("Y:", MyButton::FONT_LEFT, 10, ofVec2f(_textPositionX.GetStringSize("Position X:").x + 120 + _textDirectionY.GetStringSize("Y:").x + BORDER_LEFT, 506), 
-								ofGetHeight() / 2,
-								ofColor(120, 120, 120),
-								ofColor(80, 80, 80),
-								ofColor(255, 255, 255));
-	_textPositionY.SetSize(100, 50);
+	_textDirectionX = IntTextBox("Direction X:", MyButton::FONT_LEFT, 10, ofVec2f(_textDirectionX.GetStringSize("Direction X:").x + BORDER_LEFT, ofGetScreenHeight() / 2 - 40),
+		ofGetWidth() / 2 - 200,
+		ofColor(150, 150, 150),
+		ofColor(170, 170, 170),
+		ofColor(255, 255, 255));
+	_textDirectionX.SetSize(80, 27);
+	_textDirectionX.SetSprite("teal.png", "teal2.png");
 
-	_textDirectionX = IntTextBox("Direction X:", MyButton::FONT_LEFT, 10, ofVec2f(_textDirectionX.GetStringSize("Direction X:").x + BORDER_LEFT, 559), 
-								ofGetWidth() / 2 - 200,
-								ofColor(120, 120, 120),
-								ofColor(80, 80, 80),
-								ofColor(255, 255, 255));
-	_textDirectionX.SetSize(100, 50);
-
-	_textDirectionY = IntTextBox("Y:", MyButton::FONT_LEFT, 10, 
-								ofVec2f(_textDirectionX.GetStringSize("Direction X:").x + 120 + _textDirectionY.GetStringSize("Y:").x + BORDER_LEFT, 559), 
-								ofGetHeight() / 2,
-								ofColor(120, 120, 120),
-								ofColor(80, 80, 80),
-								ofColor(255, 255, 255));
-	_textDirectionY.SetSize(100, 50);
+	_textDirectionY = IntTextBox("Y:", MyButton::FONT_LEFT, 10,
+		ofVec2f(_textDirectionX.GetStringSize("Direction X:").x + 120 + _textDirectionY.GetStringSize("Y:").x + BORDER_LEFT, ofGetScreenHeight() / 2 - 40),
+		ofGetHeight() / 2,
+		ofColor(150, 150, 150),
+		ofColor(170, 170, 170),
+		ofColor(255, 255, 255));
+	_textDirectionY.SetSize(80, 27);
+	_textDirectionY.SetSprite("teal.png", "teal2.png");
 
 
-	m_loadImageButton = MyButton("Image Load", MyButton::FONT_CENTER, 0, false, 0, ofGetHeight() - 156, 203, 50);
+	m_loadImageButton = MyButton("Image Load", MyButton::FONT_CENTER, 1.5f, false, 0, (ofGetHeight() - 200.0f), 120, 30);
+	//m_loadImageButton.SetPosition(0, (ofGetHeight() - 100.0f));
 	m_loadImageButton.SetColor(ofColor(120, 120, 120), ofColor(80, 80, 80));
+	m_loadImageButton.SetSprite("teal.png", "teal2.png");
 
-	m_resetButton = MyButton("Reset", MyButton::FONT_CENTER, 0, false, 0, ofGetHeight() - 103, 203, 50);
+	m_resetButton = MyButton("Reset", MyButton::FONT_CENTER, 0, false, 0, ofGetHeight() - 150, 203, 50);
 	m_resetButton.SetColor(ofColor(120, 120, 120), ofColor(80, 80, 80));
+	m_resetButton.SetSprite("teal.png", "teal2.png");
 
 	m_saveButton = MyButton("Save", MyButton::FONT_CENTER, 0, false, 0, ofGetHeight() - 50, 100, 50);
 	m_saveButton.SetColor(ofColor(120, 120, 120), ofColor(80, 80, 80));
@@ -144,9 +155,13 @@ void Gui::Init() {
 	m_exit = MyButton("Sair", MyButton::FONT_CENTER, 0, false, ofGetWidth() - 100, ofGetHeight() - 50, 100, 50);
 	m_exit.SetColor(ofColor(120, 120, 120), ofColor(80, 80, 80));
 
+	m_loadBackground = MyButton("Background", MyButton::FONT_CENTER, 0, false, 103, ofGetHeight() - 100, 100, 50);
+	m_loadBackground.SetColor(ofColor(120, 120, 120), ofColor(80, 80, 80));
+
 
 
 	sprite = "/sprites/particula.png";
+	background = "bgtest.png";
 
 
 }
@@ -160,16 +175,17 @@ void Gui::Update(ParticleEmission &emissor) {
 
 
 		// Reajusta a posicao dos botoes de acordo com o tamanho da tela
-		m_loadImageButton.SetPosition(0, ofGetHeight() - 156);
-		m_resetButton.SetPosition(0, ofGetHeight() - 103);
+		m_loadImageButton.SetPosition(0, ofGetHeight() - 160);
+		m_loadBackground.SetPosition(0, ofGetHeight() - 120);
+		m_resetButton.SetPosition(0, ofGetHeight() - 90);
 		m_saveButton.SetPosition(0, ofGetHeight() - 50);
 		m_loadButton.SetPosition(103, ofGetHeight() - 50);
 		m_playButton.SetPosition(ofGetWidth() / 2.0f, ofGetHeight() - 50);
 
 		// Updates dos botoes para verificar se eles foram precionados
-		_textPositionX.Update(); 
+		_textPositionX.Update();
 		_textPositionY.Update();
-		_textDirectionX.Update(); 
+		_textDirectionX.Update();
 		_textDirectionY.Update();
 		_textTotalSpawnByTime.Update();
 		m_loadImageButton.Update();
@@ -179,13 +195,17 @@ void Gui::Update(ParticleEmission &emissor) {
 		m_playButton.Update();
 		m_playButton.IsPressed() ? m_playButton.SetText("Pause") : m_playButton.SetText("Play");
 		m_exit.Update();
-
 	}
 	if (m_loadImageButton.IsPressed()) {
 		ofFileDialogResult file = ofSystemLoadDialog("Load File", false, "sprites");
 
 		sprite = file.getName() != "" ? file.getPath() : sprite;
 		emissor.SetSprite(sprite);
+		m_loadImageButton.SetToggleValue(false);
+	}
+	else if (m_loadBackground.IsPressed()) {
+		ofFileDialogResult file = ofSystemLoadDialog("Load Background", false, "background");
+		background = file.getName() != "" ? file.getPath() : background;
 		m_loadImageButton.SetToggleValue(false);
 	}
 
@@ -246,7 +266,6 @@ void Gui::Update(ParticleEmission &emissor) {
 }
 
 void Gui::Draw() {
-
 	gui.draw();
 	m_saveButton.Draw();
 	m_resetButton.Draw();
@@ -254,6 +273,7 @@ void Gui::Draw() {
 	m_playButton.Draw();
 	m_exit.Draw();
 	m_loadImageButton.Draw();
+	m_loadBackground.Draw();
 	_textTotalSpawnByTime.Draw();
 	_textPositionX.Draw();
 	_textPositionY.Draw();
@@ -285,7 +305,7 @@ void Gui::ChangeDirectionAndPosition()
 {
 	/*
 		Funcao para poder alterar a posicao da direcao e da origem caso os botoes de Toggle sejam selecionados
-		Para confirmar a nova posicao, basta clicar com o botao direito do mouse 
+		Para confirmar a nova posicao, basta clicar com o botao direito do mouse
 	*/
 
 	// Altera somente a Direcao
@@ -310,7 +330,7 @@ void Gui::ChangeDirectionAndPosition()
 }
 
 void Gui::DrawDirectionAndCone(const ofVec2f& posit, const ofVec2f& direct)
-{	
+{
 	// Desenha a direcao para onde sera gerado as particulas
 	ofSetColor(255, 255, 255);
 	ofVec3f start = ofVec3f(posit.x, posit.y, 0);
@@ -341,17 +361,17 @@ void Gui::DrawCenterAxis() {
 bool Gui::ParameterHasChanged(const ParticleEmission &emissor) {
 	// Verifica se os parametros do emissor e do gui estao diferentes
 	changeValues = (
-					emissor.GetOrigin()					!= Position()						||
-					emissor.GetDirection()				!= Direction()						||
-					emissor.GetOpenAngle()				!= angle							||
-					emissor.GetSpeed()					!= velocity							||
-					emissor.GetLifeTime()				!= lifeTime							||
-					emissor.GetSpawnTime()				!= timeSpawn						||
-					emissor.GetSizeParticle()			!= radius							||
-					emissor.GetColor()					!= color							||
-					emissor.GetSprite()					!= sprite							||
-					emissor.GetTotalOfSpawnParticle()	!= _textTotalSpawnByTime.GetValue()
-					);
+		emissor.GetOrigin() != Position() ||
+		emissor.GetDirection() != Direction() ||
+		emissor.GetOpenAngle() != angle ||
+		emissor.GetSpeed() != velocity ||
+		emissor.GetLifeTime() != lifeTime ||
+		emissor.GetSpawnTime() != timeSpawn ||
+		emissor.GetSizeParticle() != radius ||
+		emissor.GetColor() != color ||
+		emissor.GetSprite() != sprite ||
+		emissor.GetTotalOfSpawnParticle() != _textTotalSpawnByTime.GetValue()
+		);
 
 	return changeValues;
 }

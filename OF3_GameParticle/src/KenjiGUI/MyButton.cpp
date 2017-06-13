@@ -109,7 +109,7 @@ MyButton::MyButton()
 	m_colorPressed.set(255, 255, 255);
 	m_fontColor.set(255, 255, 255);
 	m_mousePressed = false;
-	m_font.load("C:/Windows/Fonts/arial.ttf", 12);
+	m_font.load("C:/Windows/Fonts/verdana.ttf", 12);
 }
 
 
@@ -120,7 +120,7 @@ MyButton::MyButton(std::string name, int textPosition, float margin, bool value,
 	m_width = width;
 	m_height = heigth;
 	m_name = name;
-	m_font.load("C:/Windows/Fonts/arial.ttf", 12);
+	m_font.load("C:/Windows/Fonts/verdana.ttf", 12);
 	m_mousePressed = false;	
 	m_textMargin = margin;
 	m_textPosition = textPosition;
@@ -136,7 +136,7 @@ MyButton::MyButton(std::string name, int textPosition, float margin, bool value,
 	m_width = width;
 	m_height = heigth;
 	m_name = name;
-	m_font.load("C:/Windows/Fonts/arial.ttf", 12);
+	m_font.load("C:/Windows/Fonts/verdana.ttf", 12);
 	m_mousePressed = false;
 	m_textMargin = margin;
 	m_textPosition = textPosition;
