@@ -128,12 +128,6 @@ void ofApp::keyReleased(int key) {
 		break;
 
 	case 2://EDITOR
-		//if (key == 'm' || key == 'M') {
-		//	_particleEditor.m_guiEditor.MoveOriginParticle();
-		//}
-		//if (key == 'd' || key == 'D') {
-		//	_particleEditor.m_guiEditor.MoveDirectionParticle();
-		//}
 		break;
 
 	case 3://GAME OVER

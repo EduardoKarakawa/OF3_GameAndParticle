@@ -1,10 +1,12 @@
 #include "Gui.h"
 #include "Storage.h"
 
+// Auxiliares para facilitar o get e set de direcao e posicao, eles foram colocados depois que adiciou o IntTextBox
 const ofVec2f& Gui::Position()	const	{ return ofVec2f(_textPositionX.GetValue(),  _textPositionY.GetValue());		}
 const ofVec2f& Gui::Direction() const	{ return ofVec2f(_textDirectionX.GetValue(), _textDirectionY.GetValue());		}
 void Gui::Position(ofVec2f& position)	{ _textPositionX.SetValue(position.x);	_textPositionY.SetValue(position.y);	}
 void Gui::Direction(ofVec2f& position)	{ _textDirectionX.SetValue(position.x); _textDirectionY.SetValue(position.y);	}
+
 
 void Gui::SetTotalParticleSpawn(int value) {
 	_textTotalSpawnByTime.SetValue(value);
@@ -191,8 +193,10 @@ void Gui::Update(ParticleEmission &emissor) {
 
 	else if (m_saveButton.IsPressed()) {
 		DisableProcessParticle(emissor);
+
 		//chama metodo save da classe Storage, parâmetros: ParticleEmission e string
 		std::string tag = STORAGE.GetFather(m_tagButtons);
+
 		if (tag == "NotSave") {
 			ofSystemAlertDialog("Save cancelado!");
 			m_saveButton.SetToggleValue(false);
@@ -246,7 +250,7 @@ void Gui::Update(ParticleEmission &emissor) {
 }
 
 void Gui::Draw() {
-
+	// Desenha
 	gui.draw();
 	m_saveButton.Draw();
 	m_resetButton.Draw();
@@ -259,6 +263,7 @@ void Gui::Draw() {
 	_textPositionY.Draw();
 	_textDirectionX.Draw();
 	_textDirectionY.Draw();
+
 	if (localPosition) {
 		DrawCenterAxis();
 	}
@@ -270,6 +275,7 @@ void Gui::Draw() {
 
 
 	if (m_saveButton.IsPressed()) {
+		// Desenha os botoes de tags quando vai salvar um configuracao
 		for (int i = 0; i < m_tagButtons.size(); i++) {
 			m_tagButtons[i].Draw();
 		}

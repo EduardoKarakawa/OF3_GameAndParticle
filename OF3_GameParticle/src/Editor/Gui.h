@@ -15,8 +15,6 @@ class Gui {
 	private:
 		std::string sprite;
 		ofxFloatSlider size, lifeTime, angle, radius, timeSpawn, velocity; //slider float
-		//ofxVec2Slider worldPos, direction; //slider vector
-		//ofxIntSlider totalSpawnByTime; //slider int
 		ofxColorSlider color; //slider color
 		ofxToggle drawParameters, randomSpawn;
 		ofxPanel gui;
