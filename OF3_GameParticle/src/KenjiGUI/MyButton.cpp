@@ -103,7 +103,7 @@ void MyButton::LoadFont(std::string font, int size, int r, int g, int b, int a) 
 }
 
 
-//
+
 // Construtor para o botao
 MyButton::MyButton()
 {
