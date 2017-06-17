@@ -86,7 +86,33 @@ ParticleEmission::ParticleEmission(ofVec2f origin, ofVec2f direction, float open
 	m_timeSpawnParticle = timeSpawn;
 	m_spawnTimeCont = 0;
 	m_enableParticles = true;
-	m_color = ofColor(255, 255, 255);
+	m_color = ofColor(255,255,255);
+	m_particles.clear();
+	m_particlesDead.clear();
+	m_timeCountSweep = 0;
+	m_totalByTime = 1;
+	m_chageSize = false;
+}
+
+ParticleEmission::ParticleEmission(ofVec2f position, ofVec2f origin, ofVec2f direction, float openAngle, float speed, float lifeTime, float timeSpawn, std::string sprite, float size, ofColor& color)
+{
+	// Inicia os parametros da sistema de particula novo
+	m_fatherPosition = nullptr;
+	m_fatherTag = "";
+	m_spriteLocal = sprite;
+	m_sprite.loadImage(m_spriteLocal);
+	m_radius = size;
+	m_sprite.resize(m_radius, m_radius);
+	m_position = position;
+	m_direction.set(m_position.x, m_position.y);
+	m_direction.set(direction);
+	m_openAngle = openAngle;
+	m_maxLifeTime = lifeTime;
+	m_velocity = speed;
+	m_timeSpawnParticle = timeSpawn;
+	m_spawnTimeCont = 0;
+	m_enableParticles = true;
+	m_color = color;
 	m_particles.clear();
 	m_particlesDead.clear();
 	m_timeCountSweep = 0;
@@ -408,7 +434,5 @@ const bool& ParticleEmission::CollidedWith(const ofVec2f &other, float size) con
 			collided = angleOther >= (angleDir - midopen) && angleOther <= (angleDir + midopen);
 		}
 	}
-
-
 	return collided;
 }

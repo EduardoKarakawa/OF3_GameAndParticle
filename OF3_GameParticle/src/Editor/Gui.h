@@ -3,6 +3,7 @@
 #include <string>
 #include "ofxGui.h"
 #include "ofxLabel.h"
+#include "ofTrueTypeFont.h"
 #include "ParticleEmission.h"
 #include "ofSystemUtils.h"
 #include "of3dUtils.h"
@@ -14,7 +15,10 @@
 class Gui {
 	private:
 		std::string sprite;
+		string background;
 		ofxFloatSlider size, lifeTime, angle, radius, timeSpawn, velocity; //slider float
+		//ofxVec2Slider worldPos, direction; //slider vector
+		//ofxIntSlider totalSpawnByTime; //slider int
 		ofxColorSlider color; //slider color
 		ofxToggle drawParameters, randomSpawn;
 		ofxPanel gui;
@@ -24,10 +28,11 @@ class Gui {
 		std::vector<MyButton> m_tagButtons;
 		ofxToggle localPosition;
 		MyButton m_saveButton, m_resetButton, m_loadButton;
-		MyButton m_playButton, m_loadImageButton;
+		MyButton m_playButton, m_loadImageButton, m_loadBackground;
 		IntTextBox _textPositionX, _textPositionY;
 		IntTextBox _textDirectionX, _textDirectionY;
 		IntTextBox _textTotalSpawnByTime;
+		ofTrueTypeFont font;
 	
 	public:
 		MyButton m_exit;
@@ -46,7 +51,7 @@ class Gui {
 		void Draw();
 		void SetMousePosition(int x, int y);
 		void ChangeDirectionAndPosition();
-		void DrawDirectionAndCone(ofVec2f posit, ofVec2f direct);
+		void DrawDirectionAndCone(const ofVec2f& posit, const ofVec2f& direct);
 		void DrawCenterAxis();
 
 		void SetTotalParticleSpawn(int value);
@@ -57,6 +62,7 @@ class Gui {
 		void SetSizeParticle(float radius);
 		void SetLifeTime(float lifeTime);
 		void SetSprite(std::string local);
+		void SetBackground(string bg);
 		void SetSpawnTime(float timeSpawn);
 		void SetColor(ofColor color);
 		void SetRandomSpawn(bool value);

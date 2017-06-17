@@ -36,6 +36,7 @@ class ParticleEmission
 	public:
 		ParticleEmission();
 		ParticleEmission(ofVec2f origin, ofVec2f direction, float openAngle, float speed, float lifeTime, float timeSpawn, std::string sprite, float size);
+		ParticleEmission(ofVec2f position, ofVec2f origin, ofVec2f direction, float openAngle, float speed, float lifeTime, float timeSpawn, std::string sprite, float size, ofColor& color);
 		~ParticleEmission();
 
 		void Update(const float &deltaTime);

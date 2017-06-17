@@ -6,7 +6,7 @@
 #include "ParticleEmission.h"
 #include "ofFileUtils.h"
 #include "ofSystemUtils.h"
-
+#include "Camera.h"
 
 
 class ParticleEditor{
@@ -15,7 +15,10 @@ class ParticleEditor{
 		
 	public:
 		Gui m_guiEditor;
-
+		Camera camera;
+		ofImage image;
+		string background;
+		bool clicked;
 
 	public:
 		ParticleEditor();
@@ -23,5 +26,6 @@ class ParticleEditor{
 		void Update(float &deltaTime);
 		void Draw();
 		void SetMousePosition(int &x, int &y);
+		void SetBackground(string& bg);
 		
 };

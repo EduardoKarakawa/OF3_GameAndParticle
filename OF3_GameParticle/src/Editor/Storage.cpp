@@ -83,11 +83,14 @@ void Storage::save(const ParticleEmission &particle, std::string fatherTag) {
 //aqui ParticleEmission não é const porque os parâmetros dela são alterados
 //string referente ao nome do documento de texto(xml)
 void Storage::load(Gui &guiParticle) {
+
+//	ofFileDialogResult file = ofSystemLoadDialog("Load File");
 	//cria documento de texto(xml)
 	ofFileDialogResult file = ofSystemLoadDialog("Load File", false, "particles");
 
 	if (file.bSuccess) {
 		string path = file.getPath();
+		//cria documento de texto(xml)
 		ofXml xml;
 		//carrega xml com o nome enviado por parâmetro
 		xml.load(path);

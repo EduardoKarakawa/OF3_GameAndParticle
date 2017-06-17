@@ -94,24 +94,30 @@ void ofApp::keyPressed(int key) {
 
 	switch (_gameStatus.GetStatus())
 	{
-		case 0://MENU
-			break;
+	case 0://MENU
+		break;
 
-		case 1://GAME
-			_game.Key(key);
-			break;
+	case 1://GAME
+		_game.Key(key);
+		break;
 
-		case 2://EDITOR
-			if (key == 'm' || key == 'M') {
-				_particleEditor.m_guiEditor.MoveOriginParticle();
-			}
-			if (key == 'd' || key == 'D') {
-				_particleEditor.m_guiEditor.MoveDirectionParticle();
-			}
-			break;
+	case 2://EDITOR
+		if (key == 'm' || key == 'M') {
+			_particleEditor.m_guiEditor.MoveOriginParticle();
+		}
+		if (key == 'd' || key == 'D') {
+			_particleEditor.m_guiEditor.MoveDirectionParticle();
+		}
+		if (key == 'l' || key == 'L') {
+			if (!_particleEditor.clicked)
+				_particleEditor.clicked = true;
+			else
+				_particleEditor.clicked = false;
+		}
+		break;
 
-		case 3://GAME OVER
-			break;
+	case 3://GAME OVER
+		break;
 
 	}
 }
@@ -128,6 +134,13 @@ void ofApp::keyReleased(int key) {
 		break;
 
 	case 2://EDITOR
+		//if (key == 'm' || key == 'M') {
+		//	_particleEditor.m_guiEditor.MoveOriginParticle();
+		//}
+		//if (key == 'd' || key == 'D') {
+		//	_particleEditor.m_guiEditor.MoveDirectionParticle();
+		//}
+
 		break;
 
 	case 3://GAME OVER
