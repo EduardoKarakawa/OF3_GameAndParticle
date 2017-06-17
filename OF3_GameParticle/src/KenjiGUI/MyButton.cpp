@@ -29,6 +29,7 @@ void MyButton::SetColor(ofColor &colorDefault, ofColor &colorPressed) {
 	m_colorPressed.set(colorPressed); 
 }
 
+
 void MyButton::SetColor(int r_D, int g_D, int b_D, int a_D, int r_P, int g_P, int b_P, int a_P){
 	m_colorDefault.set(r_D, g_D, b_D, a_D);
 	m_colorPressed.set(r_P, g_P, b_P, a_P);

@@ -72,5 +72,6 @@ class MyButton
 		void DrawSprite();
 		void DrawSquare();
 		bool MouseClickedButton();
+
 };
 

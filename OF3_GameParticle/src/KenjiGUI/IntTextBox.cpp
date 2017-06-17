@@ -42,7 +42,6 @@ IntTextBox::IntTextBox(std::string name, ofVec2f& fontPosition, float margin, of
 	SetFontColor(fontColor);
 	SetFontPosition(fontPosition);
 	m_textMargin = margin;
-	//m_textPosition = textPosition;
 	_value = defaultValue;
 	_timeCont = 0;
 	_drawLineEdit = false;
@@ -103,9 +102,9 @@ void IntTextBox::Draw() {
 	else {
 		DrawSquare();
 	}
-	//_valuePosition.set(m_position.x + 5, m_position.y + m_height / 2.0f + m_font.stringHeight(ofToString(_value)) / 2.0f);
+	
 	_valuePosition.set(m_position.x + 5,
-					   m_position.y + m_height / 2.0f + m_font.stringHeight("0") / 2.0f);
+						m_position.y + m_height / 2.0f + m_font.stringHeight("0") / 2.0f);
 
 	m_font.drawString(ofToString(_value), _valuePosition.x, _valuePosition.y);
 
@@ -114,6 +113,8 @@ void IntTextBox::Draw() {
 
 		// cria uma margin baseando na altura do background do botao com a altura da font
 		float margin = abs((m_height - m_font.stringHeight("0")) / 2.0f);
+
+		// Desenha a linha para feedback
 		ofDrawLine(	_valuePosition.x + m_font.stringWidth(ofToString(_value)) + 2, m_position.y + 5,
 					_valuePosition.x + m_font.stringWidth(ofToString(_value)) + 2, _valuePosition.y);
 		
