@@ -111,7 +111,7 @@ void IntTextBox::Draw() {
 
 	if (_drawLineEdit > 0.5f && m_pressed) {
 		ofSetColor(m_fontColor);
-
+		//
 		// cria uma margin baseando na altura do background do botao com a altura da font
 		float margin = abs((m_height - m_font.stringHeight("0")) / 2.0f);
 		ofDrawLine(	_valuePosition.x + m_font.stringWidth(ofToString(_value)) + 2, m_position.y + 5,
