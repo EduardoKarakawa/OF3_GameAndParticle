@@ -53,6 +53,7 @@ class MyButton
 		void SetToggleValue(bool newValue);
 		void SetFontColor(ofColor &color);
 		void SetFontColor(int r, int g, int b, int a);
+		void SetFontPosition();
 		void SetFontPosition(int position, float margin);
 		void SetSize(int w, int h);
 		
@@ -60,9 +61,9 @@ class MyButton
 		const ofVec2f & GetPosition() const;
 		const bool & IsPressed()	  const;
 		const std::string & GetText() const;
-		void LoadFont(ofTrueTypeFont &font, ofColor &color);
-		void LoadFont(std::string &font, int size, ofColor &color);
-		void LoadFont(std::string &font, int size, int r, int g, int b, int a);
+		void LoadFont(ofTrueTypeFont font, ofColor &color);
+		void LoadFont(std::string font, int size, ofColor &color);
+		void LoadFont(std::string font, int size, int r, int g, int b, int a);
 
 		virtual void Draw();
 		virtual void Update();
