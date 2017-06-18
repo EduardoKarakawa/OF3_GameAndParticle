@@ -39,8 +39,12 @@ void Gui::SetSpawnTime(float timeSpawn) {
 	this->timeSpawn = timeSpawn;
 	changeValues = true;
 }
-void Gui::SetColor(ofColor color) {
-	this->color = color;
+void Gui::SetInitialColor(const ofColor& initialColor) {
+	this->initialColor = initialColor;
+	changeValues = true;
+}
+void Gui::SetFinalColor(const ofColor& finalColor) {
+	this->finalColor = finalColor;
 	changeValues = true;
 }
 void Gui::SetSprite(std::string local) {
@@ -83,8 +87,11 @@ void Gui::Init() {
 	// Botao toggle para calcular o local da particula apartir do centro
 	gui.add(localPosition.setup("Local Position", true));
 
-	// Muda a cor das particulas
-	gui.add(color.setup("Color: ", ofColor(255, 159, 17), ofColor(0, 0), ofColor(255, 255)));
+	// Muda a cor inicial das particulas
+	gui.add(initialColor.setup("Initial Color: ", ofColor(255, 159, 17), ofColor(0, 0), ofColor(255, 255)));
+	
+	// Muda a cor final das particulas
+	gui.add(finalColor.setup("Final Color: ", ofColor(255, 159, 17), ofColor(0, 0), ofColor(255, 255)));
 
 	// Define se esta movimentando a origem ou a direcao para falso
 	worldPosToMouse = false;
@@ -289,7 +296,8 @@ void Gui::Update(ParticleEmission &emissor) {
 		emissor.SetSpeed(velocity);
 		emissor.SetLifeTime(lifeTime);
 		emissor.SetSpawnTime(timeSpawn);
-		emissor.SetColor(color);
+		emissor.SetInitialColor(initialColor);
+		emissor.SetFinalColor(finalColor);
 		emissor.SetSizeParticle(radius);
 		emissor.SetSprite(sprite);
 		emissor.SetTotalOfSpawnParticle(_textTotalSpawnByTime.GetValue());
@@ -403,7 +411,8 @@ bool Gui::ParameterHasChanged(const ParticleEmission &emissor) {
 		emissor.GetLifeTime() != lifeTime ||
 		emissor.GetSpawnTime() != timeSpawn ||
 		emissor.GetSizeParticle() != radius ||
-		emissor.GetColor() != color ||
+		emissor.GetInialColor() != initialColor ||
+		emissor.GetFinalColor() != finalColor ||
 		emissor.GetSprite() != sprite ||
 		emissor.GetTotalOfSpawnParticle() != _textTotalSpawnByTime.GetValue()
 		);
@@ -426,7 +435,8 @@ void Gui::CopyConfig(Gui &config) {
 	SetLifeTime(config.lifeTime);
 	SetSpeed(config.velocity);
 	SetSpawnTime(config.timeSpawn);
-	SetColor(config.color);
+	SetInitialColor(config.initialColor);
+	SetFinalColor(config.finalColor);
 	SetTotalParticleSpawn(config._textTotalSpawnByTime.GetValue());
 	SetRandomSpawn(config.randomSpawn);
 }

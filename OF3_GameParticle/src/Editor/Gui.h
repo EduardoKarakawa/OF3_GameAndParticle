@@ -17,9 +17,7 @@ class Gui {
 		std::string sprite;
 		string background;
 		ofxFloatSlider size, lifeTime, angle, radius, timeSpawn, velocity; //slider float
-		//ofxVec2Slider worldPos, direction; //slider vector
-		//ofxIntSlider totalSpawnByTime; //slider int
-		ofxColorSlider color; //slider color
+		ofxColorSlider initialColor, finalColor; //slider color
 		ofxToggle drawParameters, randomSpawn;
 		ofxPanel gui;
 		ofVec2f mousePositon, antPosition;
@@ -64,7 +62,8 @@ class Gui {
 		void SetSprite(std::string local);
 		void SetBackground(string bg);
 		void SetSpawnTime(float timeSpawn);
-		void SetColor(ofColor color);
+		void SetInitialColor(const ofColor& initialColor);
+		void SetFinalColor(const ofColor& finalColor);
 		void SetRandomSpawn(bool value);
 
 		void MoveOriginParticle();

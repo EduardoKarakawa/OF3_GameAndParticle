@@ -13,7 +13,7 @@ class IntTextBox : public MyButton {
 		float _timeToGetKey;
 		float _drawLineEdit;
 
-
+			
 	public:
 		IntTextBox();
 		IntTextBox(std::string name, int textPosition, float margin, ofVec2f &position,int defaultValue, ofColor &defaultColor, ofColor &pressedColor, ofColor &fontColor);

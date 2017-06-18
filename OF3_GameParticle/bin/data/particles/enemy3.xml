@@ -3,12 +3,13 @@
 	<TotalSpawn>4</TotalSpawn>
 	<RandomSpawn>0</RandomSpawn>
 	<Sprite>/sprites/particula.png</Sprite>
-	<Size>34.65</Size>
+	<Size>-4.31602e+08</Size>
 	<Position>0, 0</Position>
-	<Direction>-614.4, -384</Direction>
+	<Direction>-200, 0</Direction>
 	<OpenAngle>67.415</OpenAngle>
 	<Lifetime>3.796</Lifetime>
 	<Velocity>95</Velocity>
 	<TimeSpawn>0.31637</TimeSpawn>
-	<Color>255, 159, 17, 255</Color>
+	<InitialColor>0, 0, 0, 0</InitialColor>
+	<FinalColor>255, 147, 0, 255</FinalColor>
 </EMITTER>

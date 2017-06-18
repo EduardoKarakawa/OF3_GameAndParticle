@@ -56,20 +56,21 @@ void Storage::save(const ParticleEmission &particle, std::string fatherTag) {
 		xml.setTo("EMITTER");
 
 		//cria "subtags" dentro da tag EMITTER com todos os parâmetros necessários
-		xml.addValue("Father", fatherTag);
-		xml.addValue("TotalSpawn", particle.GetTotalOfSpawnParticle());
-		xml.addValue("RandomSpawn", particle.IsRamdomSpawn());
-		xml.addValue("Sprite", particle.GetSprite());
-		xml.addValue("Size", particle.GetSizeParticle());
+		xml.addValue("Father",			fatherTag);
+		xml.addValue("TotalSpawn",		particle.GetTotalOfSpawnParticle());
+		xml.addValue("RandomSpawn",		particle.IsRamdomSpawn());
+		xml.addValue("Sprite",			particle.GetSprite());
+		xml.addValue("Size",			particle.GetSizeParticle());
 
-		xml.addValue("Position", particle.GetOrigin());
-		xml.addValue("Direction", particle.GetDirection());
+		xml.addValue("Position",		particle.GetOrigin());
+		xml.addValue("Direction",		particle.GetDirection());
 
-		xml.addValue("OpenAngle", particle.GetOpenAngle());
-		xml.addValue("Lifetime", particle.GetLifeTime());
-		xml.addValue("Velocity", particle.GetSpeed());
-		xml.addValue("TimeSpawn", particle.GetSpawnTime());
-		xml.addValue("Color", particle.GetColor());
+		xml.addValue("OpenAngle",		particle.GetOpenAngle());
+		xml.addValue("Lifetime",		particle.GetLifeTime());
+		xml.addValue("Velocity",		particle.GetSpeed());
+		xml.addValue("TimeSpawn",		particle.GetSpawnTime());
+		xml.addValue("InitialColor",	particle.GetInialColor());
+		xml.addValue("FinalColor",		particle.GetFinalColor());// TODO - Arrumar o salve cor
 
 		xml.save(path);
 		ofSystemAlertDialog("Configuracoes Salvas com Sucesso.");
@@ -131,8 +132,11 @@ void Storage::load(Gui &guiParticle) {
 			if (xml.exists("TimeSpawn")) {
 				guiParticle.SetSpawnTime(xml.getValue<float>("TimeSpawn"));
 			}
-			if (xml.exists("Color")) {
-				guiParticle.SetColor(xml.getValue<ofColor>("Color"));
+			if (xml.exists("InitialColor")) {
+				guiParticle.SetInitialColor(xml.getValue<ofColor>("InitialColor"));
+			}
+			if (xml.exists("FinalColor")) {
+				guiParticle.SetFinalColor(xml.getValue<ofColor>("FinalColor"));
 			}
 		}
 		else {

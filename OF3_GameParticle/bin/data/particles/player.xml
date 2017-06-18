@@ -4,11 +4,12 @@
 	<RandomSpawn>0</RandomSpawn>
 	<Sprite>C:\Users\B155 FIRE V3\Source\Repos\OF3_GameParticle\OF3_GameParticle\bin\data\sprites\enemy.png</Sprite>
 	<Size>-4.31602e+08</Size>
-	<Position>3, 3</Position>
-	<Direction>-5120, -5625</Direction>
+	<Position>0, 0</Position>
+	<Direction>-200, 0</Direction>
 	<OpenAngle>67.415</OpenAngle>
 	<Lifetime>1.068</Lifetime>
 	<Velocity>485</Velocity>
 	<TimeSpawn>0.72555</TimeSpawn>
-	<Color>255, 255, 255, 255</Color>
+	<InitialColor>255, 0, 0, 255</InitialColor>
+	<FinalColor>253, 255, 255, 255</FinalColor>
 </EMITTER>

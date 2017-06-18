@@ -4,34 +4,36 @@
 
 
 ParticleEmission::~ParticleEmission() {}
-void ParticleEmission::SetOrigin(ofVec2f origin)			{ m_position = origin; }
-void ParticleEmission::SetDirection(ofVec2f direction)		{ m_direction = direction; }
-void ParticleEmission::SetOpenAngle(float openAngle)		{ m_openAngle = openAngle; }
-void ParticleEmission::SetSpeed(float speed)				{ m_velocity = speed; }
-void ParticleEmission::SetLifeTime(float lifeTime)			{ m_maxLifeTime = lifeTime; }
-void ParticleEmission::SetSpawnTime(float timeSpawn)		{ m_timeSpawnParticle = timeSpawn; }
-void ParticleEmission::SetColor(ofColor color)				{ m_color = color; }
-void ParticleEmission::SetParticleProcess(bool process)		{ m_enableParticles = process; }
-void ParticleEmission::SetFatherTag(std::string fatherTag)	{ m_fatherTag = fatherTag; }
-void ParticleEmission::SetEnable(bool value)				{ m_enableParticles = value; }
-void ParticleEmission::SetTotalOfSpawnParticle(int total)	{ m_totalByTime = total; }
-void ParticleEmission::SetRandomDirection(bool value)		{ m_randomDirection = value; }
+void ParticleEmission::SetOrigin(ofVec2f origin)						{ m_position = origin; }
+void ParticleEmission::SetDirection(ofVec2f direction)					{ m_direction = direction; }
+void ParticleEmission::SetOpenAngle(float openAngle)					{ m_openAngle = openAngle; }
+void ParticleEmission::SetSpeed(float speed)							{ m_velocity = speed; }
+void ParticleEmission::SetLifeTime(float lifeTime)						{ m_maxLifeTime = lifeTime; }
+void ParticleEmission::SetSpawnTime(float timeSpawn)					{ m_timeSpawnParticle = timeSpawn; }
+void ParticleEmission::SetParticleProcess(bool process)					{ m_enableParticles = process; }
+void ParticleEmission::SetFatherTag(std::string fatherTag)				{ m_fatherTag = fatherTag; }
+void ParticleEmission::SetEnable(bool value)							{ m_enableParticles = value; }
+void ParticleEmission::SetTotalOfSpawnParticle(int total)				{ m_totalByTime = total; }
+void ParticleEmission::SetRandomDirection(bool value)					{ m_randomDirection = value; }
+void ParticleEmission::SetInitialColor(const ofColor& initialColor )	{ m_initialColor = initialColor; }
+void ParticleEmission::SetFinalColor(const ofColor& finalColor)			{ m_finalColor = finalColor; }
 
-//criei metodos getters pra poder pegar os valores e salvar
+// Getters pra poder pegar os valores e salvar
 
-const ofVec2f& ParticleEmission::GetOrigin() const { return m_position; }
-const bool& ParticleEmission::IsRamdomSpawn() const { return m_randomDirection; }
-const ofVec2f& ParticleEmission::GetDirection() const { return m_direction; }
-const float& ParticleEmission::GetOpenAngle() const { return m_openAngle; }
-const float& ParticleEmission::GetSpeed() const { return m_velocity; }
-const float& ParticleEmission::GetLifeTime() const { return m_maxLifeTime; }
-const std::string& ParticleEmission::GetSprite() const { return m_spriteLocal; }
-const float& ParticleEmission::GetSpawnTime() const { return m_timeSpawnParticle; }
-const ofColor& ParticleEmission::GetColor() const { return m_color; }
-const float& ParticleEmission::GetSizeParticle() const { return m_radius; }
-const std::string& ParticleEmission::GetFatherTag() const { return m_fatherTag; }
-const bool& ParticleEmission::IsEnable() const { return m_enableParticles; }
-const int& ParticleEmission::GetTotalOfSpawnParticle() const { return m_totalByTime; }
+const ofVec2f& ParticleEmission::GetOrigin() const				{ return m_position; }
+const bool& ParticleEmission::IsRamdomSpawn() const				{ return m_randomDirection; }
+const ofVec2f& ParticleEmission::GetDirection() const			{ return m_direction; }
+const float& ParticleEmission::GetOpenAngle() const				{ return m_openAngle; }
+const float& ParticleEmission::GetSpeed() const					{ return m_velocity; }
+const float& ParticleEmission::GetLifeTime() const				{ return m_maxLifeTime; }
+const std::string& ParticleEmission::GetSprite() const			{ return m_spriteLocal; }
+const float& ParticleEmission::GetSpawnTime() const				{ return m_timeSpawnParticle; }
+const float& ParticleEmission::GetSizeParticle() const			{ return m_radius; }
+const std::string& ParticleEmission::GetFatherTag() const		{ return m_fatherTag; }
+const bool& ParticleEmission::IsEnable() const					{ return m_enableParticles; }
+const int& ParticleEmission::GetTotalOfSpawnParticle() const	{ return m_totalByTime; }
+const ofColor& ParticleEmission::GetInialColor() const			{ return m_initialColor; }
+const ofColor& ParticleEmission::GetFinalColor() const			{ return m_finalColor; }
 
 void ParticleEmission::SetSprite(std::string sprite) {
 	m_spriteLocal = sprite;
@@ -60,7 +62,7 @@ ParticleEmission::ParticleEmission(){
 	m_timeSpawnParticle = 0.2f;
 	m_spawnTimeCont = 0;
 	m_enableParticles = true;
-	m_color = ofColor(255, 255, 255);
+	m_initialColor = m_finalColor = ofColor(255, 255, 255);
 	m_particles.clear();
 	m_particlesDead.clear();
 	m_timeCountSweep = 0;
@@ -86,7 +88,7 @@ ParticleEmission::ParticleEmission(ofVec2f origin, ofVec2f direction, float open
 	m_timeSpawnParticle = timeSpawn;
 	m_spawnTimeCont = 0;
 	m_enableParticles = true;
-	m_color = ofColor(255,255,255);
+	m_initialColor = m_finalColor = ofColor(255, 255, 255);
 	m_particles.clear();
 	m_particlesDead.clear();
 	m_timeCountSweep = 0;
@@ -112,7 +114,34 @@ ParticleEmission::ParticleEmission(ofVec2f position, ofVec2f origin, ofVec2f dir
 	m_timeSpawnParticle = timeSpawn;
 	m_spawnTimeCont = 0;
 	m_enableParticles = true;
-	m_color = color;
+	m_initialColor = m_finalColor = color;
+	m_particles.clear();
+	m_particlesDead.clear();
+	m_timeCountSweep = 0;
+	m_totalByTime = 1;
+	m_chageSize = false;
+}
+
+ParticleEmission::ParticleEmission(ofVec2f position, ofVec2f origin, ofVec2f direction, float openAngle, float speed, float lifeTime, float timeSpawn, std::string sprite, float size, ofColor& initialColor, ofColor& finalColor)
+{
+	// Inicia os parametros da sistema de particula novo
+	m_fatherPosition = nullptr;
+	m_fatherTag = "";
+	m_spriteLocal = sprite;
+	m_sprite.loadImage(m_spriteLocal);
+	m_radius = size;
+	m_sprite.resize(m_radius, m_radius);
+	m_position = position;
+	m_direction.set(m_position.x, m_position.y);
+	m_direction.set(direction);
+	m_openAngle = openAngle;
+	m_maxLifeTime = lifeTime;
+	m_velocity = speed;
+	m_timeSpawnParticle = timeSpawn;
+	m_spawnTimeCont = 0;
+	m_enableParticles = true;
+	m_initialColor = initialColor;
+	m_finalColor = finalColor;
 	m_particles.clear();
 	m_particlesDead.clear();
 	m_timeCountSweep = 0;
@@ -217,8 +246,9 @@ void ParticleEmission::Draw()
 		// Percorre a lista de particular desenhando elas
 		std::vector<Particle>::iterator aux;	// Iterator para percorrer a lista de particles
 		for (aux = m_particles.begin(); aux != m_particles.end(); aux++) {
-			if (aux->OnScreen(windowSize.x, windowSize.y))
-				aux->Draw(m_sprite, m_color, m_position);
+			if (aux->OnScreen(windowSize.x, windowSize.y)) {
+				aux->Draw(m_sprite);
+			}
 		}
 	}
 
@@ -241,10 +271,10 @@ void ParticleEmission::CreateParticle()
 				if (tmp > 0) {
 					if (m_randomDirection) {
 						auxAngle = (-m_openAngle / 2.0f + rand() % (int)m_openAngle) * PI / 180.0f;
-						m_particles[m_particlesDead[i]] = Particle(m_position, m_direction, auxAngle, m_velocity, m_maxLifeTime, m_color.a);
+						m_particles[m_particlesDead[i]] = Particle(m_position, m_direction, auxAngle, m_velocity, m_maxLifeTime, m_initialColor, m_finalColor);
 					}
 					else {
-						m_particles[m_particlesDead[i]] = Particle(m_position, m_direction, auxCont, m_velocity, m_maxLifeTime, m_color.a);
+						m_particles[m_particlesDead[i]] = Particle(m_position, m_direction, auxCont, m_velocity, m_maxLifeTime, m_initialColor, m_finalColor);
 					}
 					m_particlesDead.erase(m_particlesDead.begin() + i); 
 					auxCont += auxAngle;
@@ -261,10 +291,10 @@ void ParticleEmission::CreateParticle()
 			if (m_randomDirection) {
 
 				auxAngle = (-m_openAngle / 2.0f + rand() % (int)m_openAngle) * PI / 180.0f;
-				m_particles.push_back(Particle(m_position, m_direction, auxAngle * tmp, m_velocity, m_maxLifeTime, m_color.a));
+				m_particles.push_back(Particle(m_position, m_direction, auxAngle * tmp, m_velocity, m_maxLifeTime, m_initialColor, m_finalColor));
 			}
 			else {
-				m_particles.push_back(Particle(m_position, m_direction, auxCont, m_velocity, m_maxLifeTime, m_color.a));
+				m_particles.push_back(Particle(m_position, m_direction, auxCont, m_velocity, m_maxLifeTime, m_initialColor, m_finalColor));
 			}
 			auxCont += auxAngle;
 			auxCont *= -1;
@@ -293,10 +323,10 @@ void ParticleEmission::CreateParticle(ofVec2f const &fatherPosition) {
 					if (tmp > 0) {
 						if (m_randomDirection) {
 							auxAngle = (-m_openAngle / 2.0f + rand() % (int)m_openAngle) * PI / 180.0f;
-							m_particles[m_particlesDead[i]] = Particle(position, direction, auxAngle, m_velocity, m_maxLifeTime, m_color.a);
+							m_particles[m_particlesDead[i]] = Particle(position, direction, auxAngle, m_velocity, m_maxLifeTime, m_initialColor, m_finalColor);
 						}
 						else {
-							m_particles[m_particlesDead[i]] = Particle(position, direction, auxCont, m_velocity, m_maxLifeTime, m_color.a);
+							m_particles[m_particlesDead[i]] = Particle(position, direction, auxCont, m_velocity, m_maxLifeTime, m_initialColor, m_finalColor);
 						}
 						m_particlesDead.erase(m_particlesDead.begin() + i);
 						auxCont += auxAngle;
@@ -313,10 +343,10 @@ void ParticleEmission::CreateParticle(ofVec2f const &fatherPosition) {
 				if (m_randomDirection) {
 
 					auxAngle = (-m_openAngle / 2.0f + rand() % (int)m_openAngle) * PI / 180.0f;
-					m_particles.push_back(Particle(position, direction, auxAngle * tmp, m_velocity, m_maxLifeTime, m_color.a));
+					m_particles.push_back(Particle(position, direction, auxAngle * tmp, m_velocity, m_maxLifeTime, m_initialColor, m_finalColor));
 				}
 				else {
-					m_particles.push_back(Particle(position, direction, auxCont, m_velocity, m_maxLifeTime, m_color.a));
+					m_particles.push_back(Particle(position, direction, auxCont, m_velocity, m_maxLifeTime, m_initialColor, m_finalColor));
 				}
 				auxCont += auxAngle;
 				auxCont *= -1;
@@ -393,8 +423,11 @@ void ParticleEmission::SearchParticleConfig(std::string tag) {
 					if (file.exists("TimeSpawn")) {
 						SetSpawnTime(file.getValue<float>("TimeSpawn"));
 					}
-					if (file.exists("Color")) {
-						SetColor(file.getValue<ofColor>("Color"));
+					if (file.exists("InitialColor")) {
+						SetInitialColor(file.getValue<ofColor>("InitialColor"));
+					}
+					if (file.exists("FinalColor")) {
+						SetFinalColor(file.getValue<ofColor>("FinalColor"));
 					}
 				}
 				break;

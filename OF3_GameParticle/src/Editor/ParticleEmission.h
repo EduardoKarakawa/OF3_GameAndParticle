@@ -16,7 +16,8 @@ class ParticleEmission
 		std::string m_fatherTag;
 		ofImage m_sprite;
 		ofVec2f m_direction;
-		ofColor m_color;
+		ofColor m_initialColor;
+		ofColor m_finalColor;
 		int m_totalByTime; 
 		float m_openAngle;
 		float m_maxLifeTime;
@@ -33,10 +34,12 @@ class ParticleEmission
 		std::vector<Particle> m_particles; 
 		std::vector<int> m_particlesDead;
 
+
 	public:
 		ParticleEmission();
 		ParticleEmission(ofVec2f origin, ofVec2f direction, float openAngle, float speed, float lifeTime, float timeSpawn, std::string sprite, float size);
 		ParticleEmission(ofVec2f position, ofVec2f origin, ofVec2f direction, float openAngle, float speed, float lifeTime, float timeSpawn, std::string sprite, float size, ofColor& color);
+		ParticleEmission(ofVec2f position, ofVec2f origin, ofVec2f direction, float openAngle, float speed, float lifeTime, float timeSpawn, std::string sprite, float size, ofColor& initialColor, ofColor& finalColor);
 		~ParticleEmission();
 
 		void Update(const float &deltaTime);
@@ -53,12 +56,13 @@ class ParticleEmission
 		void SetLifeTime(float lifeTime);
 		void SetSprite(std::string sprite);
 		void SetSpawnTime(float timeSpawn);
-		void SetColor(ofColor color);
 		void SetParticleProcess(bool process);
 		void SetFatherTag(std::string fatherTag);
 		void SetEnable(bool value);
 		void SetTotalOfSpawnParticle(int total);
 		void SetRandomDirection(bool value);
+		void SetInitialColor(const ofColor& initialColor);
+		void SetFinalColor(const ofColor& finalColor);
 
 
 		void SearchParticleConfig(std::string tag);
@@ -72,11 +76,12 @@ class ParticleEmission
 		const float& GetLifeTime() const;
 		const std::string& GetSprite() const;
 		const float& GetSpawnTime() const;
-		const ofColor& GetColor() const;
 		const float& GetSizeParticle() const;
 		const std::string& GetFatherTag() const;
 		const int& GetTotalOfSpawnParticle() const;
 		const bool& CollidedWith(const ofVec2f &other, float size) const;
+		const ofColor& GetInialColor() const;
+		const ofColor& GetFinalColor() const;
 
 
 		

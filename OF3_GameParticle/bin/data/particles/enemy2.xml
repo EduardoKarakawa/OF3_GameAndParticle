@@ -4,11 +4,12 @@
 	<RandomSpawn>0</RandomSpawn>
 	<Sprite>C:\Users\B155 FIRE V3\Source\Repos\OF3_GameParticle\OF3_GameParticle\bin\data\sprites\player.png</Sprite>
 	<Size>-4.31602e+08</Size>
-	<Position>3, 0</Position>
-	<Direction>-2127, -1629</Direction>
+	<Position>0, 0</Position>
+	<Direction>-200, 0</Direction>
 	<OpenAngle>360</OpenAngle>
-	<Lifetime>3.672</Lifetime>
-	<Velocity>80</Velocity>
-	<TimeSpawn>0.22156</TimeSpawn>
-	<Color>255, 0, 255, 158</Color>
+	<Lifetime>3.3</Lifetime>
+	<Velocity>55</Velocity>
+	<TimeSpawn>1</TimeSpawn>
+	<InitialColor>255, 0, 0, 0</InitialColor>
+	<FinalColor>255, 255, 0, 255</FinalColor>
 </EMITTER>
