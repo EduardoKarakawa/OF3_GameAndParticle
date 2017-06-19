@@ -9,8 +9,8 @@ const ofVec2f & MyButton::GetStringSize(std::string text) const { return ofVec2f
 
 
 // Seters para alterar algum parametro do botao
-void MyButton::SetPosition(ofVec2f &position)		{ m_position.set(position); SetFontPosition();}
-void MyButton::SetPosition(int x, int y)			{ m_position.set(x, y); SetFontPosition(); }
+void MyButton::SetPosition(ofVec2f &position)		{ m_position.set(position); SetFontPosition(m_textPosition, m_textMargin);}
+void MyButton::SetPosition(int x, int y)			{ m_position.set(x, y); SetFontPosition(m_textPosition, m_textMargin); }
 void MyButton::SetToggleValue(bool newValue)		{ m_pressed = newValue; }
 void MyButton::SetText(std::string name)			{ m_name = name; }
 void MyButton::SetSize(int w, int h)				{ 
@@ -75,7 +75,7 @@ void MyButton::SetFontPosition(int position, float margin) {
 							m_position.y + m_height / 2.0f + m_font.stringHeight(m_name) / 2.0f);
 		break;
 	default:
-		m_fontPosition.set(m_position.x + m_width / 2.0f - m_font.stringWidth(m_name) / 2.0f,
+		m_fontPosition.set(m_position.x + m_width / 2.0f - m_font.stringWidth(m_name) / 2.0f + margin,
 			m_position.y + m_height / 2.0f - 7.0f + m_font.stringHeight(m_name) / 2.0f);
 		break;
 	}
@@ -116,7 +116,7 @@ MyButton::MyButton()
 	m_colorPressed.set(255, 255, 255);
 	m_fontColor.set(255, 255, 255);
 	m_mousePressed = false;
-	m_font.load("Ancherr-Personal-Use.ttf", 42);
+	m_font.load("thin.ttf", 42);
 }
 
 
@@ -128,7 +128,7 @@ MyButton::MyButton(std::string name, int textPosition, float margin, bool value,
 	m_width = width;
 	m_height = heigth;
 	m_name = name;
-	m_font.load("Ancherr-Personal-Use.ttf", 42);
+	m_font.load("thin.ttf", 42);
 	m_mousePressed = false;	
 	m_textMargin = margin;
 	m_textPosition = textPosition;
@@ -145,7 +145,7 @@ MyButton::MyButton(std::string name, int textPosition, float margin, bool value,
 	m_width = width;
 	m_height = heigth;
 	m_name = name;
-	m_font.load("Ancherr-Personal-Use.ttf", 42);
+	m_font.load("thin.ttf", 42);
 	m_mousePressed = false;
 	m_textMargin = margin;
 	m_textPosition = textPosition;

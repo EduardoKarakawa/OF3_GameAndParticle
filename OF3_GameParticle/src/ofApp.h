@@ -2,13 +2,12 @@
 
 #include "ofMain.h"
 #include "Game/GameStats.h"
-#include "Game/GameControl.h"
 #include "Game/Menu.h"
+#include "Game/Game.h"
 #include "Editor/ParticleEditor.h" 
 
 class ofApp : public ofBaseApp{
 	private:
-		GameControl _game;
 		GameStats _gameStatus;
 		ParticleEditor _particleEditor;
 		Menu _menu;					// Class que gerencia o menu
@@ -25,4 +24,5 @@ class ofApp : public ofBaseApp{
 		void mousePressed(int x, int y, int button);
 		void mouseReleased(int x, int y, int button);
 		
+		Game _game;
 };

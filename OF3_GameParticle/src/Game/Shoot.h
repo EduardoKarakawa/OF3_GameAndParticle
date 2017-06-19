@@ -1,19 +1,17 @@
 #pragma once
 #include "GameObject.h"
 
-class Player : public GameObject {
+class Shoot : public GameObject {
 	private:
 		ofVec2f position;
-		int life;
+		ofVec2f direction;
+		ofVec2f destination;
 	public:
-		Player(const ofVec2f& centerPos);
+		Shoot(const ofVec2f& position, const ofVec2f& camera);
 		void init();
 		void update(float secs, const ofVec2f& camera);
 		void draw(const ofVec2f &camera);
 		bool isAlive();
 		void collidedWith(GameObject* other);
-		void setLimits(const ofVec2f& background);
 		ofRectangle bounds();
-		const ofVec2f getPosition() const;
-		const ofVec2f getHandPosition() const;
 };

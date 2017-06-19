@@ -6,7 +6,7 @@
 #include "ParticleEmission.h"
 #include "ofFileUtils.h"
 #include "ofSystemUtils.h"
-#include "Camera.h"
+#include "../Game/Camera.h"
 
 
 class ParticleEditor{

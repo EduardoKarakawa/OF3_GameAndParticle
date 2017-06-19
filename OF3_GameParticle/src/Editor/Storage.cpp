@@ -15,7 +15,7 @@ Storage& Storage::instance() {
 
 
 void Storage::reset(Gui &guiParticle, ParticleEmission & particleList) {
-	guiParticle.Init();
+	guiParticle = Gui();
 	particleList = ParticleEmission();
 
 }
@@ -226,7 +226,6 @@ std::string Storage::GetFilePath(std::string &tag) {
 		}
 	}
 
-	std::cout << "Erro aki" << std::endl;
 	return "";
 }
 
@@ -234,14 +233,11 @@ std::string Storage::GetFilePath(std::string &tag) {
 void Storage::AddOnTags(std::string &tag) {
 	std::string path = ofFile("../data/particles/Tags.xml").getAbsolutePath();
 	ofXml file(path);
-	std::cout << file.getName() << std::endl;
 	file.setTo("TAGS");
 	int cont = 0;
 	while (file.exists("tag" + ofToString(cont))) {
 		cont++;
-		std::cout << "contando " << std::endl;
 	}
-	std::cout << "Salvando " << tag << std::endl;
 	file.addValue("tag" + ofToString(cont), tag);
 	file.save(path);
 }

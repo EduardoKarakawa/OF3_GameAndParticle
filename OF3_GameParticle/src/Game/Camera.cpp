@@ -1,5 +1,29 @@
 #include "Camera.h"
 
+void Camera::init(const ofVec2f& background) {
+	center.set(ofGetWidth() / 2, ofGetHeight() / 2);
+
+	maxX = background.x - ofGetWidth();
+	maxY = background.y - ofGetHeight();
+}
+
+void Camera::update(const ofVec2f& player) {
+	position.set(player - center);
+
+	if (position.x <= 0) {
+		position.x = 0;
+	}
+	else if (position.x >= maxX) {
+		position.x = maxX;
+	}
+	if (position.y <= 0) {
+		position.y = 0;
+	}
+	else if (position.y >= maxY) {
+		position.y = maxY;
+	}
+}
+
 void Camera::init(ofImage& background) {
 	maxX = background.getWidth() / 2 - ofGetWidth() / 2;
 	maxY = background.getHeight() / 2 - ofGetHeight() / 2;
@@ -42,6 +66,7 @@ void Camera::update(float secs) {
 	}
 }
 
-ofVec2f Camera::getPosition() const {
+
+const ofVec2f Camera::getPosition() const {
 	return position;
 }

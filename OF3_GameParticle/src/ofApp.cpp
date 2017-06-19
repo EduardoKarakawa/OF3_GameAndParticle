@@ -5,7 +5,7 @@ void ofApp::setup() {
 	srand(time(NULL));
 
 	_particleEditor.Setup();	// Configura o Editor de Particula
-	_game = GameControl();
+	_game.init();
 	_gameStatus = GameStats();
 	_menu.Setup();	// Configura o Menu
 }
@@ -32,14 +32,15 @@ void ofApp::update() {
 		ofSetBackgroundColor(200, 200, 200);
 		if (_gameStatus.GetStatus() != _gameStatus.GetPreviusStatus()) {
 			_gameStatus.ChangeStats(1);
-			_game = GameControl();
+			_game.init();
 		}
 		else {
-			_game.Update(_deltaTime, _gameStatus);
-			if (_game.m_exit.IsPressed()) {
+			_game.update(_deltaTime);
+			/*if (_game.m_exit.IsPressed()) {
 				_game.m_exit.SetToggleValue(false);
 				_gameStatus.ChangeStats(0);
-			}
+			}*/
+
 		}
 		break;
 
@@ -72,7 +73,7 @@ void ofApp::draw() {
 
 		//GAME
 	case 1:
-		_game.Draw();
+		//_game.dar();
 
 		break;
 
@@ -98,7 +99,7 @@ void ofApp::keyPressed(int key) {
 		break;
 
 	case 1://GAME
-		_game.Key(key);
+		//_game.Key(key);
 		break;
 
 	case 2://EDITOR
@@ -130,7 +131,7 @@ void ofApp::keyReleased(int key) {
 		break;
 
 	case 1://GAME
-		_game.KeyRelease(key);
+		//_game.KeyRelease(key);
 		break;
 
 	case 2://EDITOR
@@ -171,7 +172,7 @@ void ofApp::mousePressed(int x, int y, int button) {
 	{
 
 	case 1://GAME
-		_game.Key(button);
+		//_game.Key(button);
 		break;
 	}
 }
@@ -182,7 +183,7 @@ void ofApp::mouseReleased(int x, int y, int button) {
 	{
 
 	case 1://GAME
-		_game.KeyRelease(button);
+		//_game.KeyRelease(button);
 		break;
 	}
 }

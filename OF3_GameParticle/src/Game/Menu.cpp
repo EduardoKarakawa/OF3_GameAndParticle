@@ -3,10 +3,10 @@ void Menu::Setup()
 {
 	particle.load("Luna.ttf", 50, true, true, false, 0.3f, 0);
 	editor.load("Luna.ttf", 35, true, true, true, 1.0f, 0);
-	m_buttonList.push_back(MyButton("Game", MyButton::FONT_CENTER, 2.0f, false, ofVec2f(ofGetWidth() / 2 - 100, (ofGetHeight() / 2)), 200, 70));
-	m_buttonList.push_back(MyButton("Editor", MyButton::FONT_CENTER, 2.0f, false, ofVec2f(ofGetWidth() / 2 - 100, (ofGetHeight() / 2) + 100), 200, 70));
+	m_buttonList.push_back(MyButton("Game", MyButton::FONT_CENTER, 21.0f, false, ofVec2f(ofGetWidth() / 2 - 100, (ofGetHeight() / 2)), 200, 70));
+	m_buttonList.push_back(MyButton("Editor", MyButton::FONT_CENTER, 25.0f, false, ofVec2f(ofGetWidth() / 2 - 100, (ofGetHeight() / 2) + 100), 200, 70));
 	for (int i = 0; i < m_buttonList.size(); i++) {
-		//m_buttonList[i].LoadFont("thin.ttf", 24, ofColor(255, 255, 255));
+		m_buttonList[i].LoadFont("Luna.ttf", 19, ofColor(255, 255, 255));
 		m_buttonList[i].SetFontColor(0, 0, 0, 255);
 		m_buttonList[i].SetColor(ofColor(255, 255, 255), ofColor(255, 255, 255));
 		m_buttonList[i].SetSprite("blue.png", "blue2.png");
@@ -46,10 +46,10 @@ void Menu::Draw() {
 	}
 
 	ofSetColor(ofColor::white);
-	particle.drawString("PARTICLE", 320, 200.0f);
+	particle.drawString("PARTICLE", (ofGetWidth() - particle.stringWidth("PARTICLE")) / 2.0f , 200.0f);
 
 	ofSetColor(ofColor::blueSteel);
-	editor.drawString("EDITOR", 410, 250.0f);
+	editor.drawString("EDITOR", (ofGetWidth() - editor.stringWidth("EDITOR")) / 2.0f, 250.0f);
 
 	ofSetColor(255, 255, 255);
 	for (MyButton i : m_buttonList) {

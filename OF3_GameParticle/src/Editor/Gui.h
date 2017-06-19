@@ -10,7 +10,8 @@
 #include "../KenjiGUI/MyButton.h"
 #include "../KenjiGUI/IntTextBox.h"
 
-#define BORDER_LEFT 10.0f
+#define BORDER_LEFT 17.0f
+#define FONT_SIZE 12
 
 class Gui {
 	private:
@@ -21,10 +22,10 @@ class Gui {
 		ofxToggle drawParameters, randomSpawn;
 		ofxPanel gui;
 		ofVec2f mousePositon, antPosition;
+		ofVec2f cameraPosition;
 		bool worldPosToMouse, directionPosToMouse;
 		bool changeValues;
 		std::vector<MyButton> m_tagButtons;
-		ofxToggle localPosition;
 		MyButton m_saveButton, m_resetButton, m_loadButton;
 		MyButton m_playButton, m_loadImageButton, m_loadBackground;
 		IntTextBox _textPositionX, _textPositionY;
@@ -33,23 +34,25 @@ class Gui {
 		ofTrueTypeFont font;
 	
 	public:
+		ofxToggle localPosition;
 		MyButton m_exit;
 
 	private:
 		void DisableProcessParticle(ParticleEmission &emissor);
 		void CopyConfig(Gui &config);
-		const ofVec2f &Position() const;
+		ofVec2f &Position();
 		void Position(ofVec2f& position);
-		const ofVec2f &Direction() const;
+		ofVec2f &Direction();
 		void Direction(ofVec2f& position);
 
 	public:
+		Gui();
 		void Init();
-		void Update(ParticleEmission &emissor);
+		void Update(ParticleEmission &emissor, const ofVec2f& cameraPosition);
 		void Draw();
 		void SetMousePosition(int x, int y);
 		void ChangeDirectionAndPosition();
-		void DrawDirectionAndCone(const ofVec2f& posit, const ofVec2f& direct);
+		void DrawDirectionAndCone(ofVec2f posit, ofVec2f direct);
 		void DrawCenterAxis();
 
 		void SetTotalParticleSpawn(int value);
